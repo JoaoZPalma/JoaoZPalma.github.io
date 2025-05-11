@@ -1,15 +1,47 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "AtlantisText";
+  src: local("AtlantisText-Regular"),
+    url("../fonts/AtlantisText-Regular.ttf") format("truetype");
+  font-weight:400;
+}
+
+@font-face {
+  font-family: "AtlantisText";
+  src: local("AtlantisText-Bold"),
+    url("../fonts/AtlantisText-Bold.ttf") format("truetype");
+  font-weight:700;
+}
+
+@font-face {
+  font-family: "AtlantisText";
+  src: local("AtlantisHeadline-Bold"),
+    url("../fonts/AtlantisHeadline-Bold.ttf") format("truetype");
+  font-weight:900;
+}
+
+@font-face {
+  font-family: "AtlantisText";
+  src: local("Atlantis-RegularSmallCaps"),
+    url("../fonts/Atlantis-RegularSmallCaps.ttf") format("truetype");
+  font-weight:500;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --brown: #312518;
+  --yellow: #cbaf7c;
+  --darkerYellow: #af9669
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --color-secondary: #312518;
+  --color-darker_secondary: #251d13;
+  --color-primary: #cbaf7c;
+  --color-darker_primary: #af9669;
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,3 +56,4 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
