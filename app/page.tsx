@@ -3,22 +3,23 @@ import './globals.css'
 import Scroll from './scroll'
 import Profile from './profile'
 import Button from './button'
+import Raven from './ravenIcon'
 import SimpleFrame from './frame300'
+
 
 export default function Home() {
   return (
-    <div className="bg-secondary min-h-screen">
-      <div className="flex justify-center h-max">
-        {/* <SimpleFrame> */}
+    <div className="bg-secondary min-h-screen flex items-center justify-center">
+      <div className="flex justify-center">
         <Scroll>
           <h1 className="text-[42px] text-darker_secondary pt-6 pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}>
             PALMA'S ELDRITCH<br />
             CODEX
           </h1>
           {/* Coluna 1 */}
-          <div className="flex justify-between min-h-screen">
+          <div className="flex justify-between ">
             <div className="w-[45%]">
-              <section className="w-[400px] text-[44px] text-darker_secondary pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
+              <section className="w-[400px] text-[44px] text-darker_secondary leading-none pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
                 BIO ---------------------
                 <p className="text-[28px] " style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
                   "I've bargained with Cursed Code and deciphered Ancient Docs.
@@ -30,83 +31,77 @@ export default function Home() {
               </section>
               <section className="w-[400px] text-[44px] text-darker_secondary pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
                 STATS -----------------
-                <ul className="grid grid-cols-2 gap-1 text-[34px] ml-4">
-                  <li className="relative">
-                    <span className="w-max cursor-help group inline-block underline decoration-3 ">
-                      STR - 12
-                      <div className="hidden group-hover:block absolute bottom-full left-0 w-full transform mb-2 
-                          bg-darker_primary border-2 border-secondary p-1 text-[20px]">
-                        Palma enjoys doing physical exercise regularly such as going to the gym!
-                      </div>
-                    </span>
-                  </li>
-                  <li className="relative">
-                    <span className="w-max cursor-help group inline-block underline decoration-3">
-                      INT - 12
-                      <div className="hidden group-hover:block absolute bottom-full left-0 w-full transform mb-2 
-                          bg-darker_primary border-2 border-secondary p-1 text-[20px]">
-                        A very smort boy!
-                      </div>
-                    </span>
-                  </li>
-                  <li className="relative">
-                    <span className="w-max cursor-help group inline-block underline decoration-3">
-                      DEX - 18
-                      <div className="hidden group-hover:block absolute bottom-full left-0 w-full transform mb-2 
-                          bg-darker_primary border-2 border-secondary p-1 text-[20px]">
-                        Vim enjoyer, fingers move faster than the compiler can complain. (he wishes)
-                      </div>
-                    </span>
-                  </li>
-                  <li className="relative">
-                    <span className="w-max cursor-help group inline-block underline decoration-3">
-                      WIS - 3
-                      <div className="hidden group-hover:block absolute bottom-full left-0 w-full transform mb-2 
-                          bg-darker_primary border-2 border-secondary p-1 text-[20px]">
-                        Once made a "Arroz de Pato" (a traditional portuguese dish which roughly translates to Duck Rice) without Rice or Duck.
-                      </div>
-                    </span>
-                  </li>
-                  <li className="relative">
-                    <span className="w-max cursor-help group inline-block underline decoration-3">
-                      CON - 10
-                      <div className="hidden group-hover:block absolute bottom-full left-0 w-full transform mb-2 
-                          bg-darker_primary border-2 border-secondary p-1 text-[20px]">
-                        Immune to caffeine crashes (lie).
-                      </div>
-                    </span>
-                  </li>
-                  <li className="relative">
-                    <span className="w-max cursor-help group inline-block underline decoration-3">
-                      CHA - 14
-                      <div className="hidden group-hover:block absolute bottom-full left-0 w-full transform mb-2 
-                          bg-darker_primary border-2 border-secondary p-1 text-[20px]">
-                        Believes himself to be easy going and somewhat funny, but for the life of his do not ask him to tell a joke on the spot.
-                      </div>
-                    </span>
-                  </li>
+                <ul className="grid grid-cols-2 gap-1 text-[34px] ml-4 leading-snug">
+                  {stats.map((stat) => (
+                    <StatItem key={stat.name} {...stat} />
+                  ))}
                 </ul>
               </section>
 
             </div>
             {/* Coluna 2 */}
-            <div className="w-[45%]">
+            <div className="w-[45%] -mt-14 ">
               <div className="mt-9 flex flex-col items-center">
                 <Profile></Profile>
-                <span className="w-full text-[44px] text-darker_secondary text-center" style={{ fontFamily: 'AtlantisText', fontWeight: 500 }}>
-                  CODE WARLOCK
-                </span>
-                <div className="mt-1">
-                  <Button>
-                    inventory
-                  </Button>
+                <div className="flex flex-col items-center gap-2">
+                  <span className="w-full text-[44px] text-darker_secondary text-center mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 500 }}>
+                    CODE WARLOCK
+                  </span>
+                  <div>
+                    <Button>
+                      inventory
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <section className="w-full text-[44px] text-darker_secondary pl-6 mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
+            CURSED ARTIFACTS -------------------------
+
+            {/* Centered 4-item grid */}
+            <div className="grid grid-cols-4 gap-4 mt-2 place-items-center">
+              <div className="artifact flex flex-col items-center">
+                <div className="chest-icon mx-auto"></div>
+                <p className="text-[20px] mt-1">Chest</p>
+              </div>
+              <div className="artifact flex flex-col items-center">
+                <div className="crow-icon mx-auto"></div>
+                <p className="text-[20px] mt-1">Spellbook</p>
+              </div>
+              <div className="artifact flex flex-col items-center">
+                <div className="crow-icon mx-auto"></div>
+                <p className="text-[20px] mt-1">Scroll</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="crow-icon mx-auto"></div>
+                <p className="text-[20px] mt-1">Messenger</p>
+              </div>
+            </div>
+          </section>
         </Scroll>
-        {/* </SimpleFrame> */}
       </div>
     </div>
   );
 }
+
+const stats = [
+  { name: "STR", value: "12", description: "Palma enjoys doing physical exercise regularly such as going to the gym!" },
+  { name: "INT", value: "12", description: "A very smort boy!" },
+  { name: "DEX", value: "18", description: "Vim enjoyer, fingers move faster than the compiler can complain. (he wishes)" },
+  { name: "WIS", value: "3", description: "Once made a 'Arroz de Pato' (a traditional portuguese dish which roughly translates to Duck Rice) without any Rice or Duck..." },
+  { name: "CON", value: "10", description: "Immune to caffeine crashes (lie)." },
+  { name: "CHA", value: "14", description: "Believes himself to be easy going and somewhat funny, but for the life of his do not ask him to tell a joke on the spot." },
+];
+
+const StatItem = ({ name, value, description }: { name: string; value: string; description: string }) => (
+  <li className="relative">
+    <span className="w-max cursor-help group inline-block underline decoration-3 hover:decoration-wavy hover:decoration-1">
+      {name} - {value}
+      <div className="hidden group-hover:block absolute bottom-full left-0 w-full transform mb-2 
+        bg-darker_primary border-2 border-secondary p-1 text-[20px]">
+        {description}
+      </div>
+    </span>
+  </li>
+);

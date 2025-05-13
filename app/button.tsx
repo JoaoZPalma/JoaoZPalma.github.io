@@ -1,5 +1,4 @@
 import './globals.css'
-import './colorPallete.css'
 import { ReactNode } from 'react';
 
 interface ButtonProps {
