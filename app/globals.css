@@ -57,25 +57,26 @@ body {
 }
 
 .crow-icon {
-  width: 31.666px;
-  height: 38px;
-  background: url('/CrowSprite.png') -158.333px 0;
+  width: 48px;
+  height: 27px;
+  background: url('/CrowIdle.png') 0px 0;
   image-rendering: pixelated;
-  transform: scale(5); /* Keep your zoom */
-  transform-origin: left bottom; /* Better zoom behavior */
+  transform: scale(3.5) translate(-25%, 8%); 
+  transform-origin: left bottom; 
   margin-left: 0px;
   margin-top: 50px;
+  animation: fly 8s steps(1) infinite;
 }
 
 .crow-icon:hover {
-  /* Animate through all 6 frames */
-  animation: fly 1.5s steps(5) infinite;
+  animation: fly 10s steps(1) backwards;
 }
 
 @keyframes fly {
-  0% { background-position: -158.33px 0; } /* Last frame (frame 6) */
-  50% { background-position: 0px 0; } /* Last frame (frame 6) */
-  100% { background-position: -158.33px 0; } /* Last frame (frame 6) */
+  0% { background-position: 0px 0; } /* Last frame (frame 6) */
+  90% { background-position: -48px 0; } /* Last frame (frame 6) */
+  95% { background-position: -96px 0; } /* Last frame (frame 6) */
+  100% { background-position: -144px 0; } /* Last frame (frame 6) */
 }
 
 .chest-icon {
@@ -90,11 +91,15 @@ body {
   transform: scale(3.5);
   transform-origin: left bottom;
   margin-left: -20px;
-  margin-top: 20px;
+  margin-top: 45px;
 }
 
 .chest-icon:hover {
   animation: open-chest 1s steps(1) forwards;
+}
+
+.chest-icon.close {
+  animation: open-chest 1s steps(1) reverse forwards;
 }
 
 @keyframes open-chest {
@@ -109,4 +114,19 @@ body {
   80%  { background-position: -144px -32px; }
   90%  { background-position: -192px -32px; }
   100% { background-position: -192px -32px; }
+}
+
+.eye-icon {
+  background-image: url('/eyeBase.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transform: scale(2.5);
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+  transition: transform 0.15s linear;
+  transform-origin: center;
+  z-index: 10;
 }

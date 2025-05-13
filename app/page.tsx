@@ -1,8 +1,10 @@
 import Image from "next/image";
 import './globals.css'
-import Scroll from './scroll'
-import Profile from './profile'
-import Button from './button'
+import Scroll from './components/scroll'
+import Profile from './components/profile'
+import Button from './components/button'
+import Chest from './components/chestIcon'
+import Eye from './components/eyeIcon'
 import Raven from './ravenIcon'
 import SimpleFrame from './frame300'
 
@@ -26,7 +28,7 @@ export default function Home() {
                   <span className="font-bold decoration-2"> In a Mighty Quest and in need of a Coding Warlock?</span> The Ravens know where to find me..."
                 </p>
                 <p className="text-[22px] text-right italic" style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
-                  (or just email me that's fine too)
+                  (or just email me, that's fine too)
                 </p>
               </section>
               <section className="w-[400px] text-[44px] text-darker_secondary pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
@@ -58,24 +60,26 @@ export default function Home() {
           </div>
           <section className="w-full text-[44px] text-darker_secondary pl-6 mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
             CURSED ARTIFACTS -------------------------
+            <div className="grid grid-cols-3 gap-4 mt-2 place-items-center">
+              <div className="artifact flex flex-col items-center h-full relative">
+                <div className="flex-1 flex items-center absolute -left-9">
+                  <Chest></Chest>
+                </div>
+                <p className="text-[20px] mt-1 absolute -bottom-9">Projects</p>
+              </div>
 
-            {/* Centered 4-item grid */}
-            <div className="grid grid-cols-4 gap-4 mt-2 place-items-center">
-              <div className="artifact flex flex-col items-center">
-                <div className="chest-icon mx-auto"></div>
-                <p className="text-[20px] mt-1">Chest</p>
+              <div className="artifact flex flex-col items-center h-full relative">
+                <div className="flex-1 flex items-center">
+                  <Eye></Eye>
+                </div>
+                <p className="text-[20px] mt-1 absolute -bottom-9">FAQ</p>
               </div>
-              <div className="artifact flex flex-col items-center">
-                <div className="crow-icon mx-auto"></div>
-                <p className="text-[20px] mt-1">Spellbook</p>
-              </div>
-              <div className="artifact flex flex-col items-center">
-                <div className="crow-icon mx-auto"></div>
-                <p className="text-[20px] mt-1">Scroll</p>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="crow-icon mx-auto"></div>
-                <p className="text-[20px] mt-1">Messenger</p>
+
+              <div className="artifact flex flex-col items-center h-full relative">
+                <div className="flex-1 flex items-center justify-center">
+                  <div className="crow-icon "></div>
+                </div>
+                <p className="text-[20px] mt-1 absolute -bottom-9">Contacts</p>
               </div>
             </div>
           </section>
