@@ -6,14 +6,14 @@ interface ButtonProps {
 }
 const Button = ({ children }: ButtonProps) => {
   return (
-    <button
+    <div
       className="relative w-min h-auto p-2 bg-darker_primary border-6 border-secondary
                 hover:bg-black/30 cursor-pointer transition-colors "
     >
       <span className="uppercase text-4xl text-darker_secondary" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
         {children}
       </span>
-    </button>
+    </div>
   );
 };
 

@@ -37,11 +37,14 @@ const RotatingIcon: React.FC = () => {
   }, []);
 
   return (
-    <div className="eye-icon -left-3"
-      style={{
-        transform: `rotate(${angle}deg) scale(2.5)`,
-      }}
-    ></div>
+    <div className='contents'>
+      <div className="eye-shadow -left-3"></div>
+      <div className="eye-icon -left-3"
+        style={{
+          transform: `rotate(${angle}deg) scale(2.5)`,
+        }}
+      ></div>
+    </div>
   );
 };
 

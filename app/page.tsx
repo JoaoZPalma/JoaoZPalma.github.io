@@ -1,89 +1,100 @@
-import Image from "next/image";
-import './globals.css'
+"use client";
+import { useState } from 'react';
+// import Image from "next/image";
 import Scroll from './components/scroll'
 import Profile from './components/profile'
 import Button from './components/button'
 import Chest from './components/chestIcon'
 import Eye from './components/eyeIcon'
-import Raven from './ravenIcon'
-import SimpleFrame from './frame300'
+import Contacts from './components/contacts'
+// import Raven from './ravenIcon'
+// import SimpleFrame from './frame300'
 
+
+import './globals.css'
 
 export default function Home() {
-  return (
-    <div className="bg-secondary min-h-screen flex items-center justify-center">
-      <div className="flex justify-center">
-        <Scroll>
-          <h1 className="text-[42px] text-darker_secondary pt-6 pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}>
-            PALMA'S ELDRITCH<br />
-            CODEX
-          </h1>
-          {/* Coluna 1 */}
-          <div className="flex justify-between ">
-            <div className="w-[45%]">
-              <section className="w-[400px] text-[44px] text-darker_secondary leading-none pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
-                BIO ---------------------
-                <p className="text-[28px] " style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
-                  "I've bargained with Cursed Code and deciphered Ancient Docs.
-                  <span className="font-bold decoration-2"> In a Mighty Quest and in need of a Coding Warlock?</span> The Ravens know where to find me..."
-                </p>
-                <p className="text-[22px] text-right italic" style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
-                  (or just email me, that's fine too)
-                </p>
-              </section>
-              <section className="w-[400px] text-[44px] text-darker_secondary pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
-                STATS -----------------
-                <ul className="grid grid-cols-2 gap-1 text-[34px] ml-4 leading-snug">
-                  {stats.map((stat) => (
-                    <StatItem key={stat.name} {...stat} />
-                  ))}
-                </ul>
-              </section>
 
-            </div>
-            {/* Coluna 2 */}
-            <div className="w-[45%] -mt-14 ">
-              <div className="mt-9 flex flex-col items-center">
-                <Profile></Profile>
-                <div className="flex flex-col items-center gap-2">
-                  <span className="w-full text-[44px] text-darker_secondary text-center mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 500 }}>
-                    CODE WARLOCK
-                  </span>
-                  <div>
-                    <Button>
-                      inventory
-                    </Button>
+  const [showContacts, setShowContacts] = useState(false);
+
+  return (
+    <div>
+
+      {showContacts && <Contacts />}
+      <div className="bg-secondary min-h-screen flex items-center justify-center">
+        <div className="flex justify-center">
+          <Scroll>
+            <h1 className="text-[42px] text-darker_secondary pt-6 pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}>
+              PALMA'S ELDRITCH<br />
+              CODEX
+            </h1>
+            {/* Coluna 1 */}
+            <div className="flex justify-between ">
+              <div className="w-[45%]">
+                <section className="w-[400px] text-[44px] text-darker_secondary leading-none pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
+                  BIO ---------------------
+                  <p className="text-[28px] " style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
+                    "I've bargained with Cursed Code and deciphered Ancient Docs.
+                    <span className="font-bold decoration-2"> In a Mighty Quest and in need of a Coding Warlock?</span> The Ravens know where to find me..."
+                  </p>
+                  <p className="text-[22px] text-right italic" style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
+                    (or just email me, that's fine too)
+                  </p>
+                </section>
+                <section className="w-[400px] text-[44px] text-darker_secondary pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
+                  STATS -----------------
+                  <ul className="grid grid-cols-2 gap-1 text-[34px] ml-4 leading-snug">
+                    {stats.map((stat) => (
+                      <StatItem key={stat.name} {...stat} />
+                    ))}
+                  </ul>
+                </section>
+
+              </div>
+              {/* Coluna 2 */}
+              <div className="w-[45%] -mt-14 ">
+                <div className="mt-9 flex flex-col items-center">
+                  <Profile></Profile>
+                  <div className="flex flex-col items-center gap-2">
+                    <span className="w-full text-[44px] text-darker_secondary text-center mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 500 }}>
+                      CODE WARLOCK
+                    </span>
+                    <button>
+                      <Button>
+                        inventory
+                      </Button>
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <section className="w-full text-[44px] text-darker_secondary pl-6 mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
-            CURSED ARTIFACTS -------------------------
-            <div className="grid grid-cols-3 gap-4 mt-2 place-items-center">
-              <div className="artifact flex flex-col items-center h-full relative">
-                <div className="flex-1 flex items-center absolute -left-9">
-                  <Chest></Chest>
+            <section className="w-full text-[44px] text-darker_secondary pl-6 mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
+              CURSED ARTIFACTS -------------------------
+              <div className="grid grid-cols-3 gap-4 mt-2 place-items-center">
+                <div className="artifact flex flex-col items-center h-full relative">
+                  <div className="flex-1 flex items-center absolute -left-9">
+                    <Chest></Chest>
+                  </div>
+                  <p className="text-[20px] mt-1 absolute -bottom-9">Projects</p>
                 </div>
-                <p className="text-[20px] mt-1 absolute -bottom-9">Projects</p>
-              </div>
 
-              <div className="artifact flex flex-col items-center h-full relative">
-                <div className="flex-1 flex items-center">
-                  <Eye></Eye>
+                <div className="artifact flex flex-col items-center h-full relative">
+                  <div className="flex-1 flex items-center">
+                    <Eye></Eye>
+                  </div>
+                  <p className="text-[20px] mt-1 absolute -bottom-9">FAQ</p>
                 </div>
-                <p className="text-[20px] mt-1 absolute -bottom-9">FAQ</p>
-              </div>
 
-              <div className="artifact flex flex-col items-center h-full relative">
-                <div className="flex-1 flex items-center justify-center">
-                  <div className="crow-icon "></div>
+                <div className="artifact flex flex-col items-center h-full relative">
+                  <button onClick={() => setShowContacts(!showContacts)} className="flex-1 flex items-center justify-center">
+                    <div className="crow-icon "></div>
+                  </button>
+                  <p className="text-[20px] mt-1 absolute -bottom-9">Contacts</p>
                 </div>
-                <p className="text-[20px] mt-1 absolute -bottom-9">Contacts</p>
               </div>
-            </div>
-          </section>
-        </Scroll>
+            </section>
+          </Scroll>
+        </div>
       </div>
     </div>
   );
