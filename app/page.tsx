@@ -1,7 +1,9 @@
 "use client";
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import Draggable, { DraggableEventHandler } from 'react-draggable';
 // import Image from "next/image";
 import Scroll from './components/scroll'
+import ScrollHeader from './components/scroll_header'
 import Profile from './components/profile'
 import Button from './components/button'
 import Chest from './components/chestIcon'
@@ -10,17 +12,35 @@ import Contacts from './components/contacts'
 // import Raven from './ravenIcon'
 // import SimpleFrame from './frame300'
 
-
 import './globals.css'
 
 export default function Home() {
 
   const [showContacts, setShowContacts] = useState(false);
+  const draggableRef = useRef(null);
+
+  const handleDrag: DraggableEventHandler = (e, data) => {
+    console.log("Dragged window to: ", data.x, data.y);
+  }
 
   return (
     <div>
-
-      {showContacts && <Contacts />}
+      {showContacts && (
+        <Draggable nodeRef={draggableRef}
+          onDrag={handleDrag}
+          bounds="parent"
+          handle=".drag-handle"
+          defaultPosition={{ x: window.innerWidth * 0.05, y: window.innerHeight * 0.05 }}>
+          <div ref={draggableRef} className="fixed z-50">
+            <ScrollHeader
+              header="CONTACT"
+              onClose={() => setShowContacts(false)}
+            >
+              <Contacts />
+            </ScrollHeader>
+          </div>
+        </Draggable>
+      )}
       <div className="bg-secondary min-h-screen flex items-center justify-center">
         <div className="flex justify-center">
           <Scroll>
@@ -101,8 +121,8 @@ export default function Home() {
 }
 
 const stats = [
-  { name: "STR", value: "12", description: "Palma enjoys doing physical exercise regularly such as going to the gym!" },
-  { name: "INT", value: "12", description: "A very smort boy!" },
+  { name: "STR", value: "14", description: "Palma enjoys doing physical exercise regularly such as going to the gym!" },
+  { name: "INT", value: "8", description: "A very smort boy!" },
   { name: "DEX", value: "18", description: "Vim enjoyer, fingers move faster than the compiler can complain. (he wishes)" },
   { name: "WIS", value: "3", description: "Once made a 'Arroz de Pato' (a traditional portuguese dish which roughly translates to Duck Rice) without any Rice or Duck..." },
   { name: "CON", value: "10", description: "Immune to caffeine crashes (lie)." },
