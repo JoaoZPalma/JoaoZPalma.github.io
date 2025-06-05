@@ -14,7 +14,7 @@ export default function Contacts() {
       </div>
 
       <p className="text-darker_secondary text-[36px] text-center" style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
-        email me at: <a href="mailto:joaozpalma@gmail.com" className='underline decoration-3'>joaozpalma@gmail.com</a><br />
+        email me at: <a href="mailto:joaozpalma@gmail.com" className='underline decoration-3 hover:decoration-4'>joaozpalma@gmail.com</a><br />
         or press the button below to magically open your email app.
       </p>
 

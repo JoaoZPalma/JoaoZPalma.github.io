@@ -21,7 +21,7 @@ const Scroll = ({ onClose, children, header }: ScrollProps) => {
             header
           )}
           {onClose && (
-            <div onClick={onClose} className='border-6 border-darker_secondary pr-2 pl-2 bg-darker_primary mr-4 flex items-center justify-center hover:cursor-pointer hover:bg-black/15'>
+            <div onClick={onClose} className='border-6 border-darker_secondary pr-2.25 pl-2.25 bg-darker_primary mr-4 flex items-center justify-center hover:cursor-pointer hover:bg-black/15'>
               <button
                 className="text-darker_secondary text-[42px] font-bold hover:cursor-pointer"
                 style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}

@@ -1,7 +1,6 @@
 "use client";
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
-// import Image from "next/image";
 import Scroll from './components/scroll'
 import ScrollHeader from './components/scroll_header'
 import Profile from './components/profile'
@@ -9,29 +8,57 @@ import Button from './components/button'
 import Chest from './components/chestIcon'
 import Eye from './components/eyeIcon'
 import Contacts from './components/contacts'
-// import Raven from './ravenIcon'
-// import SimpleFrame from './frame300'
+import Inventory from './components/inventory'
 
 import './globals.css'
 
 export default function Home() {
 
   const [showContacts, setShowContacts] = useState(false);
-  const draggableRef = useRef(null);
+  const [showInventory, setShowInventory] = useState(false);
+  const inventoryRef = useRef<HTMLDivElement>(null);
+  const contactsRef = useRef<HTMLDivElement>(null);
 
-  const handleDrag: DraggableEventHandler = (e, data) => {
+  const [defaultPosition, setDefaultPosition] = useState({ x: 0, y: 0 });
+
+  const handleDrag: DraggableEventHandler = (_, data) => {
     console.log("Dragged window to: ", data.x, data.y);
   }
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setDefaultPosition({
+        x: window.innerWidth * 0.05,
+        y: window.innerHeight * 0.05,
+      });
+    }
+  }, []);
+
   return (
     <div>
+      {showInventory && (
+        <Draggable nodeRef={inventoryRef}
+          onDrag={handleDrag}
+          bounds="parent"
+          handle=".drag-handle"
+          defaultPosition={defaultPosition}>
+          <div ref={inventoryRef} className="fixed z-50">
+            <ScrollHeader
+              header="INVENTORY"
+              onClose={() => setShowInventory(false)}
+            >
+              <Inventory />
+            </ScrollHeader>
+          </div>
+        </Draggable>
+      )}
       {showContacts && (
-        <Draggable nodeRef={draggableRef}
+        <Draggable nodeRef={contactsRef}
           onDrag={handleDrag}
           bounds="parent"
           handle=".drag-handle"
           defaultPosition={{ x: window.innerWidth * 0.05, y: window.innerHeight * 0.05 }}>
-          <div ref={draggableRef} className="fixed z-50">
+          <div ref={contactsRef} className="fixed z-50">
             <ScrollHeader
               header="CONTACT"
               onClose={() => setShowContacts(false)}
@@ -79,7 +106,7 @@ export default function Home() {
                     <span className="w-full text-[44px] text-darker_secondary text-center mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 500 }}>
                       CODE WARLOCK
                     </span>
-                    <button>
+                    <button onClick={() => setShowInventory(!showInventory)} className="drag-handle">
                       <Button>
                         inventory
                       </Button>
