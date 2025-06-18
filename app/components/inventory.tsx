@@ -116,10 +116,13 @@ const inventoryItems = [
 
 export default function Inventory() {
   return (
-    <div className="flex p-6 justify-center">
-      <div className="inline-block border-6 border-secondary">
-        <div className="flex flex-wrap w-[640px]">
-          {Array.from({ length: 56 }).map((_, i) => {
+    <div className="flex flex-col items-center p-6 justify-center">
+      <span className='w-full text-center justify-center flex items-center text-darker_secondary text-[30px]' style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
+        (tip: on hover will give further information on each skill)
+      </span>
+      <div className="inline-block border-6 border-secondary mt-4">
+        <div className="flex flex-wrap w-[640px] justify-center">
+          {Array.from({ length: 48 }).map((_, i) => {
             const item = inventoryItems[i];
             return (
               <div
@@ -127,7 +130,7 @@ export default function Inventory() {
                 className="group relative h-20 w-20 flex items-center text-center justify-center transition-colors duration-150
                 bg-darker_primary border-r-6 border-b-6 border-secondary
                 hover:bg-primary cursor-pointer
-                [&:nth-child(8n)]:border-r-0 [&:nth-child(n+49)]:border-b-0"
+                [&:nth-child(8n)]:border-r-0 [&:nth-child(n+41)]:border-b-0"
               >
                 {item ? (
                   <Image

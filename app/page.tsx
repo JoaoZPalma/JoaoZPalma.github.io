@@ -9,17 +9,23 @@ import Chest from './components/chestIcon'
 import Eye from './components/eyeIcon'
 import Contacts from './components/contacts'
 import Inventory from './components/inventory'
+import Projects from './components/projects'
 
 import './globals.css'
+import { playSound } from './soundManager';
 
 export default function Home() {
 
   const [showContacts, setShowContacts] = useState(false);
+  const [showProjects, setShowProjects] = useState(false);
   const [showInventory, setShowInventory] = useState(false);
   const inventoryRef = useRef<HTMLDivElement>(null);
   const contactsRef = useRef<HTMLDivElement>(null);
+  const projectsRef = useRef<HTMLDivElement>(null);
 
   const [defaultPosition, setDefaultPosition] = useState({ x: 0, y: 0 });
+  const [leftPosition, setLeftPosition] = useState({ x: 0, y: 0 });
+  const [rightPosition, setRightPosition] = useState({ x: 0, y: 0 });
 
   const handleDrag: DraggableEventHandler = (_, data) => {
     console.log("Dragged window to: ", data.x, data.y);
@@ -31,6 +37,14 @@ export default function Home() {
         x: window.innerWidth * 0.05,
         y: window.innerHeight * 0.05,
       });
+      setLeftPosition({
+        x: window.innerWidth * 0.1,
+        y: window.innerHeight * 0.1,
+      });
+      setRightPosition({
+        x: window.innerWidth * 0.5,
+        y: window.innerHeight * 0.1,
+      });
     }
   }, []);
 
@@ -41,7 +55,7 @@ export default function Home() {
           onDrag={handleDrag}
           bounds="parent"
           handle=".drag-handle"
-          defaultPosition={defaultPosition}>
+          defaultPosition={rightPosition}>
           <div ref={inventoryRef} className="fixed z-50">
             <ScrollHeader
               header="INVENTORY"
@@ -57,13 +71,29 @@ export default function Home() {
           onDrag={handleDrag}
           bounds="parent"
           handle=".drag-handle"
-          defaultPosition={{ x: window.innerWidth * 0.05, y: window.innerHeight * 0.05 }}>
+          defaultPosition={leftPosition}>
           <div ref={contactsRef} className="fixed z-50">
             <ScrollHeader
-              header="CONTACT"
+              header="CONTACTS"
               onClose={() => setShowContacts(false)}
             >
               <Contacts />
+            </ScrollHeader>
+          </div>
+        </Draggable>
+      )}
+      {showProjects && (
+        <Draggable nodeRef={projectsRef}
+          onDrag={handleDrag}
+          bounds="parent"
+          handle=".drag-handle"
+          defaultPosition={leftPosition}>
+          <div ref={projectsRef} className="fixed z-50">
+            <ScrollHeader
+              header="PROJECTS"
+              onClose={() => setShowProjects(false)}
+            >
+              <Projects />
             </ScrollHeader>
           </div>
         </Draggable>
@@ -106,7 +136,7 @@ export default function Home() {
                     <span className="w-full text-[44px] text-darker_secondary text-center mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 500 }}>
                       CODE WARLOCK
                     </span>
-                    <button onClick={() => setShowInventory(!showInventory)} className="drag-handle">
+                    <button onClick={() => { playSound('click1'); setShowInventory(!showInventory); }} className="drag-handle">
                       <Button>
                         inventory
                       </Button>
@@ -120,7 +150,15 @@ export default function Home() {
               <div className="grid grid-cols-3 gap-4 mt-2 place-items-center">
                 <div className="artifact flex flex-col items-center h-full relative">
                   <div className="flex-1 flex items-center absolute -left-9">
-                    <Chest></Chest>
+                    <button
+                      onClick={() => {
+                        playSound('click1');
+                        setShowProjects(!showProjects);
+                      }}
+                      className="flex-1 flex items-center justify-center">
+                      <Chest>
+                      </Chest>
+                    </button>
                   </div>
                   <p className="text-[20px] mt-1 absolute -bottom-9">Projects</p>
                 </div>
@@ -133,7 +171,13 @@ export default function Home() {
                 </div>
 
                 <div className="artifact flex flex-col items-center h-full relative">
-                  <button onClick={() => setShowContacts(!showContacts)} className="flex-1 flex items-center justify-center">
+                  <button
+                    onClick={() => {
+                      playSound('bird');
+                      setShowContacts(!showContacts);
+                    }}
+                    className="flex-1 flex items-center justify-center"
+                  >
                     <div className="crow-icon "></div>
                   </button>
                   <p className="text-[20px] mt-1 absolute -bottom-9">Contacts</p>
@@ -143,7 +187,7 @@ export default function Home() {
           </Scroll>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 

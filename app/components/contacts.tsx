@@ -2,7 +2,7 @@ import '../globals.css'
 
 export default function Contacts() {
   return (
-    <div className="p-6">
+    <div className="p-2">
       {/* Your contacts content goes here */}
       <p className="text-darker_secondary text-[36px] text-center" style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
         "My raven delivery service is <span className='font-bold '>always open.</span><br />
