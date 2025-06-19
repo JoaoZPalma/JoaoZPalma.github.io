@@ -116,7 +116,7 @@ const inventoryItems = [
 
 export default function Inventory() {
   return (
-    <div className="flex flex-col items-center p-6 justify-center">
+    <div className="overflow-visible flex flex-col items-center p-6 justify-center">
       <span className='w-full text-center justify-center flex items-center text-darker_secondary text-[30px]' style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
         (tip: on hover will give further information on each skill)
       </span>

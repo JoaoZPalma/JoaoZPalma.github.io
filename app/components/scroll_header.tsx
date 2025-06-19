@@ -6,12 +6,13 @@ import { playSound } from '../soundManager';
 interface ScrollProps {
   children: ReactNode;
   header?: string | ReactNode; // Accepts either string or JSX
-  onClose?: () => void; // Add the onClose prop to the interface
+  onClose?: () => void;
+  overflow?: boolean; // prop to control overflow behavior 
 }
 
-const Scroll = ({ onClose, children, header }: ScrollProps) => {
+const Scroll = ({ onClose, children, header, overflow = false }: ScrollProps) => {
   return (
-    <div className='border-16 border-darker_secondary bg-primary aspect-square max-w-[100vw] lg:w-[810px] lg:h-[810px]'>
+    <div className={`border-16 border-darker_secondary bg-primary aspect-square max-w-[100vw] lg:w-[810px] lg:h-[810px] ${overflow === false ? 'overflow-hidden' : 'overflow-visible'}`}>
       {header && (
         <div className='bg-darker_primary/65 max-w p-6 flex justify-between items-center drag-handle cursor-move border-b-6 border-darker_secondary border-dashed'>
           {typeof header === 'string' ? (

@@ -1,7 +1,7 @@
 // lib/soundManager.ts
 import { Howl } from 'howler';
 
-type SoundName = 'click1' | 'click2' | 'hover' | 'success' | 'error' | 'bird';
+type SoundName = 'click1' | 'click2' | 'hover' | 'success' | 'error' | 'bird' | 'chest_open';
 
 const sounds: Record<SoundName, Howl> = {
   click1: new Howl({ src: ['/sounds/click1.mp3'], volume: 0.6 }),
@@ -9,7 +9,8 @@ const sounds: Record<SoundName, Howl> = {
   hover: new Howl({ src: ['/sounds/hover.mp3'], volume: 0.3 }),
   success: new Howl({ src: ['/sounds/success.mp3'], volume: 0.6 }),
   error: new Howl({ src: ['/sounds/error.mp3'], volume: 0.6 }),
-  bird: new Howl({ src: ['/sounds/bird.wav'], volume: 0.8 })
+  bird: new Howl({ src: ['/sounds/bird.wav'], volume: 0.8 }),
+  chest_open: new Howl({ src: ['/sounds/chest_open.wav'], volume: 0.8 })
 };
 
 export const playSound = (name: SoundName) => {

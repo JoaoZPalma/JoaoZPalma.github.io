@@ -23,6 +23,7 @@ export default function Home() {
   const contactsRef = useRef<HTMLDivElement>(null);
   const projectsRef = useRef<HTMLDivElement>(null);
 
+  const [chestHoverTimeout, setChestHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [defaultPosition, setDefaultPosition] = useState({ x: 0, y: 0 });
   const [leftPosition, setLeftPosition] = useState({ x: 0, y: 0 });
   const [rightPosition, setRightPosition] = useState({ x: 0, y: 0 });
@@ -60,6 +61,7 @@ export default function Home() {
             <ScrollHeader
               header="INVENTORY"
               onClose={() => setShowInventory(false)}
+              overflow={true}
             >
               <Inventory />
             </ScrollHeader>
@@ -92,6 +94,7 @@ export default function Home() {
             <ScrollHeader
               header="PROJECTS"
               onClose={() => setShowProjects(false)}
+              overflow={false}
             >
               <Projects />
             </ScrollHeader>
@@ -151,6 +154,16 @@ export default function Home() {
                 <div className="artifact flex flex-col items-center h-full relative">
                   <div className="flex-1 flex items-center absolute -left-9">
                     <button
+                      onMouseEnter={() => {
+                        const timeoutId = setTimeout(() => playSound('chest_open'), 400);
+                        setChestHoverTimeout(timeoutId);
+                      }}
+                      onMouseLeave={() => {
+                        if (chestHoverTimeout) {
+                          clearTimeout(chestHoverTimeout);
+                          setChestHoverTimeout(null);
+                        }
+                      }}
                       onClick={() => {
                         playSound('click1');
                         setShowProjects(!showProjects);
