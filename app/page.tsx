@@ -19,9 +19,9 @@ export default function Home() {
   const [showContacts, setShowContacts] = useState(false);
   const [showProjects, setShowProjects] = useState(false);
   const [showInventory, setShowInventory] = useState(false);
-  const inventoryRef = useRef<HTMLDivElement>(null);
-  const contactsRef = useRef<HTMLDivElement>(null);
-  const projectsRef = useRef<HTMLDivElement>(null);
+  const inventoryRef = useRef<HTMLElement>(null);
+  const contactsRef = useRef<HTMLElement>(null);
+  const projectsRef = useRef<HTMLElement>(null);
 
   const [chestHoverTimeout, setChestHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [defaultPosition, setDefaultPosition] = useState({ x: 0, y: 0 });
