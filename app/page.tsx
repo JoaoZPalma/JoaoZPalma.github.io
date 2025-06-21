@@ -10,17 +10,22 @@ import Eye from './components/eyeIcon'
 import Contacts from './components/contacts'
 import Inventory from './components/inventory'
 import Projects from './components/projects'
+import FAQ from './components/faq'
 
 import './globals.css'
 import { playSound } from './soundManager';
 
 export default function Home() {
 
+  const dragBounds = { top: 0 };
+
   const [showContacts, setShowContacts] = useState(false);
   const [showProjects, setShowProjects] = useState(false);
+  const [showFAQ, setShowFAQ] = useState(false);
   const [showInventory, setShowInventory] = useState(false);
   const inventoryRef = useRef<HTMLElement>(null);
   const contactsRef = useRef<HTMLElement>(null);
+  const faqRef = useRef<HTMLDivElement>(null);
   const projectsRef = useRef<HTMLElement>(null);
 
   const [chestHoverTimeout, setChestHoverTimeout] = useState<NodeJS.Timeout | null>(null);
@@ -54,7 +59,7 @@ export default function Home() {
       {showInventory && (
         <Draggable nodeRef={inventoryRef}
           onDrag={handleDrag}
-          bounds="parent"
+          bounds={dragBounds}
           handle=".drag-handle"
           defaultPosition={rightPosition}>
           <div ref={inventoryRef} className="fixed z-50">
@@ -71,7 +76,7 @@ export default function Home() {
       {showContacts && (
         <Draggable nodeRef={contactsRef}
           onDrag={handleDrag}
-          bounds="parent"
+          bounds={dragBounds}
           handle=".drag-handle"
           defaultPosition={leftPosition}>
           <div ref={contactsRef} className="fixed z-50">
@@ -87,7 +92,7 @@ export default function Home() {
       {showProjects && (
         <Draggable nodeRef={projectsRef}
           onDrag={handleDrag}
-          bounds="parent"
+          bounds={dragBounds}
           handle=".drag-handle"
           defaultPosition={leftPosition}>
           <div ref={projectsRef} className="fixed z-50">
@@ -97,6 +102,23 @@ export default function Home() {
               overflow={false}
             >
               <Projects />
+            </ScrollHeader>
+          </div>
+        </Draggable>
+      )}
+      {showFAQ && (
+        <Draggable nodeRef={faqRef}
+          onDrag={handleDrag}
+          bounds={dragBounds}
+          handle=".drag-handle"
+          defaultPosition={leftPosition}>
+          <div ref={faqRef} className="fixed z-50">
+            <ScrollHeader
+              header="FAQ"
+              onClose={() => setShowFAQ(false)}
+              overflow={false}
+            >
+              <FAQ />
             </ScrollHeader>
           </div>
         </Draggable>
@@ -178,7 +200,15 @@ export default function Home() {
 
                 <div className="artifact flex flex-col items-center h-full relative">
                   <div className="flex-1 flex items-center">
-                    <Eye></Eye>
+                    <button
+                      onClick={() => {
+                        playSound('click1');
+                        setShowFAQ(!showFAQ);
+                      }}
+                      className="flex-1 flex items-center justify-center"
+                    >
+                      <Eye />
+                    </button>
                   </div>
                   <p className="text-[20px] mt-1 absolute -bottom-9">FAQ</p>
                 </div>
