@@ -1,6 +1,7 @@
 // lib/soundManager.ts
 import { Howl } from 'howler';
 
+let soundEnabled = true;
 type SoundName = 'click1' | 'click2' | 'hover' | 'success' | 'error' | 'bird' | 'chest_open';
 
 const sounds: Record<SoundName, Howl> = {
@@ -14,6 +15,7 @@ const sounds: Record<SoundName, Howl> = {
 };
 
 export const playSound = (name: SoundName) => {
+  if (!soundEnabled) return;
   const sound = sounds[name];
   if (sound) {
     sound.play();
@@ -21,3 +23,10 @@ export const playSound = (name: SoundName) => {
     console.warn(`Sound "${name}" not found.`);
   }
 };
+
+export const toggleSound = () => {
+  soundEnabled = !soundEnabled;
+  return soundEnabled;
+};
+
+export const isSoundEnabled = () => soundEnabled;

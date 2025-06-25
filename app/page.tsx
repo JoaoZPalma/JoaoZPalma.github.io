@@ -14,7 +14,7 @@ import FAQ from './components/faq'
 import ThemeToggle from './components/themeToggle'
 
 import './globals.css'
-import { playSound } from './soundManager';
+import { playSound, toggleSound, isSoundEnabled } from './soundManager';
 
 export default function Home() {
 
@@ -33,6 +33,25 @@ export default function Home() {
   const [defaultPosition, setDefaultPosition] = useState({ x: 0, y: 0 });
   const [leftPosition, setLeftPosition] = useState({ x: 0, y: 0 });
   const [rightPosition, setRightPosition] = useState({ x: 0, y: 0 });
+
+
+  function SoundToggleButton() {
+    const [enabled, setEnabled] = useState(isSoundEnabled());
+
+    const handleToggle = () => {
+      setEnabled(toggleSound());
+    };
+
+    return (
+      <button
+        onClick={handleToggle}
+        aria-pressed={!enabled}
+        title={enabled ? "Disable sound" : "Enable sound"}
+      >
+        <img className="w-6 h-6" src={enabled ? "/Speaker-0.svg" : "/Speaker-Crossed.svg"} alt="Sound Icon" />
+      </button>
+    );
+  }
 
   const handleDrag: DraggableEventHandler = (_, data) => {
     console.log("Dragged window to: ", data.x, data.y);
@@ -126,8 +145,10 @@ export default function Home() {
       )}
       <div className="bg-bg min-h-screen flex items-center justify-center">
         <div className="flex justify-center">
-          <div className='absolute top-4 right-4'>
+          <div className='absolute top-4 left-4 flex flex-row gap-4'>
             <ThemeToggle />
+
+            <SoundToggleButton />
           </div>
           <Scroll>
             <h1 className="text-[42px] text-darker_secondary pt-6 pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}>
