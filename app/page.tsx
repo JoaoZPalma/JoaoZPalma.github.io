@@ -11,6 +11,7 @@ import Contacts from './components/contacts'
 import Inventory from './components/inventory'
 import Projects from './components/projects'
 import FAQ from './components/faq'
+import ThemeToggle from './components/themeToggle'
 
 import './globals.css'
 import { playSound } from './soundManager';
@@ -123,8 +124,11 @@ export default function Home() {
           </div>
         </Draggable>
       )}
-      <div className="bg-secondary min-h-screen flex items-center justify-center">
+      <div className="bg-bg min-h-screen flex items-center justify-center">
         <div className="flex justify-center">
+          <div className='absolute top-4 right-4'>
+            <ThemeToggle />
+          </div>
           <Scroll>
             <h1 className="text-[42px] text-darker_secondary pt-6 pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}>
               PALMA'S ELDRITCH<br />

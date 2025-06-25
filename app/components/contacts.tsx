@@ -22,7 +22,7 @@ export default function Contacts() {
         <div className='w-max border-6 border-darker_secondary pr-2 pl-2 bg-darker_primary flex items-center justify-center hover:cursor-pointer hover:bg-black/15'>
           <a
             href="mailto:joaozpalma@gmail.com"
-            className="text-darker_secondary text-4xl hover:cursor-pointer items-center p-1"
+            className="text-darker_secondary text-4xl hover:cursor-pointer items-center p-1 pt-2"
             style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}
           >
             CAST &nbsp;"EMAIL"
