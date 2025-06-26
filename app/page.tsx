@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
 import Scroll from './components/scroll'
 import ScrollHeader from './components/scroll_header'
@@ -77,71 +77,63 @@ export default function Home() {
   return (
     <div>
       {showInventory && (
-        <Draggable nodeRef={inventoryRef}
-          onDrag={handleDrag}
+        <AnimatedPopup
+          onClose={() => setShowInventory(false)}
           bounds={dragBounds}
           handle=".drag-handle"
-          defaultPosition={rightPosition}>
-          <div ref={inventoryRef} className="fixed z-50">
-            <ScrollHeader
-              header="INVENTORY"
-              onClose={() => setShowInventory(false)}
-              overflow={true}
-            >
-              <Inventory />
-            </ScrollHeader>
-          </div>
-        </Draggable>
+          defaultPosition={rightPosition}
+        >
+          <ScrollHeader
+            header="INVENTORY"
+            overflow={true}
+          >
+            <Inventory />
+          </ScrollHeader>
+        </AnimatedPopup>
       )}
       {showContacts && (
-        <Draggable nodeRef={contactsRef}
-          onDrag={handleDrag}
+        <AnimatedPopup
+          onClose={() => setShowContacts(false)}
           bounds={dragBounds}
           handle=".drag-handle"
-          defaultPosition={leftPosition}>
-          <div ref={contactsRef} className="fixed z-50">
-            <ScrollHeader
-              header="CONTACTS"
-              onClose={() => setShowContacts(false)}
-            >
-              <Contacts />
-            </ScrollHeader>
-          </div>
-        </Draggable>
+          defaultPosition={leftPosition}
+        >
+          <ScrollHeader
+            header="CONTACTS"
+          >
+            <Contacts />
+          </ScrollHeader>
+        </AnimatedPopup>
       )}
       {showProjects && (
-        <Draggable nodeRef={projectsRef}
-          onDrag={handleDrag}
+        <AnimatedPopup
+          onClose={() => setShowProjects(false)}
           bounds={dragBounds}
           handle=".drag-handle"
-          defaultPosition={leftPosition}>
-          <div ref={projectsRef} className="fixed z-50">
-            <ScrollHeader
-              header="PROJECTS"
-              onClose={() => setShowProjects(false)}
-              overflow={false}
-            >
-              <Projects />
-            </ScrollHeader>
-          </div>
-        </Draggable>
+          defaultPosition={leftPosition}
+        >
+          <ScrollHeader
+            header="PROJECTS"
+            overflow={false}
+          >
+            <Projects />
+          </ScrollHeader>
+        </AnimatedPopup>
       )}
       {showFAQ && (
-        <Draggable nodeRef={faqRef}
-          onDrag={handleDrag}
+        <AnimatedPopup
+          onClose={() => setShowFAQ(false)}
           bounds={dragBounds}
           handle=".drag-handle"
-          defaultPosition={leftPosition}>
-          <div ref={faqRef} className="fixed z-50">
-            <ScrollHeader
-              header="FAQ"
-              onClose={() => setShowFAQ(false)}
-              overflow={false}
-            >
-              <FAQ />
-            </ScrollHeader>
-          </div>
-        </Draggable>
+          defaultPosition={leftPosition}
+        >
+          <ScrollHeader
+            header="FAQ"
+            overflow={false}
+          >
+            <FAQ />
+          </ScrollHeader>
+        </AnimatedPopup>
       )}
       <div className="bg-bg min-h-screen flex items-center justify-center">
         <div className="flex justify-center">
@@ -279,3 +271,29 @@ const StatItem = ({ name, value, description }: { name: string; value: string; d
     </span>
   </li>
 );
+
+function AnimatedPopup({
+  children,
+  onClose,
+  ...draggableProps
+}: {
+  children: React.ReactElement<any>;
+  onClose: () => void;
+  [key: string]: any;
+}) {
+  const [visible, setVisible] = useState(true);
+  const popupRef = useRef<HTMLDivElement>(null);
+
+  const handleClose = () => {
+    setVisible(false);
+    setTimeout(onClose, 150); // match animation duration
+  };
+
+  return (
+    <Draggable nodeRef={popupRef} {...draggableProps}>
+      <div ref={popupRef} className="fixed z-50">
+        {React.cloneElement(children, { closing: !visible, onClose: handleClose })}
+      </div>
+    </Draggable>
+  );
+}
