@@ -6,9 +6,9 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true
   },
-  // Add cache busting
+  // Add cache busting with timestamp
   generateBuildId: async () => {
-    return Date.now().toString()
+    return `build-${Date.now()}`
   },
   // GitHub Actions will automatically handle basePath and assetPrefix
   // Remove manual configuration to let GitHub manage it
