@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  basePath: '/github-actions',
   output: 'export',
   trailingSlash: true,
   images: {
