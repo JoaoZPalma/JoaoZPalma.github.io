@@ -6,11 +6,12 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true
   },
-  // Only add basePath and assetPrefix if deploying to GitHub Pages repo subdirectory
-  // Replace 'your-repo-name' with your actual repository name
-  // Remove these lines if deploying to username.github.io
-  // basePath: '/your-repo-name',
-  // assetPrefix: '/your-repo-name/',
+  // Add cache busting
+  generateBuildId: async () => {
+    return Date.now().toString()
+  },
+  // GitHub Actions will automatically handle basePath and assetPrefix
+  // Remove manual configuration to let GitHub manage it
 }
 
 export default nextConfig
