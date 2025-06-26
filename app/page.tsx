@@ -1,6 +1,6 @@
 "use client";
-import React, { useState, useRef, useEffect } from 'react';
-import Draggable, { DraggableEventHandler } from 'react-draggable';
+import React, { ReactElement, useState, useRef, useEffect } from 'react';
+import Draggable, { DraggableProps } from 'react-draggable';
 import Scroll from './components/scroll'
 import ScrollHeader from './components/scroll_header'
 import Profile from './components/profile'
@@ -24,10 +24,6 @@ export default function Home() {
   const [showProjects, setShowProjects] = useState(false);
   const [showFAQ, setShowFAQ] = useState(false);
   const [showInventory, setShowInventory] = useState(false);
-  const inventoryRef = useRef<HTMLElement>(null);
-  const contactsRef = useRef<HTMLElement>(null);
-  const faqRef = useRef<HTMLDivElement>(null);
-  const projectsRef = useRef<HTMLElement>(null);
 
   const [chestHoverTimeout, setChestHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [defaultPosition, setDefaultPosition] = useState({ x: 0, y: 0 });
@@ -51,10 +47,6 @@ export default function Home() {
         <img className="w-6 h-6" src={enabled ? "/Speaker-0.svg" : "/Speaker-Crossed.svg"} alt="Sound Icon" />
       </button>
     );
-  }
-
-  const handleDrag: DraggableEventHandler = (_, data) => {
-    console.log("Dragged window to: ", data.x, data.y);
   }
 
   useEffect(() => {
@@ -110,7 +102,7 @@ export default function Home() {
           onClose={() => setShowProjects(false)}
           bounds={dragBounds}
           handle=".drag-handle"
-          defaultPosition={leftPosition}
+          defaultPosition={defaultPosition}
         >
           <ScrollHeader
             header="PROJECTS"
@@ -144,7 +136,7 @@ export default function Home() {
           </div>
           <Scroll>
             <h1 className="text-[42px] text-darker_secondary pt-6 pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}>
-              PALMA'S ELDRITCH<br />
+              PALMA&apos;S ELDRITCH<br />
               CODEX
             </h1>
             {/* Coluna 1 */}
@@ -153,11 +145,11 @@ export default function Home() {
                 <section className="w-[400px] text-[44px] text-darker_secondary leading-none pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
                   BIO ---------------------
                   <p className="text-[28px] " style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
-                    "I've bargained with Cursed Code and deciphered Ancient Docs.
-                    <span className="font-bold decoration-2"> In a Mighty Quest and in need of a Coding Warlock?</span> The Ravens know where to find me..."
+                    &quot;I&apos;ve bargained with Cursed Code and deciphered Ancient Docs.
+                    <span className="font-bold decoration-2"> In a Mighty Quest and in need of a Coding Warlock?</span> The Ravens know where to find me...&quot;
                   </p>
                   <p className="text-[22px] text-right italic" style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
-                    (or just email me, that's fine too)
+                    (or just email me, that&apos;s fine too)
                   </p>
                 </section>
                 <section className="w-[400px] text-[44px] text-darker_secondary pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
@@ -277,22 +269,29 @@ function AnimatedPopup({
   onClose,
   ...draggableProps
 }: {
-  children: React.ReactElement<any>;
+  children: ReactElement<{ closing?: boolean; onClose?: () => void }>;
   onClose: () => void;
-  [key: string]: any;
-}) {
+} & Partial<DraggableProps>) {
   const [visible, setVisible] = useState(true);
-  const popupRef = useRef<HTMLDivElement>(null);
+  const popupRef = useRef<HTMLElement>(null);
 
   const handleClose = () => {
     setVisible(false);
-    setTimeout(onClose, 150); // match animation duration
+    setTimeout(onClose, 150);
   };
 
   return (
-    <Draggable nodeRef={popupRef} {...draggableProps}>
-      <div ref={popupRef} className="fixed z-50">
-        {React.cloneElement(children, { closing: !visible, onClose: handleClose })}
+    <Draggable nodeRef={popupRef as React.RefObject<HTMLElement>} {...draggableProps}>
+      <div
+        ref={(el) => {
+          popupRef.current = el!; // Non-null assertion since we know the div will exist
+        }}
+        className="fixed z-50"
+      >
+        {React.cloneElement(children, {
+          closing: !visible,
+          onClose: handleClose
+        })}
       </div>
     </Draggable>
   );

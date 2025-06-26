@@ -17,12 +17,12 @@ const faqs = [
   {
     question: "Can I see your creations?",
     answer:
-      <>Absolutely! Visit the <b>Projects</b> section to see what I've been working on. There’s a bit of this, a bit of that, and <b>always room for your questions or recommendations!</b></>
+      <>Absolutely! Visit the <b>Projects</b> section to see what I&apos;ve been working on. There’s a bit of this, a bit of that, and <b>always room for your questions or recommendations!</b></>
   },
   {
     question: "How do I reach you?",
     answer: <>
-      Send a raven! Or, more practically, visit the <b>Contacts</b> section. Whether it's <b>email</b> or another platform, I’m just a <b>scroll</b> away.
+      Send a raven! Or, more practically, visit the <b>Contacts</b> section. Whether it&apos;s <b>email</b> or another platform, I’m just a <b>scroll</b> away.
     </>
   },
   {

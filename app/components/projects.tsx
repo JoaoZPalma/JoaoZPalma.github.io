@@ -3,7 +3,7 @@ import '../globals.css'
 const projects = [
   {
     title: 'Web Portfolio',
-    description: <>A portfolio made to my taste using <strong>Next.js, React, Typescript and Taiwind</strong>. It's simple, cozy and showcases not only my projects but a little bit of me.</>,
+    description: <>A portfolio made to my taste using <strong>Next.js, React, Typescript and Taiwind</strong>. It&apos;s simple, cozy and showcases not only my projects but a little bit of me.</>,
     image: '/joao.png',
     link: '#',
     available: false,

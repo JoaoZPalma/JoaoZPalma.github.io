@@ -24,7 +24,6 @@ const Scroll = ({
     // force a reflow so the browser definitely restarts the animation
     if (containerRef.current) {
       // read a layout property
-      void containerRef.current.offsetWidth;
     }
     setAnimationClass(closing ? 'popDown' : 'popUp');
   }, [closing]);

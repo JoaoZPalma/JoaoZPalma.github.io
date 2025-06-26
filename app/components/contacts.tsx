@@ -5,8 +5,8 @@ export default function Contacts() {
     <div className="p-2 min-h-screen flex flex-col items-center">
       {/* Your contacts content goes here */}
       <p className="text-darker_secondary text-4xl text-center" style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
-        "My raven delivery service is <span className='font-bold '>always open.</span><br />
-        Send a message!—I don’t bite (much)."
+        &quot;My raven delivery service is <span className='font-bold '>always open.</span><br />
+        Send a message!&mdash;I don&apos;t bite (much).&quot;
       </p>
 
       <div className='w-full flex items-center justify-center'>
@@ -25,7 +25,7 @@ export default function Contacts() {
             className="text-darker_secondary text-4xl hover:cursor-pointer items-center p-1 pt-2"
             style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}
           >
-            CAST &nbsp;"EMAIL"
+            CAST &nbsp;&quot;EMAIL&quot;
           </a>
         </div>
         <p className="text-darker_secondary text-4xl mt-3" style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
