@@ -1,4 +1,5 @@
 import '../globals.css'
+import Image from 'next/image';
 
 const projects = [
   {
@@ -53,10 +54,12 @@ export default function Projects() {
         <ul className='mr-8'>
           {projects.map((project, index) => (
             <li className={`flex items-start mb-12 ${index % 2 === 1 ? 'flex-row-reverse' : ''}`} key={index}>
-              <img
+              <Image
                 className='aspect-square w-40 h-40 object-cover border-secondary border-4 bg-darker_primary p-1'
                 src={project.image}
                 alt={project.title}
+                width={160}
+                height={160}
               />
               <article className={`flex-1 text-left ${index % 2 === 1 ? 'text-right mr-4 ml-2' : ' ml-4 mr-2'} ${index % 2 === 1 ? '-mt-2' : '-mt-2'}`}>
                 <h2 className="text-darker_secondary text-4xl " style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>{project.title}</h2>

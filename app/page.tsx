@@ -1,4 +1,5 @@
 "use client";
+import Image from 'next/image';
 import React, { ReactElement, useState, useRef, useEffect } from 'react';
 import Draggable, { DraggableProps } from 'react-draggable';
 import Scroll from './components/scroll'
@@ -44,7 +45,7 @@ export default function Home() {
         aria-pressed={!enabled}
         title={enabled ? "Disable sound" : "Enable sound"}
       >
-        <img className="w-6 h-6" src={enabled ? "/Speaker-0.svg" : "/Speaker-Crossed.svg"} alt="Sound Icon" />
+        <Image className="w-6 h-6" src={enabled ? "/Speaker-0.svg" : "/Speaker-Crossed.svg"} alt="Sound Icon" width={24} height={24} />
       </button>
     );
   }
