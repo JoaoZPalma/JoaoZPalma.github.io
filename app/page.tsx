@@ -1,6 +1,7 @@
 "use client";
 import Image from 'next/image';
 import React, { ReactElement, useState, useRef, useEffect } from 'react';
+import Head from 'next/head';
 import Draggable, { DraggableProps } from 'react-draggable';
 import Scroll from './components/scroll'
 import ScrollHeader from './components/scroll_header'
