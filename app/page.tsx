@@ -11,6 +11,7 @@ import Eye from './components/eyeIcon'
 import Contacts from './components/contacts'
 import Inventory from './components/inventory'
 import Projects from './components/projects'
+import Notes from './components/notes'
 import FAQ from './components/faq'
 import ThemeToggle from './components/themeToggle'
 
@@ -25,6 +26,7 @@ export default function Home() {
   const [showProjects, setShowProjects] = useState(false);
   const [showFAQ, setShowFAQ] = useState(false);
   const [showInventory, setShowInventory] = useState(false);
+  const [showNotes, setShowNotes] = useState(false);
 
   const [chestHoverTimeout, setChestHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [defaultPosition, setDefaultPosition] = useState({ x: 0, y: 0 });
@@ -128,6 +130,21 @@ export default function Home() {
           </ScrollHeader>
         </AnimatedPopup>
       )}
+      {showNotes && (
+        <AnimatedPopup
+          onClose={() => setShowNotes(false)}
+          bounds={dragBounds}
+          handle=".drag-handle"
+          defaultPosition={leftPosition}
+        >
+          <ScrollHeader
+            header="NOTES"
+            overflow={false}
+          >
+            <Notes />
+          </ScrollHeader>
+        </AnimatedPopup>
+      )}
       <div className="bg-bg min-h-screen flex items-center justify-center">
         <div className="flex justify-center">
           <div className='absolute top-4 left-4 flex flex-row gap-4'>
@@ -182,7 +199,7 @@ export default function Home() {
             </div>
             <section className="w-full text-[44px] text-darker_secondary pl-6 mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
               CURSED ARTIFACTS -------------------------
-              <div className="grid grid-cols-3 gap-4 mt-2 place-items-center">
+              <div className="grid grid-cols-4 gap-2 mt-2 place-items-center justify-items-center -ml-4">
                 <div className="artifact flex flex-col items-center h-full relative">
                   <div className="flex-1 flex items-center absolute -left-9">
                     <button
@@ -206,6 +223,20 @@ export default function Home() {
                     </button>
                   </div>
                   <p className="text-[20px] mt-1 absolute -bottom-9">Projects</p>
+                </div>
+
+                <div className="artifact flex flex-col items-center h-full relative">
+                  <div className="flex-1 flex items-center">
+                    <button
+                      onClick={() => {
+                        playSound('click1');
+                        setShowNotes(!showNotes);
+                      }}
+                      className="flex-1 flex items-center justify-center">
+                      <div className="notes-icon"></div>
+                    </button>
+                  </div>
+                  <p className="text-[20px] mt-1 absolute -bottom-9">Notes</p>
                 </div>
 
                 <div className="artifact flex flex-col items-center h-full relative">

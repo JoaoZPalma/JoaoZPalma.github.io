@@ -198,3 +198,15 @@ body {
     opacity: 0;
   }
 }
+
+.notes-icon {
+  width: 30px;
+  height: 30px;
+  background: url('/grimoire.png') 0px 0;
+  background-size: 30px 30px;
+  image-rendering: pixelated;
+  transform: scale(3.5);
+  transform-origin: center;
+  margin-left: 0px;
+  margin-top: 0px;
+}
