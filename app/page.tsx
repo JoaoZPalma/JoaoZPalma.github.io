@@ -71,6 +71,18 @@ export default function Home() {
 
   return (
     <div>
+      <div style={{ display: 'none' }}>
+        <Inventory />
+      </div>
+      <div style={{ display: 'none' }}>
+        <Projects />
+      </div>
+      <div style={{ display: 'none' }}>
+        <Contacts />
+      </div>
+      <div style={{ display: 'none' }}>
+        <Notes />
+      </div>
       {showInventory && (
         <AnimatedPopup
           onClose={() => setShowInventory(false)}

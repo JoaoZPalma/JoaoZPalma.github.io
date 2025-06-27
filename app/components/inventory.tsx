@@ -139,6 +139,7 @@ export default function Inventory() {
                     width={64}
                     height={64}
                     className="w-14 h-14 object-contain"
+                    priority={i < inventoryItems.length}
                   />
                 ) : ""}
                 <span
