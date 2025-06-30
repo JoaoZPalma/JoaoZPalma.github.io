@@ -52,25 +52,28 @@ const Scroll = ({
       className={`
         ${animationClass}
         border-16 border-darker_secondary
-        bg-primary aspect-square
-        max-w-[100vw] lg:w-[49vw] lg:h-[49vw]
-        ${overflow ? 'overflow-visible' : 'overflow-hidden'}
+        bg-primary 
+        w-full h-auto min-h-[300px]
+        max-w-[95vw] max-h-[95vh]
+        sm:max-w-[90vw] sm:max-h-[90vh]
+        lg:max-w-[49vw] lg:max-h-[49vh]
+        ${overflow ? 'overflow-visible' : 'overflow-auto'}
         focus:outline-none
       `}
     >
       {header && (
-        <div role="heading" aria-level={1} className="bg-darker_primary/65 p-6 flex justify-between items-center drag-handle cursor-move border-b-6 border-darker_secondary border-dashed">
+        <div role="heading" aria-level={1} className="bg-darker_primary/65 p-3 sm:p-4 lg:p-6 flex justify-between items-center drag-handle cursor-move border-b-6 border-darker_secondary border-dashed">
           {typeof header === 'string'
-            ? <h1 className="text-[42px] text-darker_secondary" style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}>{header}</h1>
+            ? <h1 className="text-lg sm:text-2xl lg:text-[42px] text-darker_secondary break-words" style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}>{header}</h1>
             : header
           }
           {onClose && (
             <div
               onClick={handleClose}
-              className='border-6 border-darker_secondary pr-2.25 pl-2.25 bg-darker_primary mr-4 flex items-center justify-center hover:cursor-pointer hover:bg-black/15'
+              className='border-4 sm:border-6 border-darker_secondary p-1 sm:p-2 bg-darker_primary flex items-center justify-center hover:cursor-pointer hover:bg-black/15 flex-shrink-0'
             >
               <button
-                className="text-darker_secondary text-[42px] font-bold hover:cursor-pointer"
+                className="text-darker_secondary text-lg sm:text-2xl lg:text-[42px] font-bold hover:cursor-pointer"
                 style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}
                 aria-label="Close"
                 onClick={handleClose}
