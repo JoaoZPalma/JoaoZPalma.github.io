@@ -14,11 +14,23 @@ import Projects from './components/projects'
 import Notes from './components/notes'
 import FAQ from './components/faq'
 import ThemeToggle from './components/themeToggle'
+import LoadingScreen from './loading-screen'
 
 import './globals.css'
 import { playSound, toggleSound, isSoundEnabled } from './soundManager';
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true); // Always start with loading on both server and client
+  const [mounted, setMounted] = useState(false);
+
+  // Handle client-side mounting
+  useEffect(() => {
+    setMounted(true);
+    // Check if we should show loading only after component mounts
+    if (sessionStorage.getItem('codex-loaded')) {
+      setIsLoading(false);
+    }
+  }, []);
 
   const dragBounds = { top: 0 };
 
@@ -32,7 +44,6 @@ export default function Home() {
   const [defaultPosition, setDefaultPosition] = useState({ x: 0, y: 0 });
   const [leftPosition, setLeftPosition] = useState({ x: 0, y: 0 });
   const [rightPosition, setRightPosition] = useState({ x: 0, y: 0 });
-
 
   function SoundToggleButton() {
     const [enabled, setEnabled] = useState(isSoundEnabled());
@@ -61,21 +72,48 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setDefaultPosition({
-        x: window.innerWidth * 0.05,
-        y: window.innerHeight * 0.05,
-      });
-      setLeftPosition({
-        x: window.innerWidth * 0.1,
-        y: window.innerHeight * 0.1,
-      });
-      setRightPosition({
-        x: window.innerWidth * 0.5,
-        y: window.innerHeight * 0.1,
-      });
-    }
+    const handleResize = () => {
+      if (typeof window !== "undefined") {
+        setDefaultPosition({
+          x: window.innerWidth * 0.05,
+          y: window.innerHeight * 0.05,
+        });
+        setLeftPosition({
+          x: window.innerWidth * 0.1,
+          y: window.innerHeight * 0.1,
+        });
+        setRightPosition({
+          x: window.innerWidth * 0.5,
+          y: window.innerHeight * 0.1,
+        });
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (chestHoverTimeout) {
+        clearTimeout(chestHoverTimeout);
+      }
+    };
+  }, [chestHoverTimeout]);
+
+  // Don't render anything until mounted to avoid hydration mismatch
+  if (!mounted) {
+    return null;
+  }
+
+  if (isLoading) {
+    return <LoadingScreen onLoadCompleteAction={() => setIsLoading(false)} />;
+  }
 
   return (
     <div>
@@ -98,6 +136,7 @@ export default function Home() {
           handle=".drag-handle"
           defaultPosition={rightPosition}
           ariaLabel="Inventory popup window"
+          popupId="inventory-popup"
         >
           <ScrollHeader
             header="INVENTORY"
@@ -114,6 +153,7 @@ export default function Home() {
           handle=".drag-handle"
           defaultPosition={leftPosition}
           ariaLabel="Contacts popup window"
+          popupId="contacts-popup"
         >
           <ScrollHeader
             header="CONTACTS"
@@ -129,6 +169,7 @@ export default function Home() {
           handle=".drag-handle"
           defaultPosition={defaultPosition}
           ariaLabel="Projects popup window"
+          popupId="projects-popup"
         >
           <ScrollHeader
             header="PROJECTS"
@@ -145,6 +186,7 @@ export default function Home() {
           handle=".drag-handle"
           defaultPosition={leftPosition}
           ariaLabel="FAQ popup window"
+          popupId="faq-popup"
         >
           <ScrollHeader
             header="FAQ"
@@ -161,6 +203,7 @@ export default function Home() {
           handle=".drag-handle"
           defaultPosition={leftPosition}
           ariaLabel="Notes popup window"
+          popupId="notes-popup"
         >
           <ScrollHeader
             header="NOTES"
@@ -362,14 +405,16 @@ function AnimatedPopup({
   children,
   onClose,
   ariaLabel,
+  popupId,
   ...draggableProps
 }: {
   children: ReactElement<{ closing?: boolean; onClose?: () => void }>;
   onClose: () => void;
   ariaLabel?: string;
+  popupId?: string;
 } & Partial<DraggableProps>) {
   const [visible, setVisible] = useState(true);
-  const popupRef = useRef<HTMLElement>(null);
+  const popupRef = useRef<HTMLDivElement>(null);
 
   const handleClose = () => {
     setVisible(false);
@@ -383,11 +428,10 @@ function AnimatedPopup({
   };
 
   return (
-    <Draggable nodeRef={popupRef as React.RefObject<HTMLElement>} {...draggableProps}>
+    <Draggable nodeRef={popupRef} {...draggableProps}>
       <div
-        ref={(el) => {
-          popupRef.current = el!; // Non-null assertion since we know the div will exist
-        }}
+        id={popupId}
+        ref={popupRef}
         className="fixed z-50"
         role="dialog"
         aria-modal="true"
