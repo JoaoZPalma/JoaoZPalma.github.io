@@ -53,7 +53,7 @@ const Scroll = ({
         ${animationClass}
         border-16 border-darker_secondary
         bg-primary aspect-square
-        max-w-[100vw] lg:w-[810px] lg:h-[810px]
+        max-w-[100vw] lg:w-[43vw] lg:h-[43vw]
         ${overflow ? 'overflow-visible' : 'overflow-hidden'}
         focus:outline-none
       `}
