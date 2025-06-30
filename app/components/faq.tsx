@@ -5,7 +5,7 @@ const faqs = [
   {
     question: "Who are you?",
     answer: <>
-      My name is <b>João Palma</b>, a <b>developer</b> who loves to nitpick about <b>uncentered divs</b>. I call myself a <b>warlock</b> because I sold my soul to Vim, and now I must make <b>daily coffee offerings to my belly</b>. Nice to meet you, fellow traveler!
+      My name is <b>João Palma</b>, a <b>developer</b> who loves to nitpick about <b>uncentered divs</b>. I&apos;m a <b>warlock</b> because I sold my soul to Vim, and now I must make <b>daily coffee offerings to my belly</b>. Nice to meet you, fellow traveler!
     </>
   },
   {

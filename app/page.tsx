@@ -44,10 +44,18 @@ export default function Home() {
     return (
       <button
         onClick={handleToggle}
-        aria-pressed={!enabled}
+        className="p-2"
+        aria-pressed={enabled}
+        aria-label={enabled ? "Disable sound effects" : "Enable sound effects"}
         title={enabled ? "Disable sound" : "Enable sound"}
       >
-        <Image className="w-6 h-6" src={enabled ? "/Speaker-0.svg" : "/Speaker-Crossed.svg"} alt="Sound Icon" width={24} height={24} />
+        <Image
+          className="w-12 h-12 pixelated"
+          src={enabled ? "/Speaker-0.svg" : "/Speaker-Crossed.svg"}
+          alt={enabled ? "Sound enabled" : "Sound disabled"}
+          width={56}
+          height={56}
+        />
       </button>
     );
   }
@@ -71,16 +79,16 @@ export default function Home() {
 
   return (
     <div>
-      <div style={{ display: 'none' }}>
+      <div style={{ display: 'none' }} aria-hidden="true">
         <Inventory />
       </div>
-      <div style={{ display: 'none' }}>
+      <div style={{ display: 'none' }} aria-hidden="true">
         <Projects />
       </div>
-      <div style={{ display: 'none' }}>
+      <div style={{ display: 'none' }} aria-hidden="true">
         <Contacts />
       </div>
-      <div style={{ display: 'none' }}>
+      <div style={{ display: 'none' }} aria-hidden="true">
         <Notes />
       </div>
       {showInventory && (
@@ -89,6 +97,7 @@ export default function Home() {
           bounds={dragBounds}
           handle=".drag-handle"
           defaultPosition={rightPosition}
+          ariaLabel="Inventory popup window"
         >
           <ScrollHeader
             header="INVENTORY"
@@ -104,6 +113,7 @@ export default function Home() {
           bounds={dragBounds}
           handle=".drag-handle"
           defaultPosition={leftPosition}
+          ariaLabel="Contacts popup window"
         >
           <ScrollHeader
             header="CONTACTS"
@@ -118,6 +128,7 @@ export default function Home() {
           bounds={dragBounds}
           handle=".drag-handle"
           defaultPosition={defaultPosition}
+          ariaLabel="Projects popup window"
         >
           <ScrollHeader
             header="PROJECTS"
@@ -133,6 +144,7 @@ export default function Home() {
           bounds={dragBounds}
           handle=".drag-handle"
           defaultPosition={leftPosition}
+          ariaLabel="FAQ popup window"
         >
           <ScrollHeader
             header="FAQ"
@@ -148,6 +160,7 @@ export default function Home() {
           bounds={dragBounds}
           handle=".drag-handle"
           defaultPosition={leftPosition}
+          ariaLabel="Notes popup window"
         >
           <ScrollHeader
             header="NOTES"
@@ -157,23 +170,24 @@ export default function Home() {
           </ScrollHeader>
         </AnimatedPopup>
       )}
-      <div className="bg-bg min-h-screen flex items-center justify-center">
+      <main className="bg-bg min-h-screen flex items-center justify-center">
         <div className="flex justify-center">
-          <div className='absolute top-4 left-4 flex flex-row gap-4'>
+          <nav className='absolute top-4 left-4 flex flex-row gap-4 p-2' aria-label="Main controls">
             <ThemeToggle />
-
             <SoundToggleButton />
-          </div>
+          </nav>
           <Scroll>
-            <h1 className="text-[42px] text-darker_secondary pt-6 pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}>
-              PALMA&apos;S ELDRITCH<br />
-              CODEX
-            </h1>
+            <header>
+              <h1 className="text-[42px] text-darker_secondary pt-6 pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}>
+                PALMA&apos;S ELDRITCH<br />
+                CODEX
+              </h1>
+            </header>
             {/* Coluna 1 */}
             <div className="flex justify-between ">
               <div className="w-[45%]">
-                <section className="w-[400px] text-[44px] text-darker_secondary leading-none pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
-                  BIO ---------------------
+                <section className="w-[400px] text-[44px] text-darker_secondary leading-none pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }} aria-labelledby="bio-heading">
+                  <h2 id="bio-heading">BIO ---------------------</h2>
                   <p className="text-[28px] " style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
                     &quot;I&apos;ve bargained with Cursed Code and deciphered Ancient Docs.
                     <span className="font-bold decoration-2"> In a Mighty Quest and in need of a Coding Warlock?</span> The Ravens know where to find me...&quot;
@@ -182,9 +196,9 @@ export default function Home() {
                     (or just email me, that&apos;s fine too)
                   </p>
                 </section>
-                <section className="w-[400px] text-[44px] text-darker_secondary pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
-                  STATS -----------------
-                  <ul className="grid grid-cols-2 gap-1 text-[34px] ml-4 leading-snug">
+                <section className="w-[400px] text-[44px] text-darker_secondary pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }} aria-labelledby="stats-heading">
+                  <h2 id="stats-heading">STATS -----------------</h2>
+                  <ul className="grid grid-cols-2 gap-1 text-[34px] ml-4 leading-snug" role="list">
                     {stats.map((stat) => (
                       <StatItem key={stat.name} {...stat} />
                     ))}
@@ -197,10 +211,16 @@ export default function Home() {
                 <div className="mt-9 flex flex-col items-center">
                   <Profile></Profile>
                   <div className="flex flex-col items-center gap-2">
-                    <span className="w-full text-[44px] text-darker_secondary text-center mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 500 }}>
+                    <span className="w-full text-[44px] text-darker_secondary text-center mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 500 }} role="heading" aria-level={2}>
                       CODE WARLOCK
                     </span>
-                    <button onClick={() => { playSound('click1'); setShowInventory(!showInventory); }} className="drag-handle">
+                    <button
+                      onClick={() => { playSound('click1'); setShowInventory(!showInventory); }}
+                      className="drag-handle"
+                      aria-label="Open inventory"
+                      aria-expanded={showInventory}
+                      aria-controls={showInventory ? "inventory-popup" : undefined}
+                    >
                       <Button>
                         inventory
                       </Button>
@@ -209,9 +229,9 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <section className="w-full text-[44px] text-darker_secondary pl-6 mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
-              CURSED ARTIFACTS -------------------------
-              <div className="grid grid-cols-4 gap-2 mt-2 place-items-center justify-items-center -ml-4">
+            <section className="w-full text-[44px] text-darker_secondary pl-6 mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }} aria-labelledby="artifacts-heading">
+              <h2 id="artifacts-heading">CURSED ARTIFACTS -------------------------</h2>
+              <div className="grid grid-cols-4 gap-2 mt-2 place-items-center justify-items-center -ml-4" role="group" aria-label="Navigation artifacts">
                 <div className="artifact flex flex-col items-center h-full relative">
                   <div className="flex-1 flex items-center absolute -left-9">
                     <button
@@ -229,12 +249,16 @@ export default function Home() {
                         playSound('click1');
                         setShowProjects(!showProjects);
                       }}
-                      className="flex-1 flex items-center justify-center">
+                      className="flex-1 flex items-center justify-center"
+                      aria-label="Open projects"
+                      aria-expanded={showProjects}
+                      aria-controls={showProjects ? "projects-popup" : undefined}
+                    >
                       <Chest>
                       </Chest>
                     </button>
                   </div>
-                  <p className="text-[20px] mt-1 absolute -bottom-9">Projects</p>
+                  <p className="text-[20px] mt-1 absolute -bottom-9" aria-hidden="true">Projects</p>
                 </div>
 
                 <div className="artifact flex flex-col items-center h-full relative">
@@ -244,11 +268,15 @@ export default function Home() {
                         playSound('click1');
                         setShowNotes(!showNotes);
                       }}
-                      className="flex-1 flex items-center justify-center">
-                      <div className="notes-icon"></div>
+                      className="flex-1 flex items-center justify-center"
+                      aria-label="Open notes"
+                      aria-expanded={showNotes}
+                      aria-controls={showNotes ? "notes-popup" : undefined}
+                    >
+                      <div className="notes-icon" aria-hidden="true"></div>
                     </button>
                   </div>
-                  <p className="text-[20px] mt-1 absolute -bottom-9">Notes</p>
+                  <p className="text-[20px] mt-1 absolute -bottom-9" aria-hidden="true">Notes</p>
                 </div>
 
                 <div className="artifact flex flex-col items-center h-full relative">
@@ -259,11 +287,14 @@ export default function Home() {
                         setShowFAQ(!showFAQ);
                       }}
                       className="flex-1 flex items-center justify-center"
+                      aria-label="Open FAQ"
+                      aria-expanded={showFAQ}
+                      aria-controls={showFAQ ? "faq-popup" : undefined}
                     >
                       <Eye />
                     </button>
                   </div>
-                  <p className="text-[20px] mt-1 absolute -bottom-9">FAQ</p>
+                  <p className="text-[20px] mt-1 absolute -bottom-9" aria-hidden="true">FAQ</p>
                 </div>
 
                 <div className="artifact flex flex-col items-center h-full relative">
@@ -273,16 +304,19 @@ export default function Home() {
                       setShowContacts(!showContacts);
                     }}
                     className="flex-1 flex items-center justify-center"
+                    aria-label="Open contacts"
+                    aria-expanded={showContacts}
+                    aria-controls={showContacts ? "contacts-popup" : undefined}
                   >
-                    <div className="crow-icon "></div>
+                    <div className="crow-icon" aria-hidden="true"></div>
                   </button>
-                  <p className="text-[20px] mt-1 absolute -bottom-9">Contacts</p>
+                  <p className="text-[20px] mt-1 absolute -bottom-9" aria-hidden="true">Contacts</p>
                 </div>
               </div>
             </section>
           </Scroll>
         </div>
-      </div>
+      </main>
     </div >
   );
 }
@@ -297,11 +331,27 @@ const stats = [
 ];
 
 const StatItem = ({ name, value, description }: { name: string; value: string; description: string }) => (
-  <li className="relative">
-    <span className="w-max cursor-help group inline-block underline decoration-3 hover:decoration-wavy hover:decoration-1">
+  <li className="relative" role="listitem">
+    <span
+      className="w-max cursor-help group inline-block underline decoration-3 hover:decoration-wavy hover:decoration-1"
+      tabIndex={0}
+      role="button"
+      aria-describedby={`${name.toLowerCase()}-description`}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          // Toggle tooltip visibility for keyboard users
+        }
+      }}
+    >
       {name} - {value}
-      <div className="hidden group-hover:block absolute bottom-full left-0 w-full transform mb-2 
-        bg-darker_primary border-2 border-secondary p-1 text-[20px]">
+      <div
+        id={`${name.toLowerCase()}-description`}
+        className="hidden group-hover:block group-focus:block absolute bottom-full left-0 w-full transform mb-2 
+          bg-darker_primary border-4 border-secondary p-1 text-[20px]"
+        role="tooltip"
+        aria-live="polite"
+      >
         {description}
       </div>
     </span>
@@ -311,10 +361,12 @@ const StatItem = ({ name, value, description }: { name: string; value: string; d
 function AnimatedPopup({
   children,
   onClose,
+  ariaLabel,
   ...draggableProps
 }: {
   children: ReactElement<{ closing?: boolean; onClose?: () => void }>;
   onClose: () => void;
+  ariaLabel?: string;
 } & Partial<DraggableProps>) {
   const [visible, setVisible] = useState(true);
   const popupRef = useRef<HTMLElement>(null);
@@ -324,6 +376,12 @@ function AnimatedPopup({
     setTimeout(onClose, 150);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      handleClose();
+    }
+  };
+
   return (
     <Draggable nodeRef={popupRef as React.RefObject<HTMLElement>} {...draggableProps}>
       <div
@@ -331,6 +389,11 @@ function AnimatedPopup({
           popupRef.current = el!; // Non-null assertion since we know the div will exist
         }}
         className="fixed z-50"
+        role="dialog"
+        aria-modal="true"
+        aria-label={ariaLabel}
+        onKeyDown={handleKeyDown}
+        tabIndex={-1}
       >
         {React.cloneElement(children, {
           closing: !visible,

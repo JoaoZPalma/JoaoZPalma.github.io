@@ -12,7 +12,7 @@ Thank you for having the time to read this! And may we chat sometime, friend!
 
 Rpg-Style Interface, some Draggable Windows, a couple of immersive sounds and some fairy dust.
 
-## Built With Love Using
+## Built With Inspiration from the Dark Lords Using
 
 - **Next.js 14**
 - **TypeScript** 

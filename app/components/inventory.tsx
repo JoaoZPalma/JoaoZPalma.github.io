@@ -117,20 +117,50 @@ const inventoryItems = [
 export default function Inventory() {
   return (
     <div className="overflow-visible flex flex-col items-center p-6 justify-center">
-      <span className='w-full text-center justify-center flex items-center text-darker_secondary text-[30px]' style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
+      <p
+        className='w-full text-center justify-center flex items-center text-darker_secondary text-[30px]'
+        style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}
+        role="note"
+        aria-label="Inventory usage tip"
+      >
         (tip: on hover will give further information on each skill)
-      </span>
-      <div className="inline-block border-6 border-secondary mt-4">
-        <div className="flex flex-wrap w-[640px] justify-center">
+      </p>
+      <div
+        className="inline-block border-6 border-secondary mt-4"
+        role="region"
+        aria-label="Skills inventory grid"
+      >
+        <div
+          className="flex flex-wrap w-[640px] justify-center"
+          role="grid"
+          aria-label="Skills and tools inventory, 8 columns by 6 rows"
+          aria-rowcount={6}
+          aria-colcount={8}
+        >
           {Array.from({ length: 48 }).map((_, i) => {
             const item = inventoryItems[i];
+            const row = Math.floor(i / 8) + 1;
+            const col = (i % 8) + 1;
+
             return (
               <div
                 key={i}
                 className="group relative h-20 w-20 flex items-center text-center justify-center transition-colors duration-150
                 bg-darker_primary border-r-6 border-b-6 border-secondary
-                hover:bg-primary cursor-pointer
+                hover:bg-primary cursor-pointer focus:bg-primary focus:outline-none focus:ring-2 focus:ring-darker_secondary focus:ring-inset
                 [&:nth-child(8n)]:border-r-0 [&:nth-child(n+41)]:border-b-0"
+                role="gridcell"
+                aria-rowindex={row}
+                aria-colindex={col}
+                tabIndex={item ? 0 : -1}
+                aria-label={item ? `${item.alt} skill` : `Empty inventory slot ${i + 1}`}
+                aria-describedby={item ? `tooltip-${i}` : undefined}
+                onKeyDown={(e) => {
+                  if (item && (e.key === 'Enter' || e.key === ' ')) {
+                    e.preventDefault();
+                    // Toggle tooltip visibility for keyboard users - handled by CSS focus state
+                  }
+                }}
               >
                 {item ? (
                   <Image
@@ -140,19 +170,26 @@ export default function Inventory() {
                     height={64}
                     className="w-14 h-14 object-contain"
                     priority={i < inventoryItems.length}
+                    aria-hidden="true"
                   />
-                ) : ""}
+                ) : (
+                  <span aria-hidden="true"></span>
+                )}
                 <span
+                  id={item ? `tooltip-${i}` : undefined}
                   className="pointer-events-none absolute left-1/2 bottom-full mb-2 w-max -translate-x-1/2
-                  rounded bg-darker_primary border-2 text-[22px] text-darker_secondary px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity
-                  z-10 whitespace-nowrap" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}
+                  bg-darker_primary border-4 text-[22px] text-darker_secondary px-2 py-1 opacity-0 
+                  group-hover:opacity-100 group-focus:opacity-100 transition-opacity
+                  z-10 whitespace-nowrap"
+                  style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}
+                  role="tooltip"
+                  aria-live="polite"
                 >
                   {item ? item.tooltip : `Empty slot #${i + 1}`}
                 </span>
               </div>
             );
-          }
-          )}
+          })}
         </div>
       </div>
     </div>
