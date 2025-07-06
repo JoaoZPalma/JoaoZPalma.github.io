@@ -40,7 +40,7 @@ const Scroll = ({
         ${animationClass}
         border-16 border-darker_secondary
         bg-primary aspect-square
-        max-w-[100vw] lg:w-[810px] lg:h-[810px]
+        max-w-[100vw] md:w-[800px] md:h-[800px]
         ${overflow ? 'overflow-visible' : 'overflow-hidden'}
       `}
     >
@@ -51,8 +51,9 @@ const Scroll = ({
             : header
           }
           {onClose && (
-            <div onClick={handleClose} className='border-6 border-darker_secondary pr-2.25 pl-2.25 bg-darker_primary mr-4 flex items-center justify-center hover:cursor-pointer hover:bg-black/15'>
+            <div className='border-6 border-darker_secondary pr-2.25 pl-2.25 bg-darker_primary mr-4 flex items-center justify-center hover:cursor-pointer hover:bg-black/15'>
               <button
+                onClick={handleClose}
                 className="text-darker_secondary text-[42px] font-bold hover:cursor-pointer"
                 style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}
               >

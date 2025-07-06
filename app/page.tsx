@@ -4,6 +4,7 @@ import React, { ReactElement, useState, useRef, useEffect } from 'react';
 import Draggable, { DraggableProps } from 'react-draggable';
 import Scroll from './components/scroll'
 import ScrollHeader from './components/scroll_header'
+import ScrollHeaderMobile from './components/scroll_header_mobile'
 import Profile from './components/profile'
 import Button from './components/button'
 import Chest from './components/chestIcon'
@@ -113,121 +114,184 @@ export default function Home() {
   }
 
   if (isLoading) {
-    return <LoadingScreen onLoadCompleteAction={() => setIsLoading(false)} />;
+    return (
+      <>
+        {/* PreLoad components during loading screen */}
+        <div style={{ display: 'none' }} aria-hidden="true">
+          <Inventory />
+          <Projects />
+          <Contacts />
+          <Notes />
+        </div>
+        <LoadingScreen onLoadCompleteAction={() => setIsLoading(false)} />
+      </>
+    );
   }
 
   return (
     <div>
       {/* PreLoading components for readiness */}
-      <div style={{ display: 'none' }} aria-hidden="true">
-        <Inventory />
-      </div>
-      <div style={{ display: 'none' }} aria-hidden="true">
-        <Projects />
-      </div>
-      <div style={{ display: 'none' }} aria-hidden="true">
-        <Contacts />
-      </div>
-      <div style={{ display: 'none' }} aria-hidden="true">
-        <Notes />
-      </div>
       {showInventory && (
-        <AnimatedPopup
-          onClose={() => setShowInventory(false)}
-          bounds={dragBounds}
-          handle=".drag-handle"
-          defaultPosition={rightPosition}
-          ariaLabel="Inventory popup window"
-          popupId="inventory-popup"
-        >
-          <ScrollHeader
+        <div className="md:hidden">
+          <ScrollHeaderMobile
             header="INVENTORY"
             overflow={true}
+            onClose={() => setShowInventory(false)}
           >
             <Inventory />
-          </ScrollHeader>
-        </AnimatedPopup>
+          </ScrollHeaderMobile>
+        </div>
+      )}
+      {showInventory && (
+        <div className="hidden md:block">
+          <AnimatedPopup
+            onClose={() => setShowInventory(false)}
+            bounds={dragBounds}
+            handle=".drag-handle"
+            defaultPosition={rightPosition}
+            ariaLabel="Inventory popup window"
+            popupId="inventory-popup"
+          >
+            <ScrollHeader
+              header="INVENTORY"
+              overflow={true}
+            >
+              <Inventory />
+            </ScrollHeader>
+          </AnimatedPopup>
+        </div>
       )}
       {showContacts && (
-        <AnimatedPopup
-          onClose={() => setShowContacts(false)}
-          bounds={dragBounds}
-          handle=".drag-handle"
-          defaultPosition={leftPosition}
-          ariaLabel="Contacts popup window"
-          popupId="contacts-popup"
-        >
-          <ScrollHeader
+        <div className="md:hidden">
+          <ScrollHeaderMobile
             header="CONTACTS"
+            onClose={() => setShowContacts(false)}
           >
             <Contacts />
-          </ScrollHeader>
-        </AnimatedPopup>
+          </ScrollHeaderMobile>
+        </div>
+      )}
+      {showContacts && (
+        <div className="hidden md:block">
+          <AnimatedPopup
+            onClose={() => setShowContacts(false)}
+            bounds={dragBounds}
+            handle=".drag-handle"
+            defaultPosition={leftPosition}
+            ariaLabel="Contacts popup window"
+            popupId="contacts-popup"
+          >
+            <ScrollHeader
+              header="CONTACTS"
+            >
+              <Contacts />
+            </ScrollHeader>
+          </AnimatedPopup>
+        </div>
       )}
       {showProjects && (
-        <AnimatedPopup
-          onClose={() => setShowProjects(false)}
-          bounds={dragBounds}
-          handle=".drag-handle"
-          defaultPosition={defaultPosition}
-          ariaLabel="Projects popup window"
-          popupId="projects-popup"
-        >
-          <ScrollHeader
+        <div className="md:hidden">
+          <ScrollHeaderMobile
             header="PROJECTS"
             overflow={false}
+            onClose={() => setShowProjects(false)}
           >
             <Projects />
-          </ScrollHeader>
-        </AnimatedPopup>
+          </ScrollHeaderMobile>
+        </div>
+      )}
+      {showProjects && (
+        <div className="hidden md:block">
+          <AnimatedPopup
+            onClose={() => setShowProjects(false)}
+            bounds={dragBounds}
+            handle=".drag-handle"
+            defaultPosition={defaultPosition}
+            ariaLabel="Projects popup window"
+            popupId="projects-popup"
+          >
+            <ScrollHeader
+              header="PROJECTS"
+              overflow={false}
+            >
+              <Projects />
+            </ScrollHeader>
+          </AnimatedPopup>
+        </div>
       )}
       {showFAQ && (
-        <AnimatedPopup
-          onClose={() => setShowFAQ(false)}
-          bounds={dragBounds}
-          handle=".drag-handle"
-          defaultPosition={leftPosition}
-          ariaLabel="FAQ popup window"
-          popupId="faq-popup"
-        >
-          <ScrollHeader
+        <div className="md:hidden">
+          <ScrollHeaderMobile
             header="FAQ"
             overflow={false}
+            onClose={() => setShowFAQ(false)}
           >
             <FAQ />
-          </ScrollHeader>
-        </AnimatedPopup>
+          </ScrollHeaderMobile>
+        </div>
+      )}
+      {showFAQ && (
+        <div className="hidden md:block">
+          <AnimatedPopup
+            onClose={() => setShowFAQ(false)}
+            bounds={dragBounds}
+            handle=".drag-handle"
+            defaultPosition={leftPosition}
+            ariaLabel="FAQ popup window"
+            popupId="faq-popup"
+          >
+            <ScrollHeader
+              header="FAQ"
+              overflow={false}
+            >
+              <FAQ />
+            </ScrollHeader>
+          </AnimatedPopup>
+        </div>
       )}
       {showNotes && (
-        <AnimatedPopup
-          onClose={() => setShowNotes(false)}
-          bounds={dragBounds}
-          handle=".drag-handle"
-          defaultPosition={leftPosition}
-          ariaLabel="Notes popup window"
-          popupId="notes-popup"
-        >
-          <ScrollHeader
+        <div className="md:hidden">
+          <ScrollHeaderMobile
             header="NOTES"
             overflow={false}
+            onClose={() => setShowNotes(false)}
           >
             <Notes />
-          </ScrollHeader>
-        </AnimatedPopup>
+          </ScrollHeaderMobile>
+        </div>
+      )}
+      {showNotes && (
+        <div className="hidden md:block">
+          <AnimatedPopup
+            onClose={() => setShowNotes(false)}
+            bounds={dragBounds}
+            handle=".drag-handle"
+            defaultPosition={leftPosition}
+            ariaLabel="Notes popup window"
+            popupId="notes-popup"
+          >
+            <ScrollHeader
+              header="NOTES"
+              overflow={false}
+            >
+              <Notes />
+            </ScrollHeader>
+          </AnimatedPopup>
+        </div>
       )}
       <main className="bg-bg min-h-screen w-full flex items-center justify-center overflow-x-scroll">
         <div className="flex justify-center">
-          <div className="md:hidden fixed top-4 right-0 z-50">
-            <div className={`flex flex-col transition-transform duration-300 ${controlsOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+          <div className="md:hidden fixed top-6 left-0 z-50">
+            <div className={`flex flex-col transition-all duration-300 ${controlsOpen ? 'translate-x-0' : '-translate-x-full'}`}>
               <button
                 onClick={() => setControlsOpen(!controlsOpen)}
-                className="bg-darker_primary border-3 border-secondary p-2 absolute left-0 transform -translate-x-full"
+                className="bg-darker_primary border-3 border-secondary p-2 absolute right-0 transform translate-x-full"
                 aria-label={controlsOpen ? "Close controls" : "Open controls"}
                 style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}
               >
                 <span className="text-secondary text-xl">{controlsOpen ? 'x' : '☰'}</span>
               </button>
-              <div className="bg-darker_primary border-3 border-secondary py-2 flex flex-col gap-2 items-center">
+              <div className={`bg-darker_primary border-3 border-secondary py-2 flex flex-col gap-2 items-center transition-all duration-300 ${controlsOpen ? 'w-auto px-4' : 'w-0 px-0 overflow-hidden'}`}>
                 <ThemeToggle />
                 <SoundToggleButton />
               </div>
@@ -432,7 +496,7 @@ export default function Home() {
                 </div>
               </div>
               <section className="w-full text-5xl text-darker_secondary pl-6 mt-1 leading-normal" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }} aria-labelledby="artifacts-heading">
-                <h2 id="artifacts-heading">CURSED ARTIFACTS --------------------</h2>
+                <h2 id="artifacts-heading" className='overflow-hidden whitespace-nowrap'>CURSED ARTIFACTS --------------------</h2>
                 <nav className="grid grid-cols-4 gap-2 mt-2 place-items-center justify-items-center -ml-4" role="group" aria-label="Navigation artifacts">
                   <div className="artifact flex flex-col items-center h-full relative">
                     <div className="flex-1 flex items-center absolute -left-9">

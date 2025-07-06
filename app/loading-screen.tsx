@@ -35,6 +35,10 @@ export default function LoadingScreen({ onLoadCompleteAction }: LoadingScreenPro
 
   // Complete list of all images used in your application
   const imagesToPreload = [
+    './frame250.png',
+    './chapeu.png',
+    './joao.png',
+
     // *.svg files (from sound toggle and other components)
     '/Speaker-0.svg',
     '/Speaker-Crossed.svg',
@@ -192,16 +196,16 @@ export default function LoadingScreen({ onLoadCompleteAction }: LoadingScreenPro
 
   return (
     <div
-      className="fixed inset-0 bg-bg flex items-center justify-center z-50"
+      className="fixed inset-0 bg-bg flex items-center justify-center z-50 px-4 md:px-0"
       role="progressbar"
       aria-valuenow={Math.round(progress)}
       aria-valuemin={0}
       aria-valuemax={100}
       aria-label={`Loading progress: ${Math.round(progress)}%`}
     >
-      <div className="text-center flex flex-col items-center justify-center pixelated">
+      <div className="text-center flex flex-col items-center justify-center pixelated w-full md:w-auto max-w-lg md:max-w-none">
         <h1
-          className="text-5xl text-darker_primary mb-8 pixelated underline decoration-4 underline-offset-8"
+          className="text-3xl md:text-5xl text-darker_primary mb-6 md:mb-8 pixelated underline decoration-2 md:decoration-4 underline-offset-4 md:underline-offset-8"
           style={{
             fontFamily: 'AtlantisText', fontWeight: 900
           }}
@@ -209,7 +213,7 @@ export default function LoadingScreen({ onLoadCompleteAction }: LoadingScreenPro
           LOADING CODEX...
         </h1>
 
-        <div className="w-[500px] h-10 bg-darker_secondary border-6 border-darker_secondary pixelated relative overflow-hidden">
+        <div className="w-full md:w-[500px] h-8 md:h-10 bg-darker_secondary border-4 md:border-6 border-darker_secondary pixelated relative overflow-hidden">
           <div
             className="h-full bg-darker_primary transition-all duration-300 ease-linear pixelated"
             style={{
@@ -219,7 +223,7 @@ export default function LoadingScreen({ onLoadCompleteAction }: LoadingScreenPro
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <span
-              className="text-secondary text-xl font-bold z-10"
+              className="text-secondary text-lg md:text-xl font-bold z-10"
               style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}
             >
               {Math.round(progress)}%
@@ -227,9 +231,9 @@ export default function LoadingScreen({ onLoadCompleteAction }: LoadingScreenPro
           </div>
         </div>
 
-        <div className="mt-6 bg-darker_primary border-6 border-darker_secondary p-4 max-w-lg pixelated">
+        <div className="mt-4 md:mt-6 bg-darker_primary border-4 md:border-6 border-darker_secondary p-3 md:p-4 w-full md:max-w-lg pixelated">
           <p
-            className="text-secondary text-xl text-center"
+            className="text-secondary text-base md:text-xl text-center leading-relaxed md:leading-normal"
             style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}
           >
             {currentFact}

@@ -51,7 +51,6 @@ export default function Notes() {
               className="text-darker_secondary text-4xl hover:opacity-70 transition-opacity hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-bg"
               style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}
               aria-label="Go back to notes list"
-              role="button"
             >
               &lt;-
             </button>
@@ -95,8 +94,8 @@ export default function Notes() {
               Next
             </button>
           </div>
-        </section>
-      </div>
+        </section >
+      </div >
     );
   }
 

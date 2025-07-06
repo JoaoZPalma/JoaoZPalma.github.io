@@ -214,3 +214,54 @@ body {
 .pixelated {
   image-rendering: pixelated;
 }
+
+::-webkit-scrollbar {
+  width: 20px;
+  height: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-darker_primary);
+  border: 3px solid var(--color-darker_secondary);
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-darker_secondary);
+  border: 2px solid var(--color-darker_primary);
+  border-radius: 0px;
+  min-height: 40px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-darker_secondary);
+  border: 2px solid var(--color-darker_primary);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--color-darker_secondary);
+  border: 1px solid var(--color-darker_secondary);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--color-darker_primary);
+  border: 3px solid var(--color-darker_secondary);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thick;
+  scrollbar-color: var(--color-darker_secondary) var(--color-darker_primary);
+}
+
+/* For better mobile scrollbar appearance */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    min-height: 30px;
+  }
+}
