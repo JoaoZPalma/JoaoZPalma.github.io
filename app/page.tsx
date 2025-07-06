@@ -22,6 +22,7 @@ import { playSound, toggleSound, isSoundEnabled } from './soundManager';
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true); // Always start with loading on both server and client
   const [mounted, setMounted] = useState(false);
+  const [controlsOpen, setControlsOpen] = useState(false);
 
   // Handle client-side mounting
   useEffect(() => {
@@ -117,6 +118,7 @@ export default function Home() {
 
   return (
     <div>
+      {/* PreLoading components for readiness */}
       <div style={{ display: 'none' }} aria-hidden="true">
         <Inventory />
       </div>
@@ -213,150 +215,308 @@ export default function Home() {
           </ScrollHeader>
         </AnimatedPopup>
       )}
-      <main className="bg-bg min-h-screen flex items-center justify-center">
+      <main className="bg-bg min-h-screen w-full flex items-center justify-center overflow-x-scroll">
         <div className="flex justify-center">
-          <nav className='absolute top-4 left-4 flex flex-row gap-4 p-2' aria-label="Main controls">
+          <div className="md:hidden fixed top-4 right-0 z-50">
+            <div className={`flex flex-col transition-transform duration-300 ${controlsOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+              <button
+                onClick={() => setControlsOpen(!controlsOpen)}
+                className="bg-darker_primary border-3 border-secondary p-2 absolute left-0 transform -translate-x-full"
+                aria-label={controlsOpen ? "Close controls" : "Open controls"}
+                style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}
+              >
+                <span className="text-secondary text-xl">{controlsOpen ? 'x' : '☰'}</span>
+              </button>
+              <div className="bg-darker_primary border-3 border-secondary py-2 flex flex-col gap-2 items-center">
+                <ThemeToggle />
+                <SoundToggleButton />
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop controls */}
+          <section className='hidden md:flex absolute top-4 left-4 flex-row gap-4 p-2 z-10' aria-label="Main controls">
             <ThemeToggle />
             <SoundToggleButton />
-          </nav>
+          </section>
           <Scroll>
             <header>
-              <h1 className="text-[42px] text-darker_secondary pt-6 pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}>
+              <h1 className="text-5xl leading-tight text-darker_secondary pt-10 md:pt-6 md:pl-6 pb-6 md:pb-0 text-center md:text-left" style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}>
                 PALMA&apos;S ELDRITCH<br />
                 CODEX
               </h1>
             </header>
-            {/* Coluna 1 */}
-            <div className="flex justify-between ">
-              <div className="w-[45%]">
-                <section className="w-[400px] text-[44px] text-darker_secondary leading-none pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }} aria-labelledby="bio-heading">
-                  <h2 id="bio-heading">BIO ---------------------</h2>
-                  <p className="text-[28px] " style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
-                    &quot;I&apos;ve bargained with Cursed Code and deciphered Ancient Docs.
-                    <span className="font-bold decoration-2"> In a Mighty Quest and in need of a Coding Warlock?</span> The Ravens know where to find me...&quot;
-                  </p>
-                  <p className="text-[22px] text-right italic" style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
-                    (or just email me, that&apos;s fine too)
-                  </p>
-                </section>
-                <section className="w-[400px] text-[44px] text-darker_secondary pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }} aria-labelledby="stats-heading">
-                  <h2 id="stats-heading">STATS -----------------</h2>
-                  <ul className="grid grid-cols-2 gap-1 text-[34px] ml-4 leading-snug" role="list">
-                    {stats.map((stat) => (
-                      <StatItem key={stat.name} {...stat} />
-                    ))}
-                  </ul>
-                </section>
+            {/* Mobile Layout - ordered flow */}
+            <div className="block md:hidden px-4">
+              {/* Bio Section */}
+              <section className="w-full text-5xl text-darker_secondary leading-none pl-6 pr-6 overflow-hidden text-center" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }} aria-labelledby="bio-heading">
+                <h2 id="bio-heading" className="overflow-hidden whitespace-nowrap">-------- BIO --------</h2>
+                <p className="text-2xl break-words" style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
+                  &quot;I&apos;ve bargained with Cursed Code and deciphered Ancient Docs.
+                  <span className="font-bold decoration-2"> In a Mighty Quest and in need of a Coding Warlock?</span> The Ravens know where to find me...&quot;
+                </p>
+                <p className="text-xl text-center italic break-words" style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
+                  (or just email me, that&apos;s fine too)
+                </p>
+              </section>
 
+              {/* Profile Image */}
+              <div className="flex flex-col items-center mt-8 px-4">
+                <Profile></Profile>
+                <span className="w-full text-5xl leading-tight text-darker_secondary text-center mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 500 }} role="heading" aria-level={2}>
+                  CODE WARLOCK
+                </span>
               </div>
-              {/* Coluna 2 */}
-              <div className="w-[45%] -mt-14 ">
-                <div className="mt-9 flex flex-col items-center">
-                  <Profile></Profile>
-                  <div className="flex flex-col items-center gap-2">
-                    <span className="w-full text-[44px] text-darker_secondary text-center mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 500 }} role="heading" aria-level={2}>
-                      CODE WARLOCK
-                    </span>
-                    <button
-                      onClick={() => { playSound('click1'); setShowInventory(!showInventory); }}
-                      className="drag-handle"
-                      aria-label="Open inventory"
-                      aria-expanded={showInventory}
-                      aria-controls={showInventory ? "inventory-popup" : undefined}
-                    >
-                      <Button>
-                        inventory
-                      </Button>
-                    </button>
+
+              {/* Stats Section */}
+              <section className="w-full text-5xl text-darker_secondary pl-6 pr-6 mt-3 text-center" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }} aria-labelledby="stats-heading">
+                <h2 id="stats-heading" className="overflow-hidden whitespace-nowrap">------ STATS -------------</h2>
+                <ul className="grid grid-cols-2 gap-1 text-4xl ml-4 leading-snug justify-items-center" role="list">
+                  {stats.map((stat) => (
+                    <StatItem key={stat.name} {...stat} />
+                  ))}
+                </ul>
+              </section>
+
+              {/* Inventory Button */}
+              <div className="flex flex-col items-center gap-2 mt-6 px-4">
+                <button
+                  onClick={() => { playSound('click1'); setShowInventory(!showInventory); }}
+                  className="drag-handle"
+                  aria-label="Open inventory"
+                  aria-expanded={showInventory}
+                  aria-controls={showInventory ? "inventory-popup" : undefined}
+                >
+                  <Button>
+                    inventory
+                  </Button>
+                </button>
+              </div>
+
+              {/* Cursed Artifacts */}
+              <section className="w-full text-5xl text-darker_secondary pl-6 pr-6 pb-12 mt-3 leading-normal text-center" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }} aria-labelledby="artifacts-heading">
+                <h2 id="artifacts-heading" className="overflow-hidden whitespace-nowrap">---------------------------</h2>
+                <h2 id="artifacts-heading" className="text-wrap leading-none">CURSED ARTIFACTS </h2>
+                <h2 id="artifacts-heading" className="overflow-hidden whitespace-nowrap">---------------------------</h2>
+                <nav className="grid grid-cols-2 gap-4 mt-2 place-items-center justify-items-center px-4" role="group" aria-label="Navigation artifacts">
+                  <div className="artifact flex flex-col items-center h-full relative">
+                    <div className="flex-1 flex items-center">
+                      <button
+                        onMouseEnter={() => {
+                          const timeoutId = setTimeout(() => playSound('chest_open'), 400);
+                          setChestHoverTimeout(timeoutId);
+                        }}
+                        onMouseLeave={() => {
+                          if (chestHoverTimeout) {
+                            clearTimeout(chestHoverTimeout);
+                            setChestHoverTimeout(null);
+                          }
+                        }}
+                        onClick={() => {
+                          playSound('click1');
+                          setShowProjects(!showProjects);
+                        }}
+                        className="flex-1 flex items-center justify-center -ml-9"
+                        aria-label="Open projects"
+                        aria-expanded={showProjects}
+                        aria-controls={showProjects ? "projects-popup" : undefined}
+                      >
+                        <Chest>
+                        </Chest>
+                      </button>
+                    </div>
+                    <p className="text-xl mt-1" aria-hidden="true">Projects</p>
                   </div>
-                </div>
-              </div>
+
+                  <div className="artifact flex flex-col items-center h-full relative">
+                    <div className="flex-1 flex items-center">
+                      <button
+                        onClick={() => {
+                          playSound('click1');
+                          setShowNotes(!showNotes);
+                        }}
+                        className="flex-1 flex items-center justify-center"
+                        aria-label="Open notes"
+                        aria-expanded={showNotes}
+                        aria-controls={showNotes ? "notes-popup" : undefined}
+                      >
+                        <div className="notes-icon" aria-hidden="true"></div>
+                      </button>
+                    </div>
+                    <p className="text-xl mt-1" aria-hidden="true">Notes</p>
+                  </div>
+
+                  <div className="artifact flex flex-col items-center h-full relative">
+                    <div className="flex-1 flex items-center">
+                      <button
+                        onClick={() => {
+                          playSound('click1');
+                          setShowFAQ(!showFAQ);
+                        }}
+                        className="flex-1 flex items-center justify-center"
+                        aria-label="Open FAQ"
+                        aria-expanded={showFAQ}
+                        aria-controls={showFAQ ? "faq-popup" : undefined}
+                      >
+                        <Eye />
+                      </button>
+                    </div>
+                    <p className="text-xl mt-1" aria-hidden="true">FAQ</p>
+                  </div>
+
+                  <div className="artifact flex flex-col items-center h-full relative">
+                    <button
+                      onClick={() => {
+                        playSound('bird');
+                        setShowContacts(!showContacts);
+                      }}
+                      className="flex-1 flex items-center justify-center"
+                      aria-label="Open contacts"
+                      aria-expanded={showContacts}
+                      aria-controls={showContacts ? "contacts-popup" : undefined}
+                    >
+                      <div className="crow-icon" aria-hidden="true"></div>
+                    </button>
+                    <p className="text-xl mt-1" aria-hidden="true">Contacts</p>
+                  </div>
+                </nav>
+              </section>
             </div>
-            <section className="w-full text-[44px] text-darker_secondary pl-6 mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }} aria-labelledby="artifacts-heading">
-              <h2 id="artifacts-heading">CURSED ARTIFACTS -------------------------</h2>
-              <div className="grid grid-cols-4 gap-2 mt-2 place-items-center justify-items-center -ml-4" role="group" aria-label="Navigation artifacts">
-                <div className="artifact flex flex-col items-center h-full relative">
-                  <div className="flex-1 flex items-center absolute -left-9">
-                    <button
-                      onMouseEnter={() => {
-                        const timeoutId = setTimeout(() => playSound('chest_open'), 400);
-                        setChestHoverTimeout(timeoutId);
-                      }}
-                      onMouseLeave={() => {
-                        if (chestHoverTimeout) {
-                          clearTimeout(chestHoverTimeout);
-                          setChestHoverTimeout(null);
-                        }
-                      }}
-                      onClick={() => {
-                        playSound('click1');
-                        setShowProjects(!showProjects);
-                      }}
-                      className="flex-1 flex items-center justify-center"
-                      aria-label="Open projects"
-                      aria-expanded={showProjects}
-                      aria-controls={showProjects ? "projects-popup" : undefined}
-                    >
-                      <Chest>
-                      </Chest>
-                    </button>
-                  </div>
-                  <p className="text-[20px] mt-1 absolute -bottom-9" aria-hidden="true">Projects</p>
-                </div>
 
-                <div className="artifact flex flex-col items-center h-full relative">
-                  <div className="flex-1 flex items-center">
-                    <button
-                      onClick={() => {
-                        playSound('click1');
-                        setShowNotes(!showNotes);
-                      }}
-                      className="flex-1 flex items-center justify-center"
-                      aria-label="Open notes"
-                      aria-expanded={showNotes}
-                      aria-controls={showNotes ? "notes-popup" : undefined}
-                    >
-                      <div className="notes-icon" aria-hidden="true"></div>
-                    </button>
-                  </div>
-                  <p className="text-[20px] mt-1 absolute -bottom-9" aria-hidden="true">Notes</p>
-                </div>
+            {/* Desktop Layout - original layout */}
+            <div className="hidden md:block">
+              {/* Coluna 1 */}
+              <div className="flex justify-between">
+                <div className="w-[45%]">
+                  <section className="w-[400px] text-5xl text-darker_secondary leading-none pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }} aria-labelledby="bio-heading">
+                    <h2 id="bio-heading">BIO -------------------</h2>
+                    <p className="text-2xl " style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
+                      &quot;I&apos;ve bargained with Cursed Code and deciphered Ancient Docs.
+                      <span className="font-bold decoration-2"> In a Mighty Quest and in need of a Coding Warlock?</span> The Ravens know where to find me...&quot;
+                    </p>
+                    <p className="text-xl text-right italic" style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
+                      (or just email me, that&apos;s fine too)
+                    </p>
+                  </section>
+                  <section className="w-[400px] text-5xl text-darker_secondary pl-6" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }} aria-labelledby="stats-heading">
+                    <h2 id="stats-heading">STATS ---------------</h2>
+                    <ul className="grid grid-cols-2 gap-1 text-4xl ml-4 leading-snug" role="list">
+                      {stats.map((stat) => (
+                        <StatItem key={stat.name} {...stat} />
+                      ))}
+                    </ul>
+                  </section>
 
-                <div className="artifact flex flex-col items-center h-full relative">
-                  <div className="flex-1 flex items-center">
-                    <button
-                      onClick={() => {
-                        playSound('click1');
-                        setShowFAQ(!showFAQ);
-                      }}
-                      className="flex-1 flex items-center justify-center"
-                      aria-label="Open FAQ"
-                      aria-expanded={showFAQ}
-                      aria-controls={showFAQ ? "faq-popup" : undefined}
-                    >
-                      <Eye />
-                    </button>
-                  </div>
-                  <p className="text-[20px] mt-1 absolute -bottom-9" aria-hidden="true">FAQ</p>
                 </div>
-
-                <div className="artifact flex flex-col items-center h-full relative">
-                  <button
-                    onClick={() => {
-                      playSound('bird');
-                      setShowContacts(!showContacts);
-                    }}
-                    className="flex-1 flex items-center justify-center"
-                    aria-label="Open contacts"
-                    aria-expanded={showContacts}
-                    aria-controls={showContacts ? "contacts-popup" : undefined}
-                  >
-                    <div className="crow-icon" aria-hidden="true"></div>
-                  </button>
-                  <p className="text-[20px] mt-1 absolute -bottom-9" aria-hidden="true">Contacts</p>
+                {/* Coluna 2 */}
+                <div className="flex flex-1 -mt-14 mr-8 items-center justify-end">
+                  <div className="mt-9 flex flex-col items-center">
+                    <Profile></Profile>
+                    <div className="flex flex-col items-center gap-2">
+                      <span className="w-full text-5xl leading-tight text-darker_secondary text-center mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 500 }} role="heading" aria-level={2}>
+                        CODE WARLOCK
+                      </span>
+                      <button
+                        onClick={() => { playSound('click1'); setShowInventory(!showInventory); }}
+                        className="drag-handle"
+                        aria-label="Open inventory"
+                        aria-expanded={showInventory}
+                        aria-controls={showInventory ? "inventory-popup" : undefined}
+                      >
+                        <Button>
+                          inventory
+                        </Button>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </section>
+              <section className="w-full text-5xl text-darker_secondary pl-6 mt-1 leading-normal" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }} aria-labelledby="artifacts-heading">
+                <h2 id="artifacts-heading">CURSED ARTIFACTS --------------------</h2>
+                <nav className="grid grid-cols-4 gap-2 mt-2 place-items-center justify-items-center -ml-4" role="group" aria-label="Navigation artifacts">
+                  <div className="artifact flex flex-col items-center h-full relative">
+                    <div className="flex-1 flex items-center absolute -left-9">
+                      <button
+                        onMouseEnter={() => {
+                          const timeoutId = setTimeout(() => playSound('chest_open'), 400);
+                          setChestHoverTimeout(timeoutId);
+                        }}
+                        onMouseLeave={() => {
+                          if (chestHoverTimeout) {
+                            clearTimeout(chestHoverTimeout);
+                            setChestHoverTimeout(null);
+                          }
+                        }}
+                        onClick={() => {
+                          playSound('click1');
+                          setShowProjects(!showProjects);
+                        }}
+                        className="flex-1 flex items-center justify-center"
+                        aria-label="Open projects"
+                        aria-expanded={showProjects}
+                        aria-controls={showProjects ? "projects-popup" : undefined}
+                      >
+                        <Chest>
+                        </Chest>
+                      </button>
+                    </div>
+                    <p className="text-xl mt-1 absolute -bottom-9" aria-hidden="true">Projects</p>
+                  </div>
+
+                  <div className="artifact flex flex-col items-center h-full relative">
+                    <div className="flex-1 flex items-center">
+                      <button
+                        onClick={() => {
+                          playSound('click1');
+                          setShowNotes(!showNotes);
+                        }}
+                        className="flex-1 flex items-center justify-center"
+                        aria-label="Open notes"
+                        aria-expanded={showNotes}
+                        aria-controls={showNotes ? "notes-popup" : undefined}
+                      >
+                        <div className="notes-icon" aria-hidden="true"></div>
+                      </button>
+                    </div>
+                    <p className="text-xl mt-1 absolute -bottom-9" aria-hidden="true">Notes</p>
+                  </div>
+
+                  <div className="artifact flex flex-col items-center h-full relative">
+                    <div className="flex-1 flex items-center">
+                      <button
+                        onClick={() => {
+                          playSound('click1');
+                          setShowFAQ(!showFAQ);
+                        }}
+                        className="flex-1 flex items-center justify-center"
+                        aria-label="Open FAQ"
+                        aria-expanded={showFAQ}
+                        aria-controls={showFAQ ? "faq-popup" : undefined}
+                      >
+                        <Eye />
+                      </button>
+                    </div>
+                    <p className="text-xl mt-1 absolute -bottom-9" aria-hidden="true">FAQ</p>
+                  </div>
+
+                  <div className="artifact flex flex-col items-center h-full relative">
+                    <button
+                      onClick={() => {
+                        playSound('bird');
+                        setShowContacts(!showContacts);
+                      }}
+                      className="flex-1 flex items-center justify-center"
+                      aria-label="Open contacts"
+                      aria-expanded={showContacts}
+                      aria-controls={showContacts ? "contacts-popup" : undefined}
+                    >
+                      <div className="crow-icon" aria-hidden="true"></div>
+                    </button>
+                    <p className="text-xl mt-1 absolute -bottom-9" aria-hidden="true">Contacts</p>
+                  </div>
+                </nav>
+              </section>
+            </div>
           </Scroll>
         </div>
       </main>

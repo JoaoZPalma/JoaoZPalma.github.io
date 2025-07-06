@@ -6,8 +6,8 @@ interface ScrollProps {
 }
 const Scroll = ({ children }: ScrollProps) => {
   return (
-    <div className='border-16 border-darker_secondary'>
-      <div className='bg-primary aspect-square max-w-[100vw] lg:w-[810px] lg:h-[810px] '>
+    <div className='border-0 md:border-16 md:border-darker_secondary'>
+      <div className='bg-primary max-w-[100vw] md:aspect-square md:w-[800px] md:h-[800px]'>
         {children}
       </div>
     </div>

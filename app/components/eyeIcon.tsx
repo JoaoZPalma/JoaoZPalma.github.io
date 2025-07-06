@@ -1,13 +1,14 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import "../globals.css";
 
 const RotatingIcon: React.FC = () => {
   const [angle, setAngle] = useState(0);
+  const eyeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      const icon = document.querySelector('.eye-icon') as HTMLElement;
+      const icon = eyeRef.current;
       if (!icon) return;
 
       // Get center position of the icon
@@ -38,8 +39,10 @@ const RotatingIcon: React.FC = () => {
 
   return (
     <div className='contents'>
-      <div className="eye-shadow -left-3"></div>
-      <div className="eye-icon -left-3"
+      <div className="eye-shadow"></div>
+      <div
+        ref={eyeRef}
+        className="eye-icon"
         style={{
           transform: `rotate(${angle}deg) scale(2.5)`,
         }}
