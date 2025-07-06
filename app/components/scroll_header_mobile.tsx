@@ -25,7 +25,7 @@ const ScrollMobile = ({
     // force a reflow so the browser definitely restarts the animation
     if (containerRef.current) {
       // read a layout property
-      containerRef.current.offsetHeight;
+      void containerRef.current.offsetHeight;
     }
     setAnimationClass(closing || isClosing ? 'popDown' : 'popUp');
   }, [closing, isClosing]);
