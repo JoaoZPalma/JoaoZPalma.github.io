@@ -279,7 +279,7 @@ export default function Home() {
           </AnimatedPopup>
         </div>
       )}
-      <main className="bg-bg min-h-screen w-full flex items-center justify-center overflow-x-scroll">
+      <main className="bg-bg min-h-screen w-full flex items-center justify-center">
         <div className="flex justify-center">
           <div className="md:hidden fixed top-6 left-0 z-50">
             <div className={`flex flex-col transition-all duration-300 ${controlsOpen ? 'translate-x-0' : '-translate-x-full'}`}>
