@@ -170,7 +170,7 @@ export default function Inventory() {
                               if (tooltip) {
                                 const rect = tooltip.getBoundingClientRect();
                                 const padding = 4;
-                                let style: React.CSSProperties = {};
+                                const style: React.CSSProperties = {};
                                 if (rect.left < padding) {
                                   style.left = `calc(50% + ${padding - rect.left}px)`;
                                   // style.transform = "translateX(-50%)";
