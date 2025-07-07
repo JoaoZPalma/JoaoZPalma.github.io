@@ -1,5 +1,6 @@
 import '../globals.css'
 import Image from 'next/image';
+import React, { useState } from "react";
 
 const inventoryItems = [
   {
@@ -113,10 +114,15 @@ const inventoryItems = [
     tooltip: "The language of databases, where I summon and manipulate data from the abyss.",
   }
 ];
-
 export default function Inventory() {
+  const [openTooltip, setOpenTooltip] = useState<number | null>(null);
+  const [tooltipStyle, setTooltipStyle] = useState<{ [key: number]: React.CSSProperties }>({});
+  const itemsPerRowMobile = 6;
+  const itemsPerRowDesktop = 8;
+  const totalRowsMobile = 8;
+  const totalRowsDesktop = 6;
   return (
-    <div className="overflow-visible flex flex-col items-center p-6 justify-center">
+    <div className="overflow-visible flex flex-col items-center p-6 justify-center pb-20">
       <p
         className='w-full text-center justify-center flex items-center text-darker_secondary text-[30px]'
         style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}
@@ -125,73 +131,145 @@ export default function Inventory() {
       >
         (tip: on hover will give further information on each skill)
       </p>
-      <div
-        className="inline-block border-6 border-secondary mt-4"
-        role="region"
-        aria-label="Skills inventory grid"
-      >
-        <div
-          className="flex flex-wrap w-[640px] justify-center"
+      <div className="inline-block border-6 border-secondary mt-4 mb-8">
+        {/* Mobile Table */}
+        <table
+          className="border-collapse sm:hidden"
           role="grid"
-          aria-label="Skills and tools inventory, 8 columns by 6 rows"
-          aria-rowcount={6}
-          aria-colcount={8}
+          aria-label="Skills and tools inventory"
         >
-          {Array.from({ length: 48 }).map((_, i) => {
-            const item = inventoryItems[i];
-            const row = Math.floor(i / 8) + 1;
-            const col = (i % 8) + 1;
+          <tbody>
+            {Array.from({ length: totalRowsMobile }).map((_, rowIndex) => (
+              <tr key={rowIndex}>
+                {Array.from({ length: itemsPerRowMobile }).map((_, colIndex) => {
+                  const itemIndex = rowIndex * itemsPerRowMobile + colIndex;
+                  const item = inventoryItems[itemIndex];
+                  const isLastColumn = colIndex === itemsPerRowMobile - 1;
+                  const isLastRow = rowIndex === totalRowsMobile - 1;
 
-            return (
-              <div
-                key={i}
-                className="group relative h-20 w-20 flex items-center text-center justify-center transition-colors duration-150
-                bg-darker_primary border-r-6 border-b-6 border-secondary
-                hover:bg-primary cursor-pointer focus:bg-primary focus:outline-none focus:ring-2 focus:ring-darker_secondary focus:ring-inset
-                [&:nth-child(8n)]:border-r-0 [&:nth-child(n+41)]:border-b-0"
-                role="gridcell"
-                aria-rowindex={row}
-                aria-colindex={col}
-                tabIndex={item ? 0 : -1}
-                aria-label={item ? `${item.alt} skill` : `Empty inventory slot ${i + 1}`}
-                aria-describedby={item ? `tooltip-${i}` : undefined}
-                onKeyDown={(e) => {
-                  if (item && (e.key === 'Enter' || e.key === ' ')) {
-                    e.preventDefault();
-                    // Toggle tooltip visibility for keyboard users - handled by CSS focus state
-                  }
-                }}
-              >
-                {item ? (
-                  <Image
-                    src={item.image}
-                    alt={item.alt}
-                    width={64}
-                    height={64}
-                    className="w-14 h-14 object-contain"
-                    priority={i < inventoryItems.length}
-                    aria-hidden="true"
-                  />
-                ) : (
-                  <span aria-hidden="true"></span>
-                )}
-                <span
-                  id={item ? `tooltip-${i}` : undefined}
-                  className="pointer-events-none absolute left-1/2 bottom-full mb-2 w-max -translate-x-1/2
-                  bg-darker_primary border-4 text-[22px] text-darker_secondary px-2 py-1 opacity-0 
-                  group-hover:opacity-100 group-focus:opacity-100 transition-opacity
+                  return (
+                    <td
+                      key={colIndex}
+                      className={`group relative h-16 w-16 text-center align-middle transition-colors duration-150
+                      bg-darker_primary border-secondary hover:bg-primary cursor-pointer focus:bg-primary focus:outline-none focus:ring-2 focus:ring-darker_secondary focus:ring-inset
+                      ${!isLastColumn ? 'border-r-6' : ''} ${!isLastRow ? 'border-b-6' : ''}`}
+                      role="gridcell"
+                      aria-label={item ? item.tooltip : `Empty slot ${itemIndex + 1}`}
+                      tabIndex={0}
+                    >
+                      <div
+                        className="flex items-center justify-center w-full h-full relative group"
+                        onClick={() => {
+                          if (openTooltip === itemIndex) {
+                            setOpenTooltip(null);
+                            setTooltipStyle({});
+                          } else {
+                            setOpenTooltip(itemIndex);
+                            setTimeout(() => {
+                              const tooltip = document.getElementById(`tooltip-${itemIndex}`);
+                              if (tooltip) {
+                                const rect = tooltip.getBoundingClientRect();
+                                const padding = 4;
+                                let style: React.CSSProperties = {};
+                                if (rect.left < padding) {
+                                  style.left = `calc(50% + ${padding - rect.left}px)`;
+                                  // style.transform = "translateX(-50%)";
+                                } else if (rect.right > window.innerWidth - padding) {
+                                  style.left = `calc(50% - ${rect.right - window.innerWidth + padding}px)`;
+                                  // style.transform = "translateX(-50%)";
+                                } else {
+                                  style.left = "";
+                                  style.transform = "";
+                                }
+                                setTooltipStyle({ [itemIndex]: style });
+                              }
+                            }, 0);
+                          }
+                        }}
+                        tabIndex={0}
+                      >
+                        {item ? (
+                          <Image
+                            src={item.image}
+                            alt={item.alt}
+                            width={32}
+                            height={32}
+                            className="w-10 h-10 object-contain"
+                          />
+                        ) : ""}
+                        <span
+                          id={`tooltip-${itemIndex}`}
+                          className={`pointer-events-none absolute left-1/2 bottom-full mb-2 max-w-xs w-max -translate-x-1/2
+                          bg-darker_primary border-4 text-lg text-darker_secondary px-3 py-1 transition-opacity
+                          z-10 whitespace-normal break-words leading-snug
+                          ${openTooltip === itemIndex ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+                          style={{
+                            fontFamily: 'AtlantisText',
+                            fontWeight: 700,
+                            ...openTooltip === itemIndex ? tooltipStyle[itemIndex] || {} : {},
+                          }}
+                        >
+                          {item ? item.tooltip : `Empty slot #${itemIndex + 1}`}
+                        </span>
+                      </div>
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {/* Desktop Table */}
+        <table
+          className="border-collapse hidden sm:table"
+          role="grid"
+          aria-label="Skills and tools inventory"
+        >
+          <tbody>
+            {Array.from({ length: totalRowsDesktop }).map((_, rowIndex) => (
+              <tr key={rowIndex}>
+                {Array.from({ length: itemsPerRowDesktop }).map((_, colIndex) => {
+                  const itemIndex = rowIndex * itemsPerRowDesktop + colIndex;
+                  const item = inventoryItems[itemIndex];
+                  const isLastColumn = colIndex === itemsPerRowDesktop - 1;
+                  const isLastRow = rowIndex === totalRowsDesktop - 1;
+
+                  return (
+                    <td
+                      key={colIndex}
+                      className={`group relative h-20 w-20 text-center align-middle transition-colors duration-150
+                      bg-darker_primary border-secondary hover:bg-primary cursor-pointer focus:bg-primary focus:outline-none focus:ring-2 focus:ring-darker_secondary focus:ring-inset
+                      ${!isLastColumn ? 'border-r-6' : ''} ${!isLastRow ? 'border-b-6' : ''}`}
+                      role="gridcell"
+                      aria-label={item ? item.tooltip : `Empty slot ${itemIndex + 1}`}
+                      tabIndex={0}
+                    >
+                      {item ? (
+                        <Image
+                          src={item.image}
+                          alt={item.alt}
+                          width={64}
+                          height={64}
+                          className="w-14 h-14 object-contain inline"
+                        />
+                      ) : ""}
+                      <span
+                        className="pointer-events-none absolute left-1/2 bottom-full mb-2 w-max -translate-x-1/2
+                  rounded bg-darker_primary border-2 text-[22px] text-darker_secondary px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity
                   z-10 whitespace-nowrap"
-                  style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}
-                  role="tooltip"
-                  aria-live="polite"
-                >
-                  {item ? item.tooltip : `Empty slot #${i + 1}`}
-                </span>
-              </div>
-            );
-          })}
-        </div>
+                        style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}
+                      >
+                        {item ? item.tooltip : `Empty slot #${itemIndex + 1}`}
+                      </span>
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </div>
+    </div >
   );
 }

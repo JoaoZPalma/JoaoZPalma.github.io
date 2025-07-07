@@ -314,7 +314,7 @@ export default function Home() {
             <div className="block md:hidden px-4">
               {/* Bio Section */}
               <section className="w-full text-5xl text-darker_secondary leading-none pl-6 pr-6 overflow-hidden text-center" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }} aria-labelledby="bio-heading">
-                <h2 id="bio-heading" className="overflow-hidden whitespace-nowrap">-------- BIO --------</h2>
+                <h2 id="bio-heading" className="mx-auto w-fit text-center overflow-hidden whitespace-nowrap">------ BIO ------</h2>
                 <p className="text-2xl break-words" style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
                   &quot;I&apos;ve bargained with Cursed Code and deciphered Ancient Docs.
                   <span className="font-bold decoration-2"> In a Mighty Quest and in need of a Coding Warlock?</span> The Ravens know where to find me...&quot;
@@ -334,8 +334,8 @@ export default function Home() {
 
               {/* Stats Section */}
               <section className="w-full text-5xl text-darker_secondary pl-6 pr-6 mt-3 text-center" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }} aria-labelledby="stats-heading">
-                <h2 id="stats-heading" className="overflow-hidden whitespace-nowrap">------ STATS -------------</h2>
-                <ul className="grid grid-cols-2 gap-1 text-4xl ml-4 leading-snug justify-items-center" role="list">
+                <h2 id="stats-heading" className="mx-auto w-fit text-center overflow-hidden whitespace-nowrap">---- STATS ----</h2>
+                <ul className="grid grid-cols-2 gap-1 text-4xl ml-4 leading-snug justify-between" role="list">
                   {stats.map((stat) => (
                     <StatItem key={stat.name} {...stat} />
                   ))}
@@ -359,9 +359,9 @@ export default function Home() {
 
               {/* Cursed Artifacts */}
               <section className="w-full text-5xl text-darker_secondary pl-6 pr-6 pb-12 mt-3 leading-normal text-center" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }} aria-labelledby="artifacts-heading">
-                <h2 id="artifacts-heading" className="overflow-hidden whitespace-nowrap">---------------------------</h2>
+                <h2 id="artifacts-heading" className="overflow-hidden leading-none whitespace-nowrap">---------------------------</h2>
                 <h2 id="artifacts-heading" className="text-wrap leading-none">CURSED ARTIFACTS </h2>
-                <h2 id="artifacts-heading" className="overflow-hidden whitespace-nowrap">---------------------------</h2>
+                <h2 id="artifacts-heading" className="overflow-hidden leading-none whitespace-nowrap">---------------------------</h2>
                 <nav className="grid grid-cols-2 gap-4 mt-2 place-items-center justify-items-center px-4" role="group" aria-label="Navigation artifacts">
                   <div className="artifact flex flex-col items-center h-full relative">
                     <div className="flex-1 flex items-center">
@@ -600,7 +600,7 @@ const stats = [
 const StatItem = ({ name, value, description }: { name: string; value: string; description: string }) => (
   <li className="relative" role="listitem">
     <span
-      className="w-max cursor-help group inline-block underline decoration-3 hover:decoration-wavy hover:decoration-1"
+      className="w-max cursor-help group inline-block underline decoration-3 hover:decoration-wavy hover:decoration-1 z-15 relative"
       tabIndex={0}
       role="button"
       aria-describedby={`${name.toLowerCase()}-description`}
@@ -615,7 +615,7 @@ const StatItem = ({ name, value, description }: { name: string; value: string; d
       <div
         id={`${name.toLowerCase()}-description`}
         className="hidden group-hover:block group-focus:block absolute bottom-full left-0 w-full transform mb-2 
-          bg-darker_primary border-4 border-secondary p-1 text-[20px]"
+          bg-darker_primary border-4 border-secondary p-1 text-xl"
         role="tooltip"
         aria-live="polite"
       >

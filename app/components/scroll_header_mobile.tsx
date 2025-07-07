@@ -59,7 +59,7 @@ const ScrollMobile = ({
           fixed inset-0 w-full h-full
           bg-primary
           ${overflow ? 'overflow-visible' : 'overflow-hidden'}
-          z-50
+          z-55
         `}
         onClick={(e) => e.stopPropagation()}
         onMouseDown={(e) => e.stopPropagation()}
@@ -69,13 +69,13 @@ const ScrollMobile = ({
         style={{ touchAction: 'none' }}
       >
         {header && (
-          <div className="bg-darker_primary/65 p-6 flex justify-between items-center border-b-6 border-darker_secondary border-dashed">
+          <div className="bg-darker_primary/65 py-6 px-3 flex justify-between items-center border-b-6 border-darker_secondary border-dashed">
             {typeof header === 'string'
-              ? <h1 className="text-4xl text-darker_secondary pl-4" style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}>{header}</h1>
+              ? <h1 className="text-4xl text-darker_secondary" style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}>{header}</h1>
               : header
             }
             {onClose && (
-              <div className='border-6 border-darker_secondary pr-2.25 pl-2.25 bg-darker_primary mr-4 flex items-center justify-center hover:cursor-pointer hover:bg-black/15'>
+              <div className='border-6 border-darker_secondary pr-2.25 pl-2.25 bg-darker_primary flex items-center justify-center hover:cursor-pointer hover:bg-black/15'>
                 <button
                   onClick={handleClose}
                   className="text-darker_secondary text-4xl font-bold hover:cursor-pointer"
