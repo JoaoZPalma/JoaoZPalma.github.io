@@ -10,8 +10,8 @@ interface UseImagePreloaderReturn {
 type ProgressCallback = (progress: number, loaded: number, total: number) => void;
 
 // Add this flag for testing - set to true to enable slow loading
-const ENABLE_SLOW_LOADING = false; // Change to false in production
-const DELAY_PER_IMAGE = 20; // Milliseconds delay per image
+const ENABLE_SLOW_LOADING = true; // Change to false in production
+const DELAY_PER_IMAGE = 40; // Milliseconds delay per image
 
 export const preloadImages = (
   imageSources: string[],
