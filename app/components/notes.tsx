@@ -1,5 +1,6 @@
 import '../globals.css'
 import { useState } from 'react';
+import { playSound } from '../soundManager';
 
 interface Note {
   id: number;
@@ -17,6 +18,22 @@ const notes: Note[] = [
     </>,
     createdAt: "27/06/2025"
   },
+  {
+    id: 2,
+    title: "Got my bachelors!",
+    content: <>
+      <p>
+        After 3 years of <span className="font-semibold">exams, projects, and sleepless nights</span>, I finally have my bachelor&apos;s degree!
+      </p>
+      <p>
+        I had the pleasure of studying at the <a href="https://www.ipleiria.pt" className="underline decoration-2">Polytechnic Institute of Leiria</a> <a className='italic'>(soon to be a university)</a>, where I explored various topics such as <a className='font-semibold'> programming, databases, artificial intelligence, networks, security, mathematics, </a> and much more.
+      </p>
+      <p>Along the way, I met incredible professors and colleagues who supported me throughout this journey, not to mention the friends who not only helped me debug issues when things broke unexpectedly but also made the tough moments more bearable.</p>
+      <p>I&apos;d also like to thank my family, especially my grandmother, who gave me the opportunity to study without having to worry about work, something I&apos;ll be forever grateful for.</p>
+      <p className='italic'>Lastly, a special thank you to the Delta coffee machine at uni and the amazing ladies at the bar who served me coffee daily, without you, none of this would&apos;ve been possible...</p>
+    </>,
+    createdAt: "27/07/2025"
+  },
 ];
 
 export default function Notes() {
@@ -26,14 +43,16 @@ export default function Notes() {
   const selectedIndex = selectedNote ? notes.findIndex(note => note.id === selectedNoteId) : -1;
 
   const goToNext = () => {
-    if (selectedIndex > 0) {
-      setSelectedNoteId(notes[selectedIndex - 1].id);
+    if (selectedIndex < notes.length - 1) {
+      playSound('click1_low');
+      setSelectedNoteId(notes[selectedIndex + 1].id);
     }
   };
 
   const goToPrevious = () => {
-    if (selectedIndex < notes.length - 1) {
-      setSelectedNoteId(notes[selectedIndex + 1].id);
+    if (selectedIndex > 0) {
+      playSound('click2_low');
+      setSelectedNoteId(notes[selectedIndex - 1].id);
     }
   };
 
@@ -47,7 +66,7 @@ export default function Notes() {
         <section className="h-full overflow-y-auto pb-32 flex flex-col">
           <div className="flex items-center justify-between mb-6 mt-4">
             <button
-              onClick={goBack}
+              onClick={() => { playSound('click2_low'); goBack() }}
               className="text-darker_secondary text-4xl hover:opacity-70 transition-opacity hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-bg"
               style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}
               aria-label="Go back to notes list"
@@ -111,7 +130,7 @@ export default function Notes() {
               key={note.id}
               className="border-6 border-secondary bg-darker_primary transition-all duration-200 shadow-lg w-full text-left text-darker_secondary text-3xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-bg flex flex-col items-start p-4 hover:bg-lighter_button hover:border-darker_secondary hover:cursor-pointer"
               style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}
-              onClick={() => setSelectedNoteId(note.id)}
+              onClick={() => { playSound('click1_low'); setSelectedNoteId(note.id) }}
               aria-label={`Read note: ${note.title}, created on ${note.createdAt}`}
               role="button"
               tabIndex={0}

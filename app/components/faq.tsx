@@ -1,5 +1,6 @@
 import '../globals.css'
 import { useState } from 'react';
+import { playSound } from '../soundManager';
 
 const faqs = [
   {
@@ -48,7 +49,11 @@ export default function FAQ() {
               key={idx}
               className="border-4 border-secondary bg-darker_primary rounded-lg transition-all duration-200 shadow-lg w-full text-left text-darker_secondary text-3xl focus:outline-none flex flex-col items-start p-4"
               style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}
-              onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
+              onClick={() => {
+                const isOpening = openIndex !== idx;
+                setOpenIndex(isOpening ? idx : null);
+                playSound(isOpening ? 'click1_low' : 'click2_low');
+              }}
               aria-expanded={openIndex === idx}
             >
               <span className="flex w-full justify-between items-center">

@@ -1,3 +1,4 @@
+// Updated Home component with image preloading
 "use client";
 import Image from 'next/image';
 import React, { ReactElement, useState, useRef, useEffect } from 'react';
@@ -16,41 +17,115 @@ import Notes from './components/notes'
 import FAQ from './components/faq'
 import ThemeToggle from './components/themeToggle'
 import LoadingScreen from './loading-screen'
+import { preloadImages } from './hooks/useImagePreloader'
 
 import './globals.css'
 import { playSound, toggleSound, isSoundEnabled } from './soundManager';
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true); // Always start with loading on both server and client
-  const [mounted, setMounted] = useState(false);
-  const [controlsOpen, setControlsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [mounted, setMounted] = useState<boolean>(false);
+  const [controlsOpen, setControlsOpen] = useState<boolean>(false);
+  const [imageLoadProgress, setImageLoadProgress] = useState<number>(0);
 
-  // Handle client-side mounting
+  // Define all images that need to be preloaded
+  const imagesToPreload: string[] = [
+    // Inventory images
+    "/joao.png",
+    "/wizardHat.png",
+    "/chapeu.png",
+    "/vimIcon.png",
+    "/archLinux.png",
+    "/aseprite.png",
+    "/vue.png",
+    "/react.png",
+    "/photoshop.png",
+    "/github.png",
+    "/javascript.png",
+    "/typescript.png",
+    "/tailwind.png",
+    "/figma.png",
+    "/aseprite.png",
+    "/coffee.png",
+    "/nextJs.png",
+    "/docker.png",
+    "/latex.png",
+    "/obsidian.png",
+    "/html.png",
+    "/css.png",
+    "/c.png",
+    "/java.png",
+    "/python.png",
+    "/sql.png",
+    // SVGs from public folder
+    "/Speaker-0.svg",
+    "/Speaker-Crossed.svg",
+    "/window.svg",
+    "/vercel.svg",
+    "/file.svg",
+    "/globe.svg",
+    "/next.svg",
+    "/Speaker-1.svg",
+  ];
+
+  // Handle client-side mounting and image preloading
   useEffect(() => {
     setMounted(true);
+
     // Check if we should show loading only after component mounts
-    if (sessionStorage.getItem('codex-loaded')) {
+    const hasLoadedBefore = sessionStorage.getItem('codex-loaded');
+
+    if (hasLoadedBefore) {
       setIsLoading(false);
+      return;
     }
+
+    // Start preloading images
+    const startImagePreloading = async (): Promise<void> => {
+      try {
+        await preloadImages(imagesToPreload, (progress: number, loaded: number, total: number) => {
+          setImageLoadProgress(progress);
+          console.log(`Preloaded ${loaded}/${total} images (${progress.toFixed(1)}%)`);
+        });
+
+        console.log('All images preloaded successfully!');
+
+        // Optional: Add a small delay to ensure loading screen is visible long enough
+        setTimeout(() => {
+          setIsLoading(false);
+          sessionStorage.setItem('codex-loaded', 'true');
+        }, 500);
+
+      } catch (error) {
+        console.error('Error preloading images:', error);
+        // Still proceed even if some images failed to load
+        setTimeout(() => {
+          setIsLoading(false);
+          sessionStorage.setItem('codex-loaded', 'true');
+        }, 500);
+      }
+    };
+
+    startImagePreloading();
   }, []);
 
   const dragBounds = { top: 0 };
 
-  const [showContacts, setShowContacts] = useState(false);
-  const [showProjects, setShowProjects] = useState(false);
-  const [showFAQ, setShowFAQ] = useState(false);
-  const [showInventory, setShowInventory] = useState(false);
-  const [showNotes, setShowNotes] = useState(false);
+  const [showContacts, setShowContacts] = useState<boolean>(false);
+  const [showProjects, setShowProjects] = useState<boolean>(false);
+  const [showFAQ, setShowFAQ] = useState<boolean>(false);
+  const [showInventory, setShowInventory] = useState<boolean>(false);
+  const [showNotes, setShowNotes] = useState<boolean>(false);
 
   const [chestHoverTimeout, setChestHoverTimeout] = useState<NodeJS.Timeout | null>(null);
-  const [defaultPosition, setDefaultPosition] = useState({ x: 0, y: 0 });
-  const [leftPosition, setLeftPosition] = useState({ x: 0, y: 0 });
-  const [rightPosition, setRightPosition] = useState({ x: 0, y: 0 });
+  const [defaultPosition, setDefaultPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [leftPosition, setLeftPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [rightPosition, setRightPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   function SoundToggleButton() {
-    const [enabled, setEnabled] = useState(isSoundEnabled());
+    const [enabled, setEnabled] = useState<boolean>(isSoundEnabled());
 
-    const handleToggle = () => {
+    const handleToggle = (): void => {
       setEnabled(toggleSound());
     };
 
@@ -74,7 +149,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    const handleResize = () => {
+    const handleResize = (): void => {
       if (typeof window !== "undefined") {
         setDefaultPosition({
           x: window.innerWidth * 0.05,
@@ -123,10 +198,15 @@ export default function Home() {
           <Contacts />
           <Notes />
         </div>
-        <LoadingScreen onLoadCompleteAction={() => setIsLoading(false)} />
+        <LoadingScreen
+          onLoadCompleteAction={() => setIsLoading(false)}
+          imageProgress={imageLoadProgress} // Pass the image loading progress
+        />
       </>
     );
   }
+
+  // Rest of your component remains the same...
 
   return (
     <div>
@@ -600,7 +680,7 @@ const stats = [
 const StatItem = ({ name, value, description }: { name: string; value: string; description: string }) => (
   <li className="relative" role="listitem">
     <span
-      className="w-max cursor-help group inline-block underline decoration-3 hover:decoration-wavy hover:decoration-1 z-15 relative"
+      className="w-max cursor-help group inline-block underline decoration-3 hover:decoration-wavy hover:decoration-1 z-35 relative"
       tabIndex={0}
       role="button"
       aria-describedby={`${name.toLowerCase()}-description`}

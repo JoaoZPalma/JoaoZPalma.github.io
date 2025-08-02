@@ -15,7 +15,7 @@ export default function ImageFrame() {
         <div className="relative aspect-square w-full">
           {/* Joao */}
           <Image
-            src="/joao.png"
+            src="/joao.webp"
             alt="Dev's pixel art portrait"
             fill
             className="object-contain z-5"
@@ -24,7 +24,7 @@ export default function ImageFrame() {
           <div className="absolute -top-17 left-17 transform rotate-15 z-30 scale-110">
             {/* Chapeu */}
             <Image
-              src="/wizardHat.png"
+              src="/wizardHat.webp"
               alt="Funny wizard hat comically rotated"
               width={177}
               height={177}
