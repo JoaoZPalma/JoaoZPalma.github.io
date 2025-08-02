@@ -6,7 +6,7 @@ const projects = [
   {
     title: 'Web Portfolio',
     description: <>A portfolio made to my taste using <strong>Next.js, React, Typescript and Tailwind</strong>. It&apos;s simple, cozy and showcases not only my projects but a little bit of me.</>,
-    image: '/joao.png',
+    image: '/joao.webp',
     link: '#',
     available: false,
     unavailableComment: "You're already looking at it!! :-)"
@@ -14,7 +14,7 @@ const projects = [
   {
     title: 'Non-Profit Organization Website',
     description: <><strong>Designed, developed, and deployed</strong> a user-friendly, accessible site within budget constraints without compromising quality.</>,
-    image: '/livroslivres.png',
+    image: '/livroslivres.webp',
     link: 'https://pracadoslivroslivres.org/',
     available: true
   },

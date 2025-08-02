@@ -11,7 +11,7 @@ export default function Contacts() {
       </p>
 
       <div className='w-full flex items-center justify-center'>
-        <Image src='/contactCrow.png' alt="Cool image of a Crow" className='w-[60%]' width={800} height={600} />
+        <Image src='/contactCrow.webp' alt="Cool image of a Crow" className='w-[60%]' width={800} height={600} />
       </div>
 
       <p className="text-darker_secondary text-4xl text-center" style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
@@ -34,10 +34,10 @@ export default function Contacts() {
         </p>
         <div className='h-max flex items-center justify-center gap-4 mt-2'>
           <a href="https://www.linkedin.com/in/joaozpalma/" target="_blank" rel="noopener noreferrer">
-            <Image src="/linkedinIcone.png" alt="LinkedIn" className='w-[75px] h-[75px] hover:opacity-80' width={75} height={75} />
+            <Image src="/linkedinIcone.webp" alt="LinkedIn" className='w-[75px] h-[75px] hover:opacity-80' width={75} height={75} />
           </a>
           <a href="https://www.github.com/joaozpalma/" target="_blank" rel="noopener noreferrer">
-            <Image src="/githubIcone.png" alt="Github" className='w-[75px] h-[75px] hover:opacity-80' width={75} height={75} />
+            <Image src="/githubIcone.webp" alt="Github" className='w-[75px] h-[75px] hover:opacity-80' width={75} height={75} />
           </a>
         </div>
         {/* Add more contact information here as needed */}

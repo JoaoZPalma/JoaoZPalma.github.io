@@ -40,7 +40,7 @@ export default function ThemeToggle() {
       {isTransitioning ? (
         <Image
           className="w-20 h-20 pixelated animate-pulse"
-          src="/transition_mode.png"
+          src="/transition_mode.webp"
           alt="Transitioning"
           width={32}
           height={32}
@@ -48,7 +48,7 @@ export default function ThemeToggle() {
       ) : (
         <Image
           className="w-20 h-20 pixelated"
-          src={isAlternateColors ? "/dark_mode.png" : "/light_mode.png"}
+          src={isAlternateColors ? "/dark_mode.webp" : "/light_mode.webp"}
           alt="Theme Swapper Icon"
           width={32}
           height={32}

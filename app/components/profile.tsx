@@ -5,7 +5,7 @@ export default function ImageFrame() {
     <div className="relative w-[300px] aspect-square">
       {/* Frame */}
       <Image
-        src="/frame250.png"
+        src="/frame250.webp"
         alt=""
         fill
         className="object-cover z-10"

@@ -72,7 +72,7 @@ body {
 .crow-icon {
   width: 48px;
   height: 27px;
-  background: url('/CrowIdle.png') 0px 0;
+  background: url('/CrowIdle.webp') 0px 0;
   image-rendering: pixelated;
   transform: scale(3.5) translate(-25%, 8%); 
   transform-origin: left bottom; 
@@ -96,7 +96,7 @@ body {
   width: 48px;
   height: 32px;
 
-  background-image: url('/chest.png');
+  background-image: url('/chest.webp');
   background-position: 0 0;
   background-repeat: no-repeat;
   image-rendering: pixelated;
@@ -135,7 +135,7 @@ body {
   height: 32px; /* Single frame height */
   
   /* Sprite setup */
-  background-image: url('/eyeSprite.png');
+  background-image: url('/eyeSprite.webp');
   background-repeat: no-repeat;
   background-position: 0 0; /* Show first frame by default */
   background-size: 64px 32px; /* Total sprite dimensions */
@@ -155,7 +155,7 @@ body {
 }
 
 .eye-shadow {
-  background-image: url('/eyeShadow.png');
+  background-image: url('/eyeShadow.webp');
   opacity: 0.75;
   background-repeat: no-repeat;
   background-position: center;
@@ -202,7 +202,7 @@ body {
 .notes-icon {
   width: 30px;
   height: 30px;
-  background: url('/grimoire.png') 0px 0;
+  background: url('/grimoire.webp') 0px 0;
   background-size: 30px 30px;
   image-rendering: pixelated;
   transform: scale(3.5);

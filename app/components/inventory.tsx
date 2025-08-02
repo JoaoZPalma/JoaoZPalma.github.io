@@ -5,133 +5,133 @@ import { playSound } from '../soundManager';
 
 const inventoryItems = [
   {
-    image: "/vimIcon.png",
+    image: "/vimIcon.webp",
     alt: "Vim Editor",
     tooltip: "The text editor I perform my mystic rites with... though I've upgraded to Neovim lately.",
     link: "https://neovim.io/"
   },
   {
-    image: "/archLinux.png",
+    image: "/archLinux.webp",
     alt: "Arch Linux",
     tooltip: "My trustworthy OS, and always remember read the friendly grimoire! :)",
     link: "https://archlinux.org/"
   },
   {
-    image: "/vue.png",
+    image: "/vue.webp",
     alt: "Vue.js",
     tooltip: "One of the first frameworks I learned, and enjoyed working with.",
     link: "https://vuejs.org/"
   },
   {
-    image: "/react.png",
+    image: "/react.webp",
     alt: "React.js",
     tooltip: "The framework I use to build this website, I wanted a little project to learn it.",
     link: "https://react.dev/"
   },
   {
-    image: "/photoshop.png",
+    image: "/photoshop.webp",
     alt: "Adobe Photoshop",
     tooltip: "A powerful tool for image manipulation, learned it in my adolescence and used it to make art for a book for children!.",
     link: "https://www.adobe.com/products/photoshop.html"
   },
   {
-    image: "/github.png",
+    image: "/github.webp",
     alt: "GitHub",
     tooltip: "Magic repository where I store my code and collaborate with other wizards.",
     link: "https://github.com/"
   },
   {
-    image: "/javascript.png",
+    image: "/javascript.webp",
     alt: "JavaScript",
     tooltip: "One of the languages of the web, I use it to cast spells in my projects.",
     link: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
   },
   {
-    image: "/typescript.png",
+    image: "/typescript.webp",
     alt: "TypeScript",
     tooltip: "Javascript but with types, a safer magic to cast spells you could say...",
     link: "https://www.typescriptlang.org/"
   },
   {
-    image: "/tailwind.png",
+    image: "/tailwind.webp",
     alt: "Tailwind CSS",
     tooltip: "MY BABY! My CSS framework of election that I use to style my projects, love it!",
     link: "https://tailwindcss.com/"
   },
   {
-    image: "/figma.png",
+    image: "/figma.webp",
     alt: "Figma",
     tooltip: "Where UI spells are designed before they haunt production.",
     link: "https://figma.com/"
   },
   {
-    image: "/aseprite.png",
+    image: "/aseprite.webp",
     alt: "Aseprite",
     tooltip: "I have massive respect for their business model, and I use it to create pixel art.",
     link: "https://www.aseprite.org/"
   },
   {
-    image: "/coffee.png",
+    image: "/coffee.webp",
     alt: "Coffee",
     tooltip: "The black potion that fuels my coding sessions, a must-have for any wizard/warlock.",
     link: "https://en.wikipedia.org/wiki/Coffee"
   },
   {
-    image: "/nextJs.png",
+    image: "/nextJs.webp",
     alt: "Next.js",
     tooltip: "The framework I use to build this website, it makes server-side rendering and static site generation a breeze.",
     link: "https://nextjs.org/"
   },
   {
-    image: "/docker.png",
+    image: "/docker.webp",
     alt: "Docker",
     tooltip: "Cursed containers to imprison dependencies. 'It works on my cauldron!!'",
     link: "https://www.docker.com/"
   },
   {
-    image: "/latex.png",
+    image: "/latex.webp",
     alt: "LaTeX",
     tooltip: "For scribing arcane documents and academic scrolls.",
     link: "https://www.latex-project.org/"
   },
   {
-    image: "/obsidian.png",
+    image: "/obsidian.webp",
     alt: "Obsidian",
     tooltip: "My tangled grimoire of notes, where I keep my thoughts and ideas organized.",
     link: "https://obsidian.md/"
   },
   {
-    image: "/html.png",
+    image: "/html.webp",
     alt: "HTML",
     tooltip: "The foundation of the web, the structure of some of my spells.",
     link: "https://developer.mozilla.org/en-US/docs/Web/HTML"
   },
   {
-    image: "/css.png",
+    image: "/css.webp",
     alt: "CSS",
     tooltip: "Because raw power is good but style brings it a step further.",
     link: "https://developer.mozilla.org/en-US/docs/Web/CSS"
   },
   {
-    image: "/c.png",
+    image: "/c.webp",
     alt: "C Programming Language",
     tooltip: "The forbidden incantation. When I need to commune directly with the machine spirits.",
     link: "https://en.wikipedia.org/wiki/C_(programming_language)"
   },
   {
-    image: "/java.png",
+    image: "/java.webp",
     alt: "Java Programming Language",
     tooltip: "The ancient rune of enterprise wizards. I once battled NullPointerException dragons.",
     link: "https://www.java.com/"
   },
   {
-    image: "/python.png",
+    image: "/python.webp",
     alt: "Python",
     tooltip: "My serpent familiar—conjuring CNNs to see, LLMs to speak, and scripts to automate my dark rituals.",
     link: "https://www.python.org/"
   },
   {
-    image: "/sql.png",
+    image: "/sql.webp",
     alt: "SQL",
     tooltip: "The language of databases, where I summon and manipulate data from the abyss.",
     link: "https://en.wikipedia.org/wiki/SQL"

@@ -10,87 +10,63 @@ interface UseImagePreloaderReturn {
 type ProgressCallback = (progress: number, loaded: number, total: number) => void;
 
 // Add this flag for testing - set to true to enable slow loading
-const ENABLE_SLOW_LOADING = true; // Change to false in production
+const ENABLE_SLOW_LOADING = false; // Change to false in production
 const DELAY_PER_IMAGE = 40; // Milliseconds delay per image
 
-export const preloadImages = (
+export const preloadImages = async (
   imageSources: string[],
   onProgress?: ProgressCallback
 ): Promise<(HTMLImageElement | null)[]> => {
-  return new Promise((resolve) => {
-    if (!imageSources || imageSources.length === 0) {
-      resolve([]);
-      return;
+  if (!imageSources || imageSources.length === 0) {
+    return [];
+  }
+
+  let loadedCount = 0;
+  const totalImages = imageSources.length;
+  const loadedImages: (HTMLImageElement | null)[] = [];
+
+  const preloadImageWithDelay = (src: string, index: number): Promise<void> => {
+    return new Promise((imageResolve) => {
+      const img = new Image();
+
+      img.onload = async () => {
+        if (ENABLE_SLOW_LOADING) {
+          await new Promise(r => setTimeout(r, DELAY_PER_IMAGE));
+        }
+        loadedCount++;
+        loadedImages[index] = img;
+        onProgress?.((loadedCount / totalImages) * 100, loadedCount, totalImages);
+        imageResolve();
+      };
+
+      img.onerror = async () => {
+        console.warn(`Failed to load image: ${src}`);
+        if (ENABLE_SLOW_LOADING) {
+          await new Promise(r => setTimeout(r, DELAY_PER_IMAGE));
+        }
+        loadedCount++;
+        loadedImages[index] = null;
+        onProgress?.((loadedCount / totalImages) * 100, loadedCount, totalImages);
+        imageResolve();
+      };
+
+      img.src = src;
+    });
+  };
+
+  const loadSequentially = async (): Promise<void> => {
+    for (let i = 0; i < imageSources.length; i++) {
+      await preloadImageWithDelay(imageSources[i], i);
     }
+  };
 
-    let loadedCount = 0;
-    const totalImages = imageSources.length;
-    const loadedImages: (HTMLImageElement | null)[] = [];
+  if (ENABLE_SLOW_LOADING) {
+    await loadSequentially();
+  } else {
+    await Promise.all(imageSources.map(preloadImageWithDelay));
+  }
 
-    const preloadImageWithDelay = async (src: string, index: number): Promise<void> => {
-      return new Promise((imageResolve) => {
-        const img = new Image();
-
-        img.onload = async (): Promise<void> => {
-          // Add artificial delay for testing
-          if (ENABLE_SLOW_LOADING) {
-            await new Promise(resolve => setTimeout(resolve, DELAY_PER_IMAGE));
-          }
-
-          loadedCount++;
-          loadedImages[index] = img;
-
-          const progress = (loadedCount / totalImages) * 100;
-          onProgress?.(progress, loadedCount, totalImages);
-
-          if (loadedCount === totalImages) {
-            resolve(loadedImages);
-          }
-          imageResolve();
-        };
-
-        img.onerror = async (): Promise<void> => {
-          console.warn(`Failed to load image: ${src}`);
-
-          // Add delay even for errors
-          if (ENABLE_SLOW_LOADING) {
-            await new Promise(resolve => setTimeout(resolve, DELAY_PER_IMAGE));
-          }
-
-          loadedCount++;
-          loadedImages[index] = null;
-
-          const progress = (loadedCount / totalImages) * 100;
-          onProgress?.(progress, loadedCount, totalImages);
-
-          if (loadedCount === totalImages) {
-            resolve(loadedImages);
-          }
-          imageResolve();
-        };
-
-        img.src = src;
-      });
-    };
-
-    // Load images sequentially for more visible progress (optional)
-    const loadSequentially = async (): Promise<void> => {
-      for (let i = 0; i < imageSources.length; i++) {
-        await preloadImageWithDelay(imageSources[i], i);
-      }
-    };
-
-    // Choose loading strategy
-    if (ENABLE_SLOW_LOADING) {
-      // Sequential loading for more visible progress
-      loadSequentially();
-    } else {
-      // Parallel loading for production
-      imageSources.forEach((src: string, index: number) => {
-        preloadImageWithDelay(src, index);
-      });
-    }
-  });
+  return loadedImages;
 };
 
 export const useImagePreloader = (imageSources: string[]): UseImagePreloaderReturn => {

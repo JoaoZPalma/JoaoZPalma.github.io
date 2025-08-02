@@ -5,7 +5,7 @@ export default function SimpleFrame({ children }: { children: React.ReactNode })
   return (
     <div className="relative mx-auto w-[900px] h-[900px]">
       <Image
-        src="/frame250.png"
+        src="/frame250.webp"
         alt=""
         fill
         className="object-contain pointer-events-none z-40"
