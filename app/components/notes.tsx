@@ -34,6 +34,24 @@ const notes: Note[] = [
     </>,
     createdAt: "27/07/2025"
   },
+  {
+    id: 3,
+    title: "New Cert: Front End Development Libraries",
+    content: <>
+      <p>
+        I just finished the <span className="font-semibold">Front End Development Libraries</span> course on <a href="https://www.freecodecamp.org/" className="underline decoration-2">freeCodeCamp</a>, and it was a solid experience!
+      </p>
+      <p>
+        It worked as a great revision of things I already knew, while also helping me deepen my understanding of how frontend libraries function.
+      </p>
+      <p>
+        I finally got the chance to try out <span className="font-semibold">SASS</span> as well, since I heard of it but never got around to try it!</p>
+      <p>
+        I also strengthened my knowledge of <span className="font-semibold">React, Redux, and Bootstrap</span>, and wrapped things up with some exercises to consolidate everything.
+      </p>
+    </>,
+    createdAt: "05/08/2025"
+  }
 ];
 
 export default function Notes() {
