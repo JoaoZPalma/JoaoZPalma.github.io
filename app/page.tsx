@@ -687,15 +687,15 @@ const StatItem = ({ name, value, description }: { name: string; value: string; d
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          // Toggle tooltip visibility for keyboard users
         }
       }}
     >
       {name} - {value}
+      {/* COMMENT */}
       <div
         id={`${name.toLowerCase()}-description`}
-        className="hidden group-hover:block group-focus:block absolute bottom-full left-0 w-full transform mb-2 
-          bg-darker_primary border-4 border-secondary p-1 text-xl"
+        className="hidden group-hover:block group-focus:block absolute bottom-full left-0 w-32 md:w-48 text-center transform mb-2 
+            bg-darker_primary border-4 border-secondary p-1 text-xl"
         role="tooltip"
         aria-live="polite"
       >
