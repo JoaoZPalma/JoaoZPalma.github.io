@@ -28,9 +28,9 @@ const notes: Note[] = [
       <p>
         I had the pleasure of studying at the <a href="https://www.ipleiria.pt" className="underline decoration-2">Polytechnic Institute of Leiria</a> <a className='italic'>(soon to be a university)</a>, where I explored various topics such as <a className='font-semibold'> programming, databases, artificial intelligence, networks, security, mathematics, </a> and much more.
       </p>
-      <p>Along the way, I met incredible professors and colleagues who supported me throughout this journey, not to mention the friends who not only helped me debug issues when things broke unexpectedly but also made the tough moments more bearable.</p>
-      <p>I&apos;d also like to thank my family, especially my grandmother, who gave me the opportunity to study without having to worry about work, something I&apos;ll be forever grateful for.</p>
-      <p className='italic'>Lastly, a special thank you to the Delta coffee machine at uni and the amazing ladies at the bar who served me coffee daily, without you, none of this would&apos;ve been possible...</p>
+      <p>Along the way, I met <b>incredible professors and colleagues</b> who supported me throughout this journey, not to mention the <b>friends</b> who not only helped me debug issues when things broke unexpectedly but also made the tough moments more bearable.</p>
+      <p>I&apos;d also like to thank my family, especially my grandmother, who gave me the opportunity to study without having to worry about work, something I&apos;ll be <b>forever grateful for</b>.</p>
+      <p className='italic'>Lastly, a special thank you to the<b> Delta coffee machine at uni</b> and the <b>amazing staff at the bar</b> who served me coffee daily, without you, none of this would&apos;ve been possible...</p>
     </>,
     createdAt: "27/07/2025"
   },
@@ -89,7 +89,7 @@ export default function Notes() {
               style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}
               aria-label="Go back to notes list"
             >
-              &lt;-
+              &lt;
             </button>
             <h1 className="text-darker_secondary text-4xl text-center flex-1" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
               {selectedNote.title}
@@ -139,10 +139,7 @@ export default function Notes() {
   return (
     <div className="p-2 h-full pb-10">
       <section className="h-full overflow-y-auto pb-32 flex flex-col items-center">
-        <h1 className="text-darker_secondary text-5xl mb-6 mt-4" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
-          Notes
-        </h1>
-        <div className="w-full max-w-2xl flex flex-col gap-4">
+        <div className="w-full max-w-2xl flex flex-col gap-4 mt-8">
           {notes.slice().reverse().map((note) => (
             <button
               key={note.id}
@@ -155,7 +152,7 @@ export default function Notes() {
             >
               <span className="flex w-full justify-between items-center">
                 <span>{note.title}</span>
-                <span className="ml-2 text-3xl" style={{ fontFamily: 'AtlantisText', fontWeight: 900 }} aria-hidden="true">-&gt;</span>
+                <span className="ml-2 text-3xl" style={{ fontFamily: 'AtlantisText', fontWeight: 900 }} aria-hidden="true">&gt;</span>
               </span>
               <div className="text-lg mt-2 opacity-70" style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}>
                 {note.createdAt}

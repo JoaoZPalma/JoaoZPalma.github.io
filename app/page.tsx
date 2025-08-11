@@ -27,7 +27,8 @@ export default function Home() {
   const [mounted, setMounted] = useState<boolean>(false);
   const [controlsOpen, setControlsOpen] = useState<boolean>(false);
   const [imageLoadProgress, setImageLoadProgress] = useState<number>(0);
-
+  const [windowOrder, setWindowOrder] = useState<string[]>([]);
+  const baseZIndex = 50;
   // Define all images that need to be preloaded
   const imagesToPreload: string[] = [
     // Inventory images
@@ -120,8 +121,23 @@ export default function Home() {
   const [chestHoverTimeout, setChestHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [defaultPosition, setDefaultPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [leftPosition, setLeftPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [middlePosition, setMiddlePosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [rightPosition, setRightPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
+  // Function to bring window to front
+  const bringToFront = (windowId: string) => {
+    setWindowOrder(prev => {
+      // Remove the window from current position and add to end (highest z-index)
+      const filtered = prev.filter(id => id !== windowId);
+      return [...filtered, windowId];
+    });
+  };
+
+  // Function to get z-index for a window
+  const getZIndex = (windowId: string) => {
+    const index = windowOrder.indexOf(windowId);
+    return index === -1 ? baseZIndex : baseZIndex + index;
+  };
   function SoundToggleButton() {
     const [enabled, setEnabled] = useState<boolean>(isSoundEnabled());
 
@@ -157,6 +173,10 @@ export default function Home() {
         });
         setLeftPosition({
           x: window.innerWidth * 0.1,
+          y: window.innerHeight * 0.1,
+        });
+        setMiddlePosition({
+          x: window.innerWidth * 0.3,
           y: window.innerHeight * 0.1,
         });
         setRightPosition({
@@ -231,6 +251,8 @@ export default function Home() {
             defaultPosition={rightPosition}
             ariaLabel="Inventory popup window"
             popupId="inventory-popup"
+            zIndex={getZIndex('inventory')} // NEW
+            onFocus={() => bringToFront('inventory')} // NEW
           >
             <ScrollHeader
               header="INVENTORY"
@@ -246,6 +268,7 @@ export default function Home() {
           <ScrollHeaderMobile
             header="CONTACTS"
             onClose={() => setShowContacts(false)}
+            centered={true}
           >
             <Contacts />
           </ScrollHeaderMobile>
@@ -257,9 +280,11 @@ export default function Home() {
             onClose={() => setShowContacts(false)}
             bounds={dragBounds}
             handle=".drag-handle"
-            defaultPosition={leftPosition}
+            defaultPosition={rightPosition}
             ariaLabel="Contacts popup window"
             popupId="contacts-popup"
+            zIndex={getZIndex('contacts')} // NEW
+            onFocus={() => bringToFront('contacts')} // NEW
           >
             <ScrollHeader
               header="CONTACTS"
@@ -273,7 +298,7 @@ export default function Home() {
         <div className="md:hidden">
           <ScrollHeaderMobile
             header="PROJECTS"
-            overflow={false}
+            overflow={true}
             onClose={() => setShowProjects(false)}
           >
             <Projects />
@@ -289,6 +314,8 @@ export default function Home() {
             defaultPosition={defaultPosition}
             ariaLabel="Projects popup window"
             popupId="projects-popup"
+            zIndex={getZIndex('projects')} // NEW
+            onFocus={() => bringToFront('projects')} // NEW
           >
             <ScrollHeader
               header="PROJECTS"
@@ -316,9 +343,11 @@ export default function Home() {
             onClose={() => setShowFAQ(false)}
             bounds={dragBounds}
             handle=".drag-handle"
-            defaultPosition={leftPosition}
+            defaultPosition={middlePosition}
             ariaLabel="FAQ popup window"
             popupId="faq-popup"
+            zIndex={getZIndex('faq')} // NEW
+            onFocus={() => bringToFront('faq')} // NEW
           >
             <ScrollHeader
               header="FAQ"
@@ -349,6 +378,8 @@ export default function Home() {
             defaultPosition={leftPosition}
             ariaLabel="Notes popup window"
             popupId="notes-popup"
+            zIndex={getZIndex('notes')} // NEW
+            onFocus={() => bringToFront('notes')} // NEW
           >
             <ScrollHeader
               header="NOTES"
@@ -406,7 +437,7 @@ export default function Home() {
 
               {/* Profile Image */}
               <div className="flex flex-col items-center mt-8 px-4">
-                <Profile></Profile>
+                <Profile isAlternateColors={document.documentElement.classList.contains('alternate-colors')} />
                 <span className="w-full text-5xl leading-tight text-darker_secondary text-center mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 500 }} role="heading" aria-level={2}>
                   CODE WARLOCK
                 </span>
@@ -691,7 +722,6 @@ const StatItem = ({ name, value, description }: { name: string; value: string; d
       }}
     >
       {name} - {value}
-      {/* COMMENT */}
       <div
         id={`${name.toLowerCase()}-description`}
         className="hidden group-hover:block group-focus:block absolute bottom-full left-0 w-32 md:w-48 text-center transform mb-2 
@@ -710,12 +740,16 @@ function AnimatedPopup({
   onClose,
   ariaLabel,
   popupId,
+  zIndex = 50, // NEW: Accept z-index prop
+  onFocus, // NEW: Accept focus handler
   ...draggableProps
 }: {
   children: ReactElement<{ closing?: boolean; onClose?: () => void }>;
   onClose: () => void;
   ariaLabel?: string;
   popupId?: string;
+  zIndex?: number; // NEW
+  onFocus?: () => void; // NEW
 } & Partial<DraggableProps>) {
   const [visible, setVisible] = useState(true);
   const popupRef = useRef<HTMLDivElement>(null);
@@ -731,16 +765,29 @@ function AnimatedPopup({
     }
   };
 
+  // NEW: Handle mouse down to bring to front
+  const handleMouseDown = () => {
+    if (onFocus) {
+      onFocus();
+    }
+  };
+
   return (
-    <Draggable nodeRef={popupRef} {...draggableProps}>
+    <Draggable
+      nodeRef={popupRef}
+      onMouseDown={handleMouseDown} // NEW: Bring to front on click
+      {...draggableProps}
+    >
       <div
         id={popupId}
         ref={popupRef}
-        className="fixed z-50"
+        className="fixed"
+        style={{ zIndex }} // NEW: Apply dynamic z-index
         role="dialog"
         aria-modal="true"
         aria-label={ariaLabel}
         onKeyDown={handleKeyDown}
+        onMouseDown={handleMouseDown} // NEW: Also on direct click
         tabIndex={-1}
       >
         {React.cloneElement(children, {

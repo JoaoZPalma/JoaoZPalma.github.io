@@ -29,7 +29,19 @@ const faqs = [
   {
     question: "Do you take on collaborations?",
     answer: <>
-      Absolutely! Be it <b>open-source quests</b>, <b>freelance contracts</b>, or just sharing insights around the <b>digital campfire</b>—I’m open to <b>joining forces</b>.
+      Absolutely! Be it <b>open-source quests</b>, <b>freelance contracts</b>, or just sharing insights around the <b>digital campfire</b>, I’m open to <b>joining forces</b>.
+    </>
+  },
+  {
+    question: "Why do the stats have those numbers?",
+    answer: <>
+      In D&amp;D (Dungeons &amp; Dragons) each character has <b>6 stats</b>, each one with a <b>value between 1 and 20</b>, and they represent <b>how good you are at something</b>. I&apos;ve used the same logic to create my stats, and added some funny comments to &quot;justify&quot; each one. <b>They&apos;re not meant to be taken seriously! </b>
+    </>
+  },
+  {
+    question: "Some of the stuff seems to be outside of the screen!",
+    answer: <>
+      If you're acessing through a <b>Desktop device</b>, you can actually <b>drag the windows</b> through the <b>drag handle on top of each window!</b> This is to mimic the way a desktop works, <b>however if you're on mobile</b> and that's happening <b>please share it with me</b> so I can fix it!
     </>
   },
 ];
@@ -39,15 +51,15 @@ export default function FAQ() {
 
   return (
     <div className="p-2 h-full pb-10">
-      <section className="h-full overflow-y-auto pb-32 flex flex-col items-center">
-        <h1 className="text-darker_secondary text-5xl mb-6 mt-4" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
+      <section className="h-full overflow-y-auto pb-24 flex flex-col items-center">
+        <h1 className="text-darker_secondary text-5xl mb-6 my-2 md:mt-4" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
           Frequently Asked Questions
         </h1>
         <div className="w-full max-w-2xl flex flex-col gap-4">
           {faqs.map((faq, idx) => (
             <button
               key={idx}
-              className="border-4 border-secondary bg-darker_primary rounded-lg transition-all duration-200 shadow-lg w-full text-left text-darker_secondary text-3xl focus:outline-none flex flex-col items-start p-4"
+              className="border-4 border-secondary bg-darker_primary transition-all duration-200 shadow-lg w-full text-left text-darker_secondary text-3xl focus:outline-none flex flex-col items-start p-4"
               style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}
               onClick={() => {
                 const isOpening = openIndex !== idx;

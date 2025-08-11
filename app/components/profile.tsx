@@ -1,11 +1,25 @@
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
 export default function ImageFrame() {
+  const [isAlternateColors, setIsAlternateColors] = useState(
+    document.documentElement.classList.contains("alternate-colors")
+  );
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsAlternateColors(
+        document.documentElement.classList.contains("alternate-colors")
+      );
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
   return (
     <div className="relative w-[300px] aspect-square">
       {/* Frame */}
       <Image
-        src="/frame250.webp"
+        src={isAlternateColors ? "/frame250_light.webp" : "/frame250.webp"}
         alt=""
         fill
         className="object-cover z-10"

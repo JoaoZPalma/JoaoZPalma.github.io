@@ -8,6 +8,7 @@ interface ScrollMobileProps {
   onClose?: () => void;
   overflow?: boolean;
   closing?: boolean;
+  centered?: boolean;
 }
 
 const ScrollMobile = ({
@@ -15,12 +16,24 @@ const ScrollMobile = ({
   children,
   header,
   overflow = false,
-  closing = false
+  closing = false,
+  centered = false
 }: ScrollMobileProps) => {
   const [animationClass, setAnimationClass] = useState<'popUp' | 'popDown'>('popUp');
   const [isClosing, setIsClosing] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    // Disable body scroll when modal opens
+    document.body.style.overflow = 'hidden';
+    document.body.style.touchAction = 'none';
+
+    return () => {
+      // Re-enable scroll when modal closes
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    };
+  }, []);
   useEffect(() => {
     // force a reflow so the browser definitely restarts the animation
     if (containerRef.current) {
@@ -55,12 +68,13 @@ const ScrollMobile = ({
       <div
         ref={containerRef}
         className={`
-          ${animationClass}
-          fixed inset-0 w-full h-full
-          bg-primary
-          ${overflow ? 'overflow-visible' : 'overflow-hidden'}
-          z-55
-        `}
+    ${animationClass}
+    fixed inset-0 w-full h-full
+    bg-primary
+    ${overflow ? 'overflow-visible' : 'overflow-hidden'}
+    z-55
+    ${centered ? 'flex flex-col' : ''} 
+  `}
         onClick={(e) => e.stopPropagation()}
         onMouseDown={(e) => e.stopPropagation()}
         onTouchStart={(e) => e.stopPropagation()}
@@ -69,7 +83,7 @@ const ScrollMobile = ({
         style={{ touchAction: 'none' }}
       >
         {header && (
-          <div className="bg-darker_primary/65 py-6 px-3 flex justify-between items-center border-b-6 border-darker_secondary border-dashed">
+          <div className="bg-darker_primary py-6 px-3 flex justify-between items-center border-b-6 border-darker_secondary border-dashed">
             {typeof header === 'string'
               ? <h1 className="text-4xl text-darker_secondary" style={{ fontFamily: 'AtlantisText', fontWeight: 900 }}>{header}</h1>
               : header
@@ -87,7 +101,13 @@ const ScrollMobile = ({
             )}
           </div>
         )}
-        {children}
+        {centered ? (
+          <div className="flex-1 flex items-center justify-center overflow-y-auto">
+            {children}
+          </div>
+        ) : (
+          children
+        )}
       </div>
     </>
   );

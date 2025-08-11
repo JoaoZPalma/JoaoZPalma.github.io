@@ -54,7 +54,7 @@ export default function Projects() {
               <li className={`flex items-start my-6 md:mb-14 flex-col md:flex-row ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
                 <div className={`flex items-start gap-4 md:contents ${index % 2 === 1 ? 'flex-row-reverse' : 'text-right'}`}>
                   <Image
-                    className={`aspect-square w-[10vh] h-[10vh] md:w-40 md:h-40 object-cover border-secondary border-4 bg-darker_primary p-1 mb-4 md:mb-0 ${index % 2 === 1 ? 'self-end md:self-start' : 'self-start'}`}
+                    className={`aspect-square w-[10vh] h-[10vh] md:w-40 md:h-40 object-cover border-secondary border-4 bg-darker_primary p-1 mb-4 md:mb-0 ${index % 2 === 1 ? ' md:self-start' : 'self-start'}`}
                     src={project.image}
                     alt={project.title}
                     width={160}
@@ -64,7 +64,7 @@ export default function Projects() {
                     {project.title}
                   </h2>
                 </div>
-                <article className={`flex-1 text-left ${index % 2 === 1 ? 'md:text-right md:mr-4 md:ml-2' : 'md:ml-4 md:mr-2'} md:-mt-2`}>
+                <article className={`flex-1 text-end ${index % 2 === 1 ? 'text-start md:mr-4 md:ml-2' : 'md:ml-4 md:mr-2'} md:-mt-2`}>
                   <h2 className="text-darker_secondary text-4xl hidden md:block" style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}>
                     {project.title}
                   </h2>
@@ -82,7 +82,7 @@ export default function Projects() {
                       Check it out here!
                     </a>
                   ) : (
-                    <div className={`flex items-center gap-2 ${index % 2 === 1 ? 'md:flex-row-reverse' : ''} flex-col md:flex-row`}>
+                    <div className={`flex gap-2 ${index % 2 === 1 ? 'md:flex-row-reverse' : ''} flex-col md:flex-row`}>
                       <span
                         className="text-darker_secondary text-2xl line-through decoration-2"
                         style={{ fontFamily: 'AtlantisText', fontWeight: 400 }}
