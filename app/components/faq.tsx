@@ -41,7 +41,7 @@ const faqs = [
   {
     question: "Some of the stuff seems to be outside of the screen!",
     answer: <>
-      If you're acessing through a <b>Desktop device</b>, you can actually <b>drag the windows</b> through the <b>drag handle on top of each window!</b> This is to mimic the way a desktop works, <b>however if you're on mobile</b> and that's happening <b>please share it with me</b> so I can fix it!
+      If you&apos;re acessing through a <b>Desktop device</b>, you can actually <b>drag the windows</b> through the <b>drag handle on top of each window!</b> This is to mimic the way a desktop works, <b>however if you&apos;re on mobile</b> and that&apos;s happening <b>please share it with me</b> so I can fix it!
     </>
   },
 ];

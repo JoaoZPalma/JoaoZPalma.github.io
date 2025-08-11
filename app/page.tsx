@@ -437,7 +437,7 @@ export default function Home() {
 
               {/* Profile Image */}
               <div className="flex flex-col items-center mt-8 px-4">
-                <Profile isAlternateColors={document.documentElement.classList.contains('alternate-colors')} />
+                <Profile />
                 <span className="w-full text-5xl leading-tight text-darker_secondary text-center mt-1" style={{ fontFamily: 'AtlantisText', fontWeight: 500 }} role="heading" aria-level={2}>
                   CODE WARLOCK
                 </span>
