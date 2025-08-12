@@ -59,7 +59,7 @@ export default function FAQ() {
           {faqs.map((faq, idx) => (
             <button
               key={idx}
-              className="border-4 border-secondary bg-darker_primary transition-all duration-200 shadow-lg w-full text-left text-darker_secondary text-3xl focus:outline-none flex flex-col items-start p-4"
+              className="cursor-pointer border-4 border-secondary bg-darker_primary transition-all duration-200 shadow-lg w-full text-left text-darker_secondary text-3xl focus:outline-none flex flex-col items-start p-4"
               style={{ fontFamily: 'AtlantisText', fontWeight: 700 }}
               onClick={() => {
                 const isOpening = openIndex !== idx;

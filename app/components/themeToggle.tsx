@@ -33,7 +33,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleColors}
-      className="p-2 relative"
+      className="p-2 relative cursor-pointer"
       aria-label="Toggle color scheme"
       disabled={isTransitioning}
     >

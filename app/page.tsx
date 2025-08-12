@@ -148,7 +148,7 @@ export default function Home() {
     return (
       <button
         onClick={handleToggle}
-        className="p-2"
+        className="p-2 cursor-pointer"
         aria-pressed={enabled}
         aria-label={enabled ? "Disable sound effects" : "Enable sound effects"}
         title={enabled ? "Disable sound" : "Enable sound"}
@@ -626,7 +626,7 @@ export default function Home() {
                           playSound('click1');
                           setShowProjects(!showProjects);
                         }}
-                        className="flex-1 flex items-center justify-center"
+                        className="flex-1 flex items-center justify-center cursor-pointer"
                         aria-label="Open projects"
                         aria-expanded={showProjects}
                         aria-controls={showProjects ? "projects-popup" : undefined}
@@ -645,7 +645,7 @@ export default function Home() {
                           playSound('click1');
                           setShowNotes(!showNotes);
                         }}
-                        className="flex-1 flex items-center justify-center"
+                        className="flex-1 flex items-center justify-center cursor-pointer"
                         aria-label="Open notes"
                         aria-expanded={showNotes}
                         aria-controls={showNotes ? "notes-popup" : undefined}
@@ -663,7 +663,7 @@ export default function Home() {
                           playSound('click1');
                           setShowFAQ(!showFAQ);
                         }}
-                        className="flex-1 flex items-center justify-center"
+                        className="flex-1 flex items-center justify-center cursor-pointer"
                         aria-label="Open FAQ"
                         aria-expanded={showFAQ}
                         aria-controls={showFAQ ? "faq-popup" : undefined}
@@ -680,7 +680,7 @@ export default function Home() {
                         playSound('bird');
                         setShowContacts(!showContacts);
                       }}
-                      className="flex-1 flex items-center justify-center"
+                      className="flex-1 flex items-center justify-center cursor-pointer"
                       aria-label="Open contacts"
                       aria-expanded={showContacts}
                       aria-controls={showContacts ? "contacts-popup" : undefined}
