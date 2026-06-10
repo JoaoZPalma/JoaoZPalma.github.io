@@ -2,9 +2,9 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
-// User-site repo (JoaoZPalma.github.io) -> served at domain root, no base path.
+// Served at the apex custom domain (public/CNAME + Pages settings), no base path.
 export default defineConfig({
-  site: 'https://joaozpalma.github.io',
+  site: 'https://joaopalma.dev',
   vite: {
     plugins: [tailwindcss()],
   },
