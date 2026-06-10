@@ -23,17 +23,24 @@ export function initInventory() {
         // only one tooltip open at a time
         root.querySelectorAll<HTMLElement>('[data-cell="mobile"] [data-tooltip]').forEach((t) => {
           t.style.opacity = '';
-          t.style.transform = '';
+          t.style.translate = '';
         });
         if (wasOpen) return;
         tooltip.style.opacity = '1';
-        // clamp to screen edges
+        // Clamp to the viewport. The class centers the tooltip via the CSS
+        // `translate` property (Tailwind v4 -translate-x-1/2), so the
+        // override must use `translate` too — writing `transform` would
+        // stack on top of it and double the -50% shift.
         const rect = tooltip.getBoundingClientRect();
         const padding = 4;
+        let shift = 0;
         if (rect.left < padding) {
-          tooltip.style.transform = `translateX(calc(-50% + ${padding - rect.left}px))`;
+          shift = padding - rect.left;
         } else if (rect.right > window.innerWidth - padding) {
-          tooltip.style.transform = `translateX(calc(-50% - ${rect.right - window.innerWidth + padding}px))`;
+          shift = (window.innerWidth - padding) - rect.right;
+        }
+        if (shift !== 0) {
+          tooltip.style.translate = `calc(-50% + ${shift}px) 0`;
         }
       });
 
