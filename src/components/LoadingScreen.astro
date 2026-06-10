@@ -13,7 +13,7 @@
   <div class="text-center flex flex-col items-center justify-center pixelated w-full md:w-auto max-w-lg md:max-w-none">
     <h1
       class="text-3xl md:text-5xl text-darker_primary mb-6 md:mb-8 pixelated underline decoration-2 md:decoration-4 underline-offset-4 md:underline-offset-8"
-      style="font-family: AtlantisText; font-weight: 900;"
+      style="font-family: AtlantisText; font-weight: 900; text-shadow: 4px 4px 0 var(--color-darker_secondary);"
     >
       LOADING CODEX...
     </h1>
@@ -28,13 +28,13 @@
     </div>
 
     <div class="mt-4 md:mt-6 bg-darker_primary border-4 md:border-6 border-darker_secondary p-3 md:p-4 w-full md:max-w-lg pixelated">
-      <p data-loader-fact class="text-secondary text-base md:text-xl text-center leading-relaxed md:leading-normal" style="font-family: AtlantisText; font-weight: 400;">
+      <p data-loader-fact class="text-secondary text-base md:text-xl text-center leading-relaxed md:leading-normal" style="font-family: AtlantisText; font-weight: 600;">
         Shuffling the deck of arcane facts...
       </p>
     </div>
 
-    <p class="mt-3 text-darker_primary text-sm md:text-base italic text-center" style="font-family: AtlantisText; font-weight: 400;">
-      (this page actually loaded in ~0.000005s — the bar is just here because it's pretty)
+    <p data-loader-caption class="mt-3 text-darker_primary text-base md:text-lg italic text-center opacity-0 transition-opacity duration-500" style="font-family: AtlantisText; font-weight: 400;">
+      (this page actually loaded in <span data-loader-time>~0.000005</span>s — the bar is just here because it's pretty)
     </p>
   </div>
 </div>

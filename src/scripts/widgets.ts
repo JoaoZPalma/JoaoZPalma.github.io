@@ -147,35 +147,70 @@ const LOADING_FACTS = [
   "Loading... Please don't press F5, the ritual is delicate.",
 ];
 
-// Decorative loading bar. The page is already fully loaded behind it — it
-// exists purely for the bit. Skipped via html.skip-loader on repeat visits.
+// Decorative loading bar, shown on every page load. The page is already
+// fully loaded behind it — it exists purely for the bit, and a click skips it.
 export function initLoadingScreen() {
   const screen = document.getElementById('loading-screen');
   if (!screen) return;
-  if (document.documentElement.classList.contains('skip-loader')) {
-    screen.remove();
-    return;
-  }
+  // Debug: open the site with ?loader to keep the bar looping forever
+  // while fine-tuning its look.
+  const debugLoop = new URLSearchParams(location.search).has('loader');
 
   const fact = screen.querySelector<HTMLElement>('[data-loader-fact]');
   if (fact) fact.textContent = LOADING_FACTS[Math.floor(Math.random() * LOADING_FACTS.length)];
 
+  // Real load time for the gag caption: navigation start -> DOM ready.
+  const time = screen.querySelector<HTMLElement>('[data-loader-time]');
+  if (time) {
+    const nav = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
+    const ms = nav?.domContentLoadedEventEnd || performance.now();
+    time.textContent = (ms / 1000).toFixed(3);
+  }
+
   const bar = screen.querySelector<HTMLElement>('[data-loader-bar]')!;
   const pct = screen.querySelector<HTMLElement>('[data-loader-pct]')!;
-  const DURATION = 1200;
+  const caption = screen.querySelector<HTMLElement>('[data-loader-caption]');
+
+  // Experience timing: bar fills while the visitor reads the fact (~4 words/s
+  // average reading speed); the "it was already loaded" punchline reveals
+  // midway so it can be read before the bar completes — no extra wait at the
+  // end. Click anywhere skips.
+  const DURATION = 4000;
+  const PUNCHLINE_AT = 50; // % progress where the caption reveals
+  const FADE = 300;
   const start = performance.now();
+  let finished = false;
+
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    screen.style.transition = `opacity ${FADE}ms linear`;
+    screen.style.opacity = '0';
+    setTimeout(() => screen.remove(), FADE);
+  };
+
+  if (debugLoop) {
+    // styling mode: punchline always visible, no skipping
+    caption?.classList.remove('opacity-0');
+  } else {
+    // impatient visitors can bail at any point
+    screen.style.cursor = 'pointer';
+    screen.addEventListener('click', finish);
+  }
 
   const tick = (now: number) => {
-    const progress = Math.min(100, ((now - start) / DURATION) * 100);
+    if (finished) return;
+    const elapsed = ((now - start) / DURATION) * 100;
+    const progress = debugLoop ? elapsed % 100 : Math.min(100, elapsed);
     bar.style.width = `${progress}%`;
     pct.textContent = `${Math.round(progress)}%`;
-    if (progress < 100) {
+    if (!debugLoop && progress >= PUNCHLINE_AT) {
+      caption?.classList.remove('opacity-0');
+    }
+    if (debugLoop || progress < 100) {
       requestAnimationFrame(tick);
     } else {
-      sessionStorage.setItem('codex-loaded', 'true');
-      screen.style.transition = 'opacity 0.3s linear';
-      screen.style.opacity = '0';
-      setTimeout(() => screen.remove(), 300);
+      finish();
     }
   };
   requestAnimationFrame(tick);

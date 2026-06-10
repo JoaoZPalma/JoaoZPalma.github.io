@@ -123,6 +123,7 @@ function makeDraggable(popup: HTMLElement) {
   };
 
   const onUp = () => {
+    document.documentElement.classList.remove('is-dragging');
     document.removeEventListener('pointermove', onMove);
     document.removeEventListener('pointerup', onUp);
   };
@@ -130,6 +131,9 @@ function makeDraggable(popup: HTMLElement) {
   handle.addEventListener('pointerdown', (e) => {
     if ((e.target as HTMLElement).closest('[data-panel-close]')) return;
     e.preventDefault();
+    // preventDefault suppresses :active, so the closed-gauntlet cursor is
+    // applied via this class instead (see global.css)
+    document.documentElement.classList.add('is-dragging');
     startX = e.clientX;
     startY = e.clientY;
     const rect = popup.getBoundingClientRect();

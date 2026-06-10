@@ -43,13 +43,13 @@ import stats from '../data/stats.json';
         <div data-controls-drawer class="flex flex-col transition-all duration-300 -translate-x-full">
           <button
             data-controls-toggle
-            class="bg-darker_primary border-3 border-secondary p-2 absolute right-0 transform translate-x-full"
+            class="bg-darker_primary border-4 border-secondary p-2 absolute right-0 transform translate-x-full"
             aria-label="Open controls"
             style="font-family: AtlantisText; font-weight: 900;"
           >
             <span class="text-secondary text-xl">☰</span>
           </button>
-          <div data-controls-tray class="bg-darker_primary border-3 border-secondary py-2 flex flex-col gap-2 items-center transition-all duration-300 w-0 px-0 overflow-hidden">
+          <div data-controls-tray class="bg-darker_primary border-4 border-secondary py-2 flex flex-col gap-2 items-center transition-all duration-300 w-0 px-0 overflow-hidden">
             <ThemeToggle />
             <SoundToggle />
           </div>
@@ -65,7 +65,7 @@ import stats from '../data/stats.json';
       <div class="border-0 md:border-16 md:border-darker_secondary">
         <div class="bg-primary max-w-[100vw] md:aspect-square md:w-[800px] md:h-[800px]">
           <header>
-            <h1 class="text-5xl leading-tight text-darker_secondary pt-10 md:pt-6 md:pl-6 pb-6 md:pb-0 text-center md:text-left" style="font-family: AtlantisText; font-weight: 900;">
+            <h1 class="text-5xl leading-tight text-darker_secondary pt-10 md:pt-6 md:pl-6 pb-6 md:pb-0 text-center md:text-left" style="font-family: AtlantisText; font-weight: 900; text-shadow: 4px 4px 0 var(--color-darker_primary);">
               PALMA'S ELDRITCH<br />
               CODEX
             </h1>
@@ -86,7 +86,7 @@ import stats from '../data/stats.json';
 
             <div class="flex flex-col items-center mt-8 px-4">
               <Profile />
-              <span class="w-full text-5xl leading-tight text-darker_secondary text-center mt-1" style="font-family: AtlantisText; font-weight: 500;" role="heading" aria-level="2">
+              <span class="w-full text-5xl leading-tight text-darker_secondary text-center mt-1" style="font-family: AtlantisText; font-weight: 500; text-shadow: 3px 3px 0 var(--color-darker_primary);" role="heading" aria-level="2">
                 CODE WARLOCK
               </span>
             </div>
@@ -104,7 +104,7 @@ import stats from '../data/stats.json';
                       {stat.name} - {stat.value}
                       <span
                         id={`${stat.name.toLowerCase()}-description-mobile`}
-                        class="hidden group-hover:block group-focus:block absolute bottom-full left-0 w-32 md:w-48 text-center transform mb-2
+                        class="pointer-events-none invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus:visible group-focus:opacity-100 group-focus:translate-y-0 transition-all duration-200 ease-out absolute bottom-full left-0 w-32 md:w-48 text-center transform mb-2
                             bg-darker_primary border-4 border-secondary p-1 text-xl"
                         role="tooltip"
                       >
@@ -229,7 +229,7 @@ import stats from '../data/stats.json';
                           {stat.name} - {stat.value}
                           <span
                             id={`${stat.name.toLowerCase()}-description`}
-                            class="hidden group-hover:block group-focus:block absolute bottom-full left-0 w-32 md:w-48 text-center transform mb-2
+                            class="pointer-events-none invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus:visible group-focus:opacity-100 group-focus:translate-y-0 transition-all duration-200 ease-out absolute bottom-full left-0 w-32 md:w-48 text-center transform mb-2
                                 bg-darker_primary border-4 border-secondary p-1 text-xl"
                             role="tooltip"
                           >
@@ -246,7 +246,7 @@ import stats from '../data/stats.json';
                 <div class="mt-9 flex flex-col items-center">
                   <Profile />
                   <div class="flex flex-col items-center gap-2">
-                    <span class="w-full text-5xl leading-tight text-darker_secondary text-center mt-1" style="font-family: AtlantisText; font-weight: 500;" role="heading" aria-level="2">
+                    <span class="w-full text-5xl leading-tight text-darker_secondary text-center mt-1" style="font-family: AtlantisText; font-weight: 500; text-shadow: 3px 3px 0 var(--color-darker_primary);" role="heading" aria-level="2">
                       CODE WARLOCK
                     </span>
                     <button

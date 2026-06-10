@@ -82,11 +82,6 @@ html.alternate-colors .frame-dark {
   display: none;
 }
 
-/* Loading screen is skipped instantly on repeat visits (class set by inline head script). */
-html.skip-loader #loading-screen {
-  display: none;
-}
-
 .crow-icon {
   width: 48px;
   height: 27px;
@@ -226,6 +221,75 @@ html.skip-loader #loading-screen {
 
 .pixelated {
   image-rendering: pixelated;
+}
+
+/* Potion rating icons (book reviews). full/half PNGs are 3x3 sprite sheets
+   of 16px frames (row-major); background-size 300% scales the sheet so one
+   frame fills the element at any size. The bubbling loop steps through all
+   9 frames. potion-empty is a single 16px frame, so no sheet, no animation. */
+.potion {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: 300% 300%;
+  image-rendering: pixelated;
+  animation: potion-bubble 1.2s steps(1) infinite;
+}
+
+.potion-full {
+  background-image: url('/potion-full.png');
+}
+
+.potion-half {
+  background-image: url('/potion-half.png');
+}
+
+.potion-empty {
+  background-image: url('/potion-empty.png');
+  background-size: 100% 100%;
+  animation: none;
+}
+
+/* 8 frames — the sheet's bottom-right cell is empty, so it's skipped */
+@keyframes potion-bubble {
+  0%     { background-position: 0% 0%; }
+  12.5%  { background-position: 50% 0%; }
+  25%    { background-position: 100% 0%; }
+  37.5%  { background-position: 0% 50%; }
+  50%    { background-position: 50% 50%; }
+  62.5%  { background-position: 100% 50%; }
+  75%    { background-position: 0% 100%; }
+  87.5%  { background-position: 50% 100%; }
+}
+
+/* Gauntlet cursor everywhere. The extra selectors out-rank Tailwind's
+   cursor-* utility classes, which would otherwise restore the default
+   pointer on buttons/handles. Hotspot: 7 1 (fingertip). */
+*,
+.cursor-pointer,
+.cursor-move,
+.cursor-help,
+.hover\:cursor-pointer:hover {
+  cursor: url('/gauntlet-point.png') 7 1, auto;
+}
+
+/* press state: gauntlet closes while holding the mouse down anywhere.
+   The class'd selectors keep enough specificity to beat the cursor-*
+   utility overrides above. */
+*:active,
+.cursor-pointer:active,
+.cursor-move:active,
+.cursor-help:active,
+.drag-handle:active,
+.hover\:cursor-pointer:active {
+  cursor: url('/gauntlet-press.png') 7 1, pointer;
+}
+
+/* window dragging: pointerdown preventDefault kills :active, so panels.ts
+   sets .is-dragging on <html> for the duration of the drag */
+html.is-dragging,
+html.is-dragging * {
+  cursor: url('/gauntlet-press.png') 7 1, grabbing;
 }
 
 ::-webkit-scrollbar {

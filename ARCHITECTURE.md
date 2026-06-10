@@ -12,13 +12,15 @@ fast page, easy edits after months away, content separated from markup.
 | I want to... | Edit |
 |---|---|
 | Add/edit a project | `src/data/projects.json` (description = HTML string) |
-| Add/edit a note | `src/data/notes.json` (content = HTML string, list shows newest first) |
+| Add/edit a note | New `.md` file in `src/notes/scribbles/` — frontmatter: `title`, `date` (YYYY-MM-DD), body = markdown |
+| Add a book review | New `.md` file in `src/notes/tomes/` — same plus `author`, `rating` (potions, halves ok), `tags`, `cover` (image in public/). Potion sprites: `/potion-{full,half,empty}.png` |
 | Add/edit a FAQ entry | `src/data/faq.json` (answer = HTML string) |
 | Change inventory items | `src/data/inventory.json` (max 48 items: desktop grid 8×6, mobile 6×8) |
 | Change the D&D stats | `src/data/stats.json` |
 | Change bio / headings / layout | `src/pages/index.astro` |
 | Change colors / theme palettes | `@theme` + `.alternate-colors` blocks in `src/styles/global.css` |
 | Change loading-screen jokes | `LOADING_FACTS` in `src/scripts/widgets.ts` |
+| Style the loading bar | Open site with `?loader` — bar loops forever, ignores session skip |
 | Add a sound | Drop file in `public/sounds/`, register it in `SOUNDS` in `src/scripts/sound.ts` |
 | Add a new popup window | Add `<Panel id="x" title="X">` in `index.astro` + a button with `data-panel-toggle="x"` |
 
@@ -42,7 +44,8 @@ src/
                          Its <slot> is rendered twice (once per variant).
     Inventory.astro      Skill grid (data-driven, two tables: mobile/desktop)
     Projects.astro       Project list (data-driven)
-    Notes.astro          Notes list + pre-rendered detail view per note
+    Notes.astro          Tabbed notes (SCRIBBLES / TOME REVIEWS) + detail
+                         views, rendered from the src/notes/ collection
     Faq.astro            Accordion (data-driven)
     Contacts.astro       Static contact panel
     Profile.astro        Framed portrait; frame swaps with theme via CSS only
@@ -50,8 +53,14 @@ src/
     ThemeToggle.astro    Torch button markup (behavior in widgets.ts)
     SoundToggle.astro    Speaker button markup (behavior in widgets.ts)
     LoadingScreen.astro  Decorative fake loading bar (see below)
-  data/                  ALL editable content (JSON). "HTML string" fields
-                         are injected with set:html — keep them trusted.
+  data/                  Editable content (JSON) for projects/faq/inventory/
+                         stats. "HTML string" fields are injected with
+                         set:html — keep them trusted.
+  notes/                 One markdown file per entry (Astro content
+                         collection; schema in src/content.config.ts).
+                         The folder decides the tab: scribbles/ = notes,
+                         tomes/ = book reviews.
+  content.config.ts      Frontmatter schema — build fails on invalid fields.
   scripts/
     sound.ts             playSound/toggleSound. Plain Audio(), no howler.
                          Enabled state persists: localStorage 'sound-enabled'.
@@ -90,15 +99,23 @@ public/                  Static assets served at / (images, sounds/, fonts/)
   redefines the Tailwind color tokens. Persisted as localStorage
   `theme: 'dark' | 'light'`; restored by an inline script in `<head>`
   before first paint (no flash).
-- **Loading screen is a joke.** The site is fully loaded behind it; the bar
-  fills over ~1.2 s for the vibe and admits as much in the caption. Shown
-  once per session (`sessionStorage 'codex-loaded'`; repeat visits get
-  `html.skip-loader` from the head script, which hides it before paint).
+- **Loading screen is a joke.** The site is fully loaded behind it. Shown on
+  every page load: bar fills over 4 s (fact-reading time), then the punchline
+  caption ("actually loaded in 0.1s") reveals with the real load time, holds
+  2 s, fades. Click anywhere skips. Knobs: `DURATION`/`HOLD`/`FADE` in
+  `initLoadingScreen` (`src/scripts/widgets.ts`).
 - **Mobile vs desktop are separate markup trees** (Tailwind `md:` show/hide),
   same as the original React version. When changing main-page content,
   remember to update both the mobile and the desktop block in `index.astro`.
 - **Tooltips** (stats, inventory desktop) are pure CSS `group-hover` /
   `group-focus` — no JS.
+- **Border scale is 3 tiers**: `border-16` outer frames (main card, desktop
+  popups), `border-6` interactive chunks (buttons, list items, inventory
+  grid, header dividers), `border-4` details (tooltips, thumbnails, small
+  controls). Don't introduce other widths.
+- **Title shadows**: hard pixel offsets only (`text-shadow: NpxNpx 0 var(--color-…)`,
+  no blur), 4px main title / 3px subtitles / 2px small headings. Only on
+  backgrounds lighter than the text (skip the darker_primary header bars).
 - Fonts self-hosted in `public/fonts/`, preloaded in `Layout.astro`,
   `font-display: swap`.
 

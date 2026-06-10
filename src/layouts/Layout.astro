@@ -14,13 +14,9 @@ import '../styles/global.css';
     <link rel="preload" href="/fonts/AtlantisText-Bold.ttf" as="font" type="font/ttf" crossorigin />
     <link rel="preload" href="/fonts/AtlantisHeadline-Bold.ttf" as="font" type="font/ttf" crossorigin />
     <script is:inline>
-      // Runs before paint: restore saved theme and skip the (purely
-      // decorative) loading screen on repeat visits this session.
+      // Runs before paint: restore saved theme (no flash of wrong colors).
       if (localStorage.getItem('theme') === 'dark') {
         document.documentElement.classList.add('alternate-colors');
-      }
-      if (sessionStorage.getItem('codex-loaded')) {
-        document.documentElement.classList.add('skip-loader');
       }
     </script>
   </head>
