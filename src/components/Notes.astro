@@ -78,7 +78,7 @@ const tabs = [
                   <img
                     src={entry.data.cover}
                     alt=""
-                    class="w-20 h-28 object-contain border-4 border-secondary bg-primary p-0.5 pixelated self-start shrink-0"
+                    class="w-28 h-40 object-contain border-4 border-secondary bg-primary p-0.5 pixelated self-start shrink-0"
                     loading="lazy"
                   />
                 )}
@@ -88,9 +88,9 @@ const tabs = [
                     <span class="ml-2 text-3xl" style="font-family: AtlantisText; font-weight: 900;" aria-hidden="true">&gt;</span>
                   </span>
                   {tab.key === 'tomes' && entry.data.tags.length > 0 && (
-                    <span class="flex gap-2 mt-2">
+                    <span class="flex flex-wrap gap-2 mt-2">
                       {entry.data.tags.map((tag) => (
-                        <span class="text-darker_secondary text-base border-4 border-secondary bg-primary px-2 py-0.5" style="font-family: AtlantisText; font-weight: 700;">
+                        <span class="text-darker_secondary text-sm border-2 border-secondary bg-primary px-1.5 py-0.5 whitespace-nowrap" style="font-family: AtlantisText; font-weight: 700;">
                           {tag}
                         </span>
                       ))}
