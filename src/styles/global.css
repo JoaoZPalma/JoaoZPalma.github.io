@@ -208,10 +208,11 @@ html.alternate-colors .frame-dark {
 }
 
 .notes-icon {
-  width: 30px;
-  height: 30px;
+  /* sprite is 64px native; 32px box = exact 2:1 so it stays crisp */
+  width: 32px;
+  height: 32px;
   background: url('/grimoire.webp') 0px 0;
-  background-size: 30px 30px;
+  background-size: 32px 32px;
   image-rendering: pixelated;
   transform: scale(3.5);
   transform-origin: center;
