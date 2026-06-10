@@ -1,0 +1,41 @@
+[
+  {
+    "title": "Web Portfolio",
+    "description": "A portfolio made to my taste using <strong>Astro, Typescript and Tailwind</strong>. It's simple, cozy and showcases not only my projects but a little bit of me.",
+    "image": "/joao.webp",
+    "link": "#",
+    "available": false,
+    "unavailableComment": "You're already looking at it!! :-)"
+  },
+  {
+    "title": "Non-Profit Organization Website",
+    "description": "<strong>Designed, developed, and deployed</strong> a user-friendly, accessible site within budget constraints without compromising quality.",
+    "image": "/livroslivres.webp",
+    "link": "https://pracadoslivroslivres.org/",
+    "available": true
+  },
+  {
+    "title": "LEI - Smart Package Monitor",
+    "description": "Explored <strong>Jakarta EE</strong> to design a clean <strong>REST API</strong>, structured data flow using <strong>DTOs</strong>, accompanied with <strong>Vue</strong>, and <strong>Docker</strong> for deployment and testing.",
+    "image": "/ipleiria.ico",
+    "link": "#",
+    "available": false,
+    "unavailableComment": "Uni work, not available online :-("
+  },
+  {
+    "title": "LEI - Website Cinemagic",
+    "description": "Worked with <strong>PHP</strong>, deepened my knowledge about <strong>MVC</strong> (Model/View/Controller). And learned <strong>Laravel</strong> and <strong>Blade Templates</strong>.",
+    "image": "/ipleiria.ico",
+    "link": "#",
+    "available": false,
+    "unavailableComment": "Uni work, not available online :-("
+  },
+  {
+    "title": "LEI - CNN Modelling",
+    "description": "Learned <strong>Fine tuning</strong>, <strong>Feature extraction</strong> and the difference between <strong>Models with and without data augmentation</strong>.",
+    "image": "/ipleiria.ico",
+    "link": "#",
+    "available": false,
+    "unavailableComment": "Uni work, not available online :-("
+  }
+]

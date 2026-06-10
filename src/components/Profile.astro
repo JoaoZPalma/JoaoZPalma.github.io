@@ -1,0 +1,28 @@
+---
+// Framed pixel-art portrait. The frame swaps with the theme purely via CSS
+// (.frame-dark / .frame-light rules in global.css) — no JS needed.
+---
+<div class="relative w-[300px] aspect-square">
+  <img src="/frame250.webp" alt="" class="frame-dark absolute inset-0 w-full h-full object-cover z-10" />
+  <img src="/frame250_light.webp" alt="" class="frame-light absolute inset-0 w-full h-full object-cover z-10" />
+
+  <div class="absolute inset-0 flex items-center justify-center p-3.5">
+    <div class="relative aspect-square w-full">
+      <img
+        src="/joao.webp"
+        alt="Dev's pixel art portrait"
+        class="absolute inset-0 w-full h-full object-contain z-5"
+      />
+
+      <div class="absolute -top-17 left-17 transform rotate-15 z-30 scale-110">
+        <img
+          src="/wizardHat.webp"
+          alt="Funny wizard hat comically rotated"
+          width="177"
+          height="177"
+          class="object-contain"
+        />
+      </div>
+    </div>
+  </div>
+</div>

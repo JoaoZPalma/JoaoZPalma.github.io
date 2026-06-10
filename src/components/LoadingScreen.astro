@@ -1,0 +1,40 @@
+---
+// Decorative loading screen. The site is fully loaded behind it — the bar
+// fills over ~1.2s purely for the vibe, then fades out. Skipped on repeat
+// visits this session (html.skip-loader, set in Layout's inline script).
+// The random fun fact is picked client-side in scripts/widgets.ts.
+---
+
+<div
+  id="loading-screen"
+  class="fixed inset-0 bg-bg flex items-center justify-center z-[100] px-4 md:px-0"
+  aria-hidden="true"
+>
+  <div class="text-center flex flex-col items-center justify-center pixelated w-full md:w-auto max-w-lg md:max-w-none">
+    <h1
+      class="text-3xl md:text-5xl text-darker_primary mb-6 md:mb-8 pixelated underline decoration-2 md:decoration-4 underline-offset-4 md:underline-offset-8"
+      style="font-family: AtlantisText; font-weight: 900;"
+    >
+      LOADING CODEX...
+    </h1>
+
+    <div class="w-full md:w-[500px] h-8 md:h-10 bg-darker_secondary border-4 md:border-6 border-darker_secondary pixelated relative overflow-hidden">
+      <div data-loader-bar class="h-full bg-darker_primary pixelated" style="width: 0%; image-rendering: pixelated;"></div>
+      <div class="absolute inset-0 flex items-center justify-center">
+        <span data-loader-pct class="text-secondary text-lg md:text-xl font-bold z-10" style="font-family: AtlantisText; font-weight: 700;">
+          0%
+        </span>
+      </div>
+    </div>
+
+    <div class="mt-4 md:mt-6 bg-darker_primary border-4 md:border-6 border-darker_secondary p-3 md:p-4 w-full md:max-w-lg pixelated">
+      <p data-loader-fact class="text-secondary text-base md:text-xl text-center leading-relaxed md:leading-normal" style="font-family: AtlantisText; font-weight: 400;">
+        Shuffling the deck of arcane facts...
+      </p>
+    </div>
+
+    <p class="mt-3 text-darker_primary text-sm md:text-base italic text-center" style="font-family: AtlantisText; font-weight: 400;">
+      (this page actually loaded in ~0.000005s — the bar is just here because it's pretty)
+    </p>
+  </div>
+</div>

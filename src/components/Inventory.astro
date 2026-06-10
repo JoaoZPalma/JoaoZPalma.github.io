@@ -1,0 +1,106 @@
+---
+// Skill/tool grid. Items live in src/data/inventory.json — edit there.
+// Desktop: hover = tooltip, click = open link.
+// Mobile: tap = tooltip, double-tap = open link. (scripts/inventory.ts)
+import items from '../data/inventory.json';
+
+const MOBILE = { cols: 6, rows: 8 };
+const DESKTOP = { cols: 8, rows: 6 };
+
+const grid = ({ cols, rows }: { cols: number; rows: number }) =>
+  Array.from({ length: rows }, (_, r) =>
+    Array.from({ length: cols }, (_, c) => ({
+      item: items[r * cols + c],
+      index: r * cols + c,
+      isLastColumn: c === cols - 1,
+      isLastRow: r === rows - 1,
+    }))
+  );
+---
+
+<div class="inventory-root overflow-visible flex flex-col items-center p-6 justify-center pb-20">
+  <p
+    class="w-full text-center justify-center flex items-center text-darker_secondary text-[30px]"
+    style="font-family: AtlantisText; font-weight: 400;"
+    role="note"
+    aria-label="Inventory usage tip"
+  >
+    <span class="sm:hidden"><b>Tap</b> for information<br /> <b>Double tap</b> to access link</span>
+    <span class="hidden sm:inline"><b>Hover</b> for information | <b>Click</b> to access link</span>
+  </p>
+  <div class="inline-block border-6 border-secondary mt-4 mb-8">
+    <!-- Mobile Table -->
+    <table class="border-collapse sm:hidden" role="grid" aria-label="Skills and tools inventory">
+      <tbody>
+        {grid(MOBILE).map((row) => (
+          <tr>
+            {row.map(({ item, index, isLastColumn, isLastRow }) => (
+              <td
+                data-cell="mobile"
+                data-link={item?.link}
+                class:list={[
+                  'group relative h-16 w-16 text-center align-middle transition-colors duration-150',
+                  'bg-darker_primary border-secondary hover:bg-primary cursor-pointer focus:bg-primary focus:outline-none focus:ring-2 focus:ring-darker_secondary focus:ring-inset',
+                  !isLastColumn && 'border-r-6',
+                  !isLastRow && 'border-b-6',
+                ]}
+                role="gridcell"
+                aria-label={item ? item.tooltip : `Empty slot ${index + 1}`}
+                tabindex="0"
+              >
+                <div class="flex items-center justify-center w-full h-full relative group">
+                  {item && <img src={item.image} alt={item.alt} width="32" height="32" class="w-10 h-10 object-contain" loading="lazy" />}
+                  <span
+                    data-tooltip
+                    class="pointer-events-none absolute left-1/2 bottom-full mb-2 max-w-xs w-max -translate-x-1/2
+              bg-darker_primary border-4 text-lg text-darker_secondary px-3 py-1 transition-opacity
+              z-10 whitespace-normal break-words leading-snug opacity-0 group-hover:opacity-100"
+                    style="font-family: AtlantisText; font-weight: 700;"
+                  >
+                    {item ? item.tooltip : `Empty slot #${index + 1}`}
+                  </span>
+                </div>
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    <!-- Desktop Table -->
+    <table class="border-collapse hidden sm:table" role="grid" aria-label="Skills and tools inventory">
+      <tbody>
+        {grid(DESKTOP).map((row) => (
+          <tr>
+            {row.map(({ item, index, isLastColumn, isLastRow }) => (
+              <td
+                data-cell="desktop"
+                data-link={item?.link}
+                class:list={[
+                  'group relative h-20 w-20 text-center align-middle transition-colors duration-150',
+                  'bg-darker_primary border-secondary hover:bg-primary cursor-pointer focus:bg-primary focus:outline-none focus:ring-2 focus:ring-darker_secondary focus:ring-inset',
+                  !isLastColumn && 'border-r-6',
+                  !isLastRow && 'border-b-6',
+                ]}
+                role="gridcell"
+                aria-label={item ? item.tooltip : `Empty slot ${index + 1}`}
+                tabindex="0"
+              >
+                {item && <img src={item.image} alt={item.alt} width="64" height="64" class="w-14 h-14 object-contain inline" loading="lazy" />}
+                <span
+                  data-tooltip
+                  class="pointer-events-none absolute left-1/2 bottom-full mb-2 w-max -translate-x-1/2
+                    rounded bg-darker_primary border-2 text-[22px] text-darker_secondary px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity
+                    z-10 whitespace-nowrap"
+                  style="font-family: AtlantisText; font-weight: 700;"
+                >
+                  {item ? item.tooltip : `Empty slot #${index + 1}`}
+                </span>
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>

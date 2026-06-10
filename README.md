@@ -14,11 +14,13 @@ Rpg-Style Interface, some Draggable Windows, a couple of immersive sounds and so
 
 ## Built With Inspiration from the Dark Lords Using
 
-- **Next.js 14**
+- **Astro** (static output, zero framework JS)
 - **TypeScript** 
 - **Tailwind CSS** 
-- **React Draggable** 
+- **Vanilla JS** (draggable windows, sounds and all the rest — no React)
 - **Custom Fantasy Fonts** 
+
+Curious how it's wired? See [ARCHITECTURE.md](./ARCHITECTURE.md) — it maps every file and has recipes for common edits.
 
 ## 🎯 The Adventure Sections
 
@@ -45,7 +47,7 @@ npm install
 npm run dev
 ```
 
-Then open [http://localhost:3000](http://localhost:3000) and explore!
+Then open [http://localhost:4321](http://localhost:4321) and explore!
 
 ## 🎨 Why This Design?
 

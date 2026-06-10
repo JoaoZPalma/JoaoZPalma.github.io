@@ -1,0 +1,367 @@
+---
+// PALMA'S ELDRITCH CODEX — single-page portfolio.
+// Content lives in src/data/*.json; interactive behavior in src/scripts/*.ts.
+// See ARCHITECTURE.md at the repo root for the full map.
+import Layout from '../layouts/Layout.astro';
+import LoadingScreen from '../components/LoadingScreen.astro';
+import Panel from '../components/Panel.astro';
+import Inventory from '../components/Inventory.astro';
+import Projects from '../components/Projects.astro';
+import Notes from '../components/Notes.astro';
+import Faq from '../components/Faq.astro';
+import Contacts from '../components/Contacts.astro';
+import Profile from '../components/Profile.astro';
+import Button from '../components/Button.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import SoundToggle from '../components/SoundToggle.astro';
+import stats from '../data/stats.json';
+---
+
+<Layout>
+  <LoadingScreen />
+
+  <Panel id="inventory" title="INVENTORY" pos="right" overflow>
+    <Inventory />
+  </Panel>
+  <Panel id="contacts" title="CONTACTS" pos="right" centered>
+    <Contacts />
+  </Panel>
+  <Panel id="projects" title="PROJECTS" pos="default">
+    <Projects />
+  </Panel>
+  <Panel id="faq" title="FAQ" pos="middle">
+    <Faq />
+  </Panel>
+  <Panel id="notes" title="NOTES" pos="left">
+    <Notes />
+  </Panel>
+
+  <main class="bg-bg min-h-screen w-full flex items-center justify-center">
+    <div class="flex justify-center">
+      <!-- Mobile controls drawer -->
+      <div class="md:hidden fixed top-6 left-0 z-50">
+        <div data-controls-drawer class="flex flex-col transition-all duration-300 -translate-x-full">
+          <button
+            data-controls-toggle
+            class="bg-darker_primary border-3 border-secondary p-2 absolute right-0 transform translate-x-full"
+            aria-label="Open controls"
+            style="font-family: AtlantisText; font-weight: 900;"
+          >
+            <span class="text-secondary text-xl">☰</span>
+          </button>
+          <div data-controls-tray class="bg-darker_primary border-3 border-secondary py-2 flex flex-col gap-2 items-center transition-all duration-300 w-0 px-0 overflow-hidden">
+            <ThemeToggle />
+            <SoundToggle />
+          </div>
+        </div>
+      </div>
+
+      <!-- Desktop controls -->
+      <section class="hidden md:flex absolute top-4 left-4 flex-row gap-4 p-2 z-10" aria-label="Main controls">
+        <ThemeToggle />
+        <SoundToggle />
+      </section>
+
+      <div class="border-0 md:border-16 md:border-darker_secondary">
+        <div class="bg-primary max-w-[100vw] md:aspect-square md:w-[800px] md:h-[800px]">
+          <header>
+            <h1 class="text-5xl leading-tight text-darker_secondary pt-10 md:pt-6 md:pl-6 pb-6 md:pb-0 text-center md:text-left" style="font-family: AtlantisText; font-weight: 900;">
+              PALMA'S ELDRITCH<br />
+              CODEX
+            </h1>
+          </header>
+
+          <!-- Mobile Layout - ordered flow -->
+          <div class="block md:hidden px-4">
+            <section class="w-full text-5xl text-darker_secondary leading-none pl-6 pr-6 overflow-hidden text-center" style="font-family: AtlantisText; font-weight: 700;" aria-labelledby="bio-heading-mobile">
+              <h2 id="bio-heading-mobile" class="mx-auto w-fit text-center overflow-hidden whitespace-nowrap">------ BIO ------</h2>
+              <p class="text-2xl break-words" style="font-family: AtlantisText; font-weight: 400;">
+                "I've bargained with Cursed Code and deciphered Ancient Docs.
+                <span class="font-bold decoration-2"> In a Mighty Quest and in need of a Coding Warlock?</span> The Ravens know where to find me..."
+              </p>
+              <p class="text-xl text-center italic break-words" style="font-family: AtlantisText; font-weight: 400;">
+                (or just email me, that's fine too)
+              </p>
+            </section>
+
+            <div class="flex flex-col items-center mt-8 px-4">
+              <Profile />
+              <span class="w-full text-5xl leading-tight text-darker_secondary text-center mt-1" style="font-family: AtlantisText; font-weight: 500;" role="heading" aria-level="2">
+                CODE WARLOCK
+              </span>
+            </div>
+
+            <section class="w-full text-5xl text-darker_secondary pl-6 pr-6 mt-3 text-center" style="font-family: AtlantisText; font-weight: 700;" aria-labelledby="stats-heading-mobile">
+              <h2 id="stats-heading-mobile" class="mx-auto w-fit text-center overflow-hidden whitespace-nowrap">---- STATS ----</h2>
+              <ul class="grid grid-cols-2 gap-1 text-4xl ml-4 leading-snug justify-between" role="list">
+                {stats.map((stat) => (
+                  <li class="relative" role="listitem">
+                    <span
+                      class="w-max cursor-help group inline-block underline decoration-3 hover:decoration-wavy hover:decoration-1 z-35 relative"
+                      tabindex="0"
+                      aria-describedby={`${stat.name.toLowerCase()}-description-mobile`}
+                    >
+                      {stat.name} - {stat.value}
+                      <span
+                        id={`${stat.name.toLowerCase()}-description-mobile`}
+                        class="hidden group-hover:block group-focus:block absolute bottom-full left-0 w-32 md:w-48 text-center transform mb-2
+                            bg-darker_primary border-4 border-secondary p-1 text-xl"
+                        role="tooltip"
+                      >
+                        {stat.description}
+                      </span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <div class="flex flex-col items-center gap-2 mt-6 px-4">
+              <button
+                data-panel-toggle="inventory"
+                data-sound="click1"
+                aria-label="Open inventory"
+                aria-expanded="false"
+                aria-controls="inventory-popup"
+              >
+                <Button>inventory</Button>
+              </button>
+            </div>
+
+            <section class="w-full text-5xl text-darker_secondary pl-6 pr-6 pb-12 mt-3 leading-normal text-center" style="font-family: AtlantisText; font-weight: 700;" aria-labelledby="artifacts-heading-mobile">
+              <h2 class="overflow-hidden leading-none whitespace-nowrap">---------------------------</h2>
+              <h2 id="artifacts-heading-mobile" class="text-wrap leading-none">CURSED ARTIFACTS </h2>
+              <h2 class="overflow-hidden leading-none whitespace-nowrap">---------------------------</h2>
+              <nav class="grid grid-cols-2 gap-4 mt-2 place-items-center justify-items-center px-4" role="group" aria-label="Navigation artifacts">
+                <div class="artifact flex flex-col items-center h-full relative">
+                  <div class="flex-1 flex items-center">
+                    <button
+                      data-panel-toggle="projects"
+                      data-sound="click1"
+                      data-chest
+                      class="flex-1 flex items-center justify-center -ml-9"
+                      aria-label="Open projects"
+                      aria-expanded="false"
+                      aria-controls="projects-popup"
+                    >
+                      <div class="chest-icon mx-auto"></div>
+                    </button>
+                  </div>
+                  <p class="text-xl mt-1" aria-hidden="true">Projects</p>
+                </div>
+
+                <div class="artifact flex flex-col items-center h-full relative">
+                  <div class="flex-1 flex items-center">
+                    <button
+                      data-panel-toggle="notes"
+                      data-sound="click1"
+                      class="flex-1 flex items-center justify-center"
+                      aria-label="Open notes"
+                      aria-expanded="false"
+                      aria-controls="notes-popup"
+                    >
+                      <div class="notes-icon" aria-hidden="true"></div>
+                    </button>
+                  </div>
+                  <p class="text-xl mt-1" aria-hidden="true">Notes</p>
+                </div>
+
+                <div class="artifact flex flex-col items-center h-full relative">
+                  <div class="flex-1 flex items-center">
+                    <button
+                      data-panel-toggle="faq"
+                      data-sound="click1"
+                      class="flex-1 flex items-center justify-center"
+                      aria-label="Open FAQ"
+                      aria-expanded="false"
+                      aria-controls="faq-popup"
+                    >
+                      <div class="contents">
+                        <div class="eye-shadow"></div>
+                        <div class="eye-icon"></div>
+                      </div>
+                    </button>
+                  </div>
+                  <p class="text-xl mt-1" aria-hidden="true">FAQ</p>
+                </div>
+
+                <div class="artifact flex flex-col items-center h-full relative">
+                  <button
+                    data-panel-toggle="contacts"
+                    data-sound="bird"
+                    class="flex-1 flex items-center justify-center"
+                    aria-label="Open contacts"
+                    aria-expanded="false"
+                    aria-controls="contacts-popup"
+                  >
+                    <div class="crow-icon" aria-hidden="true"></div>
+                  </button>
+                  <p class="text-xl mt-1" aria-hidden="true">Contacts</p>
+                </div>
+              </nav>
+            </section>
+          </div>
+
+          <!-- Desktop Layout - original layout -->
+          <div class="hidden md:block">
+            <div class="flex justify-between">
+              <div class="w-[45%]">
+                <section class="w-[400px] text-5xl text-darker_secondary leading-none pl-6" style="font-family: AtlantisText; font-weight: 700;" aria-labelledby="bio-heading">
+                  <h2 id="bio-heading">BIO -------------------</h2>
+                  <p class="text-2xl " style="font-family: AtlantisText; font-weight: 400;">
+                    "I've bargained with Cursed Code and deciphered Ancient Docs.
+                    <span class="font-bold decoration-2"> In a Mighty Quest and in need of a Coding Warlock?</span> The Ravens know where to find me..."
+                  </p>
+                  <p class="text-xl text-right italic" style="font-family: AtlantisText; font-weight: 400;">
+                    (or just email me, that's fine too)
+                  </p>
+                </section>
+                <section class="w-[400px] text-5xl text-darker_secondary pl-6" style="font-family: AtlantisText; font-weight: 700;" aria-labelledby="stats-heading">
+                  <h2 id="stats-heading">STATS ---------------</h2>
+                  <ul class="grid grid-cols-2 gap-1 text-4xl ml-4 leading-snug" role="list">
+                    {stats.map((stat) => (
+                      <li class="relative" role="listitem">
+                        <span
+                          class="w-max cursor-help group inline-block underline decoration-3 hover:decoration-wavy hover:decoration-1 z-35 relative"
+                          tabindex="0"
+                          aria-describedby={`${stat.name.toLowerCase()}-description`}
+                        >
+                          {stat.name} - {stat.value}
+                          <span
+                            id={`${stat.name.toLowerCase()}-description`}
+                            class="hidden group-hover:block group-focus:block absolute bottom-full left-0 w-32 md:w-48 text-center transform mb-2
+                                bg-darker_primary border-4 border-secondary p-1 text-xl"
+                            role="tooltip"
+                          >
+                            {stat.description}
+                          </span>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              </div>
+
+              <div class="flex flex-1 -mt-14 mr-8 items-center justify-end">
+                <div class="mt-9 flex flex-col items-center">
+                  <Profile />
+                  <div class="flex flex-col items-center gap-2">
+                    <span class="w-full text-5xl leading-tight text-darker_secondary text-center mt-1" style="font-family: AtlantisText; font-weight: 500;" role="heading" aria-level="2">
+                      CODE WARLOCK
+                    </span>
+                    <button
+                      data-panel-toggle="inventory"
+                      data-sound="click1"
+                      aria-label="Open inventory"
+                      aria-expanded="false"
+                      aria-controls="inventory-popup"
+                    >
+                      <Button>inventory</Button>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <section class="w-full text-5xl text-darker_secondary pl-6 mt-1 leading-normal" style="font-family: AtlantisText; font-weight: 700;" aria-labelledby="artifacts-heading">
+              <h2 id="artifacts-heading" class="overflow-hidden whitespace-nowrap">CURSED ARTIFACTS --------------------</h2>
+              <nav class="grid grid-cols-4 gap-2 mt-2 place-items-center justify-items-center -ml-4" role="group" aria-label="Navigation artifacts">
+                <div class="artifact flex flex-col items-center h-full relative">
+                  <div class="flex-1 flex items-center absolute -left-9">
+                    <button
+                      data-panel-toggle="projects"
+                      data-sound="click1"
+                      data-chest
+                      class="flex-1 flex items-center justify-center cursor-pointer"
+                      aria-label="Open projects"
+                      aria-expanded="false"
+                      aria-controls="projects-popup"
+                    >
+                      <div class="chest-icon mx-auto"></div>
+                    </button>
+                  </div>
+                  <p class="text-xl mt-1 absolute -bottom-9" aria-hidden="true">Projects</p>
+                </div>
+
+                <div class="artifact flex flex-col items-center h-full relative">
+                  <div class="flex-1 flex items-center">
+                    <button
+                      data-panel-toggle="notes"
+                      data-sound="click1"
+                      class="flex-1 flex items-center justify-center cursor-pointer"
+                      aria-label="Open notes"
+                      aria-expanded="false"
+                      aria-controls="notes-popup"
+                    >
+                      <div class="notes-icon" aria-hidden="true"></div>
+                    </button>
+                  </div>
+                  <p class="text-xl mt-1 absolute -bottom-9" aria-hidden="true">Notes</p>
+                </div>
+
+                <div class="artifact flex flex-col items-center h-full relative">
+                  <div class="flex-1 flex items-center">
+                    <button
+                      data-panel-toggle="faq"
+                      data-sound="click1"
+                      class="flex-1 flex items-center justify-center cursor-pointer"
+                      aria-label="Open FAQ"
+                      aria-expanded="false"
+                      aria-controls="faq-popup"
+                    >
+                      <div class="contents">
+                        <div class="eye-shadow"></div>
+                        <div class="eye-icon"></div>
+                      </div>
+                    </button>
+                  </div>
+                  <p class="text-xl mt-1 absolute -bottom-9" aria-hidden="true">FAQ</p>
+                </div>
+
+                <div class="artifact flex flex-col items-center h-full relative">
+                  <button
+                    data-panel-toggle="contacts"
+                    data-sound="bird"
+                    class="flex-1 flex items-center justify-center cursor-pointer"
+                    aria-label="Open contacts"
+                    aria-expanded="false"
+                    aria-controls="contacts-popup"
+                  >
+                    <div class="crow-icon" aria-hidden="true"></div>
+                  </button>
+                  <p class="text-xl mt-1 absolute -bottom-9" aria-hidden="true">Contacts</p>
+                </div>
+              </nav>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  import { initPanels } from '../scripts/panels';
+  import { initInventory } from '../scripts/inventory';
+  import { initFaq } from '../scripts/faq';
+  import { initNotes } from '../scripts/notes';
+  import {
+    initThemeToggles,
+    initSoundToggles,
+    initMobileControlsDrawer,
+    initChests,
+    initEyes,
+    initLoadingScreen,
+  } from '../scripts/widgets';
+
+  initPanels();
+  initInventory();
+  initFaq();
+  initNotes();
+  initThemeToggles();
+  initSoundToggles();
+  initMobileControlsDrawer();
+  initChests();
+  initEyes();
+  initLoadingScreen();
+</script>

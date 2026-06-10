@@ -1,0 +1,30 @@
+---
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Palma's Portfolio</title>
+    <meta name="description" content="Welcome to Palma's Portfolio" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="preload" href="/fonts/AtlantisText-Regular.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/fonts/AtlantisText-Bold.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/fonts/AtlantisHeadline-Bold.ttf" as="font" type="font/ttf" crossorigin />
+    <script is:inline>
+      // Runs before paint: restore saved theme and skip the (purely
+      // decorative) loading screen on repeat visits this session.
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('alternate-colors');
+      }
+      if (sessionStorage.getItem('codex-loaded')) {
+        document.documentElement.classList.add('skip-loader');
+      }
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,90 @@
+---
+// One openable "window": fullscreen modal on mobile, draggable popup on
+// desktop. Hidden until opened by a [data-panel-toggle] button (see
+// scripts/panels.ts). The slot is rendered twice — once per layout variant.
+interface Props {
+  id: string;
+  title: string;
+  /** Desktop spawn position: default | left | middle | right */
+  pos?: string;
+  overflow?: boolean;
+  /** Mobile: vertically center the content */
+  centered?: boolean;
+}
+const { id, title, pos = 'default', overflow = false, centered = false } = Astro.props;
+---
+
+<div data-panel={id} data-pos={pos} class="hidden">
+  <!-- Mobile: fullscreen modal -->
+  <div class="md:hidden">
+    <div class="fixed inset-0 z-40 bg-black/50" style="touch-action: none;"></div>
+    <div
+      data-anim
+      class:list={[
+        'popUp fixed inset-0 w-full h-full bg-primary z-55',
+        overflow ? 'overflow-visible' : 'overflow-hidden',
+        centered && 'flex flex-col',
+      ]}
+      style="touch-action: none;"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${title} popup window`}
+    >
+      <div class="bg-darker_primary py-6 px-3 flex justify-between items-center border-b-6 border-darker_secondary border-dashed">
+        <h1 class="text-4xl text-darker_secondary" style="font-family: AtlantisText; font-weight: 900;">{title}</h1>
+        <div data-panel-close class="border-6 border-darker_secondary pr-2.25 pl-2.25 bg-darker_primary flex items-center justify-center hover:cursor-pointer hover:bg-black/15">
+          <button
+            class="text-darker_secondary text-4xl font-bold hover:cursor-pointer"
+            style="font-family: AtlantisText; font-weight: 900;"
+            aria-label={`Close ${title}`}
+          >
+            x
+          </button>
+        </div>
+      </div>
+      {centered ? (
+        <div class="flex-1 flex items-center justify-center overflow-y-auto">
+          <slot />
+        </div>
+      ) : (
+        <slot />
+      )}
+    </div>
+  </div>
+
+  <!-- Desktop: draggable popup window -->
+  <div class="hidden md:block">
+    <div
+      data-popup
+      id={`${id}-popup`}
+      class="fixed"
+      style="z-index: 50;"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${title} popup window`}
+      tabindex="-1"
+    >
+      <div
+        data-anim
+        class:list={[
+          'popUp border-16 border-darker_secondary bg-primary aspect-square max-w-[100vw] md:w-[800px] md:h-[800px]',
+          overflow ? 'overflow-visible' : 'overflow-hidden',
+        ]}
+      >
+        <div class="bg-darker_primary p-6 flex justify-between items-center drag-handle cursor-move border-b-6 border-darker_secondary border-dashed">
+          <h1 class="text-[42px] text-darker_secondary" style="font-family: AtlantisText; font-weight: 900;">{title}</h1>
+          <div data-panel-close class="border-6 border-darker_secondary pr-2.25 pl-2.25 bg-darker_primary mr-4 flex items-center justify-center hover:cursor-pointer hover:bg-black/15">
+            <button
+              class="text-darker_secondary text-[42px] font-bold hover:cursor-pointer"
+              style="font-family: AtlantisText; font-weight: 900;"
+              aria-label={`Close ${title}`}
+            >
+              x
+            </button>
+          </div>
+        </div>
+        <slot />
+      </div>
+    </div>
+  </div>
+</div>

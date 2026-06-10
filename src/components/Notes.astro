@@ -1,0 +1,86 @@
+---
+// Notes: list view + one pre-rendered detail view per note (all static HTML,
+// scripts/notes.ts only toggles visibility). Edit src/data/notes.json —
+// note content is an HTML string. List shows newest first.
+import notes from '../data/notes.json';
+const reversed = notes.slice().reverse();
+---
+
+<div class="notes-root p-2 h-full pb-10">
+  <!-- List view -->
+  <div data-notes-list>
+    <section class="h-full overflow-y-auto pb-32 flex flex-col items-center">
+      <div class="w-full max-w-2xl flex flex-col gap-4 mt-8">
+        {reversed.map((note) => (
+          <button
+            data-note-open={note.id}
+            class="border-6 border-secondary bg-darker_primary transition-all duration-200 shadow-lg w-full text-left text-darker_secondary text-3xl focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-bg flex flex-col items-start p-4 hover:bg-lighter_button hover:border-darker_secondary hover:cursor-pointer"
+            style="font-family: AtlantisText; font-weight: 700;"
+            aria-label={`Read note: ${note.title}, created on ${note.createdAt}`}
+          >
+            <span class="flex w-full justify-between items-center">
+              <span>{note.title}</span>
+              <span class="ml-2 text-3xl" style="font-family: AtlantisText; font-weight: 900;" aria-hidden="true">&gt;</span>
+            </span>
+            <div class="text-lg mt-2 opacity-70" style="font-family: AtlantisText; font-weight: 400;">
+              {note.createdAt}
+            </div>
+          </button>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <!-- Detail views (hidden until a note is opened) -->
+  {notes.map((note, index) => (
+    <div data-note-detail={note.id} class="hidden h-full">
+      <section class="h-full overflow-y-auto pb-32 flex flex-col">
+        <div class="flex items-center justify-between mb-6 mt-4">
+          <button
+            data-note-back
+            class="text-darker_secondary text-4xl hover:opacity-70 transition-opacity hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-bg"
+            style="font-family: AtlantisText; font-weight: 900;"
+            aria-label="Go back to notes list"
+          >
+            &lt;
+          </button>
+          <h1 class="text-darker_secondary text-4xl text-center flex-1" style="font-family: AtlantisText; font-weight: 700;">
+            {note.title}
+          </h1>
+          <div class="w-8"></div>
+        </div>
+
+        <div class="flex-1 mb-6">
+          <div class="text-darker_secondary text-2xl leading-relaxed [&>p]:mb-4" style="font-family: AtlantisText; font-weight: 400;" set:html={note.content} />
+          <div class="text-darker_secondary text-lg mt-6 opacity-70" style="font-family: AtlantisText; font-weight: 400;">
+            Created: {note.createdAt}
+          </div>
+        </div>
+
+        <div class="flex justify-center items-center mt-4 gap-8">
+          <button
+            data-note-prev={index > 0 ? notes[index - 1].id : undefined}
+            disabled={index === 0}
+            class="text-darker_secondary text-2xl px-4 py-2 border-5 border-secondary bg-darker_primary disabled:opacity-50 disabled:cursor-not-allowed hover:bg-lighter_button hover:opacity-100 transition-all hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-bg"
+            style="font-family: AtlantisText; font-weight: 700;"
+            aria-label="Go to previous note"
+          >
+            Previous
+          </button>
+          <span class="text-darker_secondary text-xl" style="font-family: AtlantisText; font-weight: 400;" aria-live="polite">
+            {index + 1} of {notes.length}
+          </span>
+          <button
+            data-note-next={index < notes.length - 1 ? notes[index + 1].id : undefined}
+            disabled={index === notes.length - 1}
+            class="text-darker_secondary text-2xl px-4 py-2 border-5 border-secondary bg-darker_primary disabled:opacity-50 disabled:cursor-not-allowed hover:bg-lighter_button hover:opacity-100 transition-all hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-bg"
+            style="font-family: AtlantisText; font-weight: 700;"
+            aria-label="Go to next note"
+          >
+            Next
+          </button>
+        </div>
+      </section>
+    </div>
+  ))}
+</div>

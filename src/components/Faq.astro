@@ -1,0 +1,32 @@
+---
+// FAQ accordion. Edit src/data/faq.json — answers are HTML strings.
+// Open/close behavior lives in scripts/faq.ts (one open at a time).
+import faqs from '../data/faq.json';
+---
+
+<div class="faq-root p-2 h-full pb-10">
+  <section class="h-full overflow-y-auto pb-24 flex flex-col items-center">
+    <h1 class="text-darker_secondary text-5xl mb-6 my-2 md:mt-4" style="font-family: AtlantisText; font-weight: 700;">
+      Frequently Asked Questions
+    </h1>
+    <div class="w-full max-w-2xl flex flex-col gap-4">
+      {faqs.map((faq) => (
+        <button
+          data-faq
+          class="cursor-pointer border-4 border-secondary bg-darker_primary transition-all duration-200 shadow-lg w-full text-left text-darker_secondary text-3xl focus:outline-none flex flex-col items-start p-4"
+          style="font-family: AtlantisText; font-weight: 700;"
+          aria-expanded="false"
+        >
+          <span class="flex w-full justify-between items-center">
+            <span>{faq.question}</span>
+            <span data-faq-arrow class="ml-2 text-2xl">▼</span>
+          </span>
+          <div data-faq-answer class="hidden mt-4 w-full text-darker_secondary text-2xl" style="font-family: AtlantisText; font-weight: 400;" set:html={faq.answer} />
+        </button>
+      ))}
+    </div>
+    <div class="mt-10 text-darker_secondary text-2xl text-center" style="font-family: AtlantisText; font-weight: 400;">
+      Didn’t find your question? <a href="mailto:joaozpalma@gmail.com" class="underline decoration-3 hover:decoration-4">Send me an email!</a>
+    </div>
+  </section>
+</div>

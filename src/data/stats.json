@@ -1,0 +1,8 @@
+[
+  { "name": "STR", "value": "14", "description": "Palma enjoys doing physical exercise regularly such as going to the gym!" },
+  { "name": "INT", "value": "8", "description": "A very smort boy!" },
+  { "name": "DEX", "value": "18", "description": "Vim enjoyer, fingers move faster than the compiler can complain. (he wishes)" },
+  { "name": "WIS", "value": "3", "description": "Once made a 'Arroz de Pato' (a traditional portuguese dish which roughly translates to Duck Rice) without any Rice or Duck..." },
+  { "name": "CON", "value": "10", "description": "Immune to caffeine crashes (lie)." },
+  { "name": "CHA", "value": "14", "description": "Believes himself to be easy going and somewhat funny, but for the life of his do not ask him to tell a joke on the spot." }
+]
