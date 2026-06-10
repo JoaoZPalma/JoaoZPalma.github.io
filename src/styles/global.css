@@ -208,13 +208,13 @@ html.alternate-colors .frame-dark {
 }
 
 .notes-icon {
-  /* sprite is 64px native; 32px box = exact 2:1 so it stays crisp */
+  /* 32px native sprite; translateY is in screen px (applied after scale) */
   width: 32px;
   height: 32px;
   background: url('/grimoire.webp') 0px 0;
   background-size: 32px 32px;
   image-rendering: pixelated;
-  transform: scale(3.5);
+  transform: translateY(6px) scale(2.7);
   transform-origin: center;
   margin-left: 0px;
   margin-top: 0px;
