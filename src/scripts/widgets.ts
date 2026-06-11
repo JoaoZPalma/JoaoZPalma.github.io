@@ -49,6 +49,39 @@ export function initSoundToggles() {
   });
 }
 
+export function initCodexScale() {
+  // The main card and the desktop popup windows share the same fixed
+  // 832px design size. Zoom goes on the popup's inner card, not the fixed
+  // outer div, so the drag math in panels.ts keeps working in real pixels.
+  const scaled = [
+    document.querySelector<HTMLElement>('[data-codex-card]'),
+    ...document.querySelectorAll<HTMLElement>('[data-popup] > [data-anim]'),
+  ].filter((el): el is HTMLElement => el !== null);
+  if (scaled.length === 0) return;
+
+  const DESIGN = 832; // 800px card + 2 × 16px border
+  const MARGIN = 24; // breathing room around the card
+
+  const update = () => {
+    // Mobile layout (< md) is already fluid; only the fixed desktop card scales.
+    if (window.innerWidth < 768) {
+      scaled.forEach((el) => el.style.removeProperty('zoom'));
+      return;
+    }
+    const scale = Math.min(
+      1,
+      (window.innerWidth - MARGIN) / DESIGN,
+      (window.innerHeight - MARGIN) / DESIGN,
+    ).toString();
+    scaled.forEach((el) => {
+      el.style.zoom = scale;
+    });
+  };
+
+  update();
+  window.addEventListener('resize', update);
+}
+
 export function initMobileControlsDrawer() {
   const drawer = document.querySelector<HTMLElement>('[data-controls-drawer]');
   const toggle = document.querySelector<HTMLElement>('[data-controls-toggle]');

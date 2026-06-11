@@ -62,7 +62,7 @@ import stats from '../data/stats.json';
         <SoundToggle />
       </section>
 
-      <div class="border-0 md:border-16 md:border-darker_secondary">
+      <div data-codex-card class="border-0 md:border-16 md:border-darker_secondary">
         <div class="bg-primary max-w-[100vw] md:aspect-square md:w-[800px] md:h-[800px]">
           <header>
             <h1 class="text-5xl leading-tight text-darker_secondary pt-10 md:pt-6 md:pl-6 pb-6 md:pb-0 text-center md:text-left" style="font-family: AtlantisText; font-weight: 900; text-shadow: 4px 4px 0 var(--color-darker_primary);">
@@ -349,6 +349,7 @@ import stats from '../data/stats.json';
     initThemeToggles,
     initSoundToggles,
     initMobileControlsDrawer,
+    initCodexScale,
     initChests,
     initEyes,
     initLoadingScreen,
@@ -361,6 +362,7 @@ import stats from '../data/stats.json';
   initThemeToggles();
   initSoundToggles();
   initMobileControlsDrawer();
+  initCodexScale();
   initChests();
   initEyes();
   initLoadingScreen();
