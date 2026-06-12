@@ -130,5 +130,71 @@
     "alt": "SQL",
     "tooltip": "The language of databases, where I summon and manipulate data from the abyss.",
     "link": "https://en.wikipedia.org/wiki/SQL"
+  },
+  {
+    "image": "/php.webp",
+    "alt": "PHP",
+    "tooltip": "The elephant familiar I commune with daily. Ancient magic that still runs most of the realm.",
+    "link": "https://www.php.net/"
+  },
+  {
+    "image": "/laravel.webp",
+    "alt": "Laravel",
+    "tooltip": "My backend spellbook of choice, with elegant rituals for routing, queues, and Eloquent summonings.",
+    "link": "https://laravel.com/"
+  },
+  {
+    "image": "/astro.webp",
+    "alt": "Astro",
+    "tooltip": "The framework conjuring this very codex. Ships almost no JavaScript, pure arcane efficiency.",
+    "link": "https://astro.build/"
+  },
+  {
+    "image": "/kubernetes.webp",
+    "alt": "Kubernetes",
+    "tooltip": "The helm that steers my fleet of cursed containers. A dark art I'm still mastering.",
+    "link": "https://kubernetes.io/"
+  },
+  {
+    "image": "/githubActions.webp",
+    "alt": "GitHub Actions",
+    "tooltip": "Self-casting spells! My rituals of building and deploying trigger themselves on every push.",
+    "link": "https://github.com/features/actions"
+  },
+  {
+    "image": "/bash.webp",
+    "alt": "Bash",
+    "tooltip": "Terminal incantations to automate the mundane. With great pipes comes great responsibility.",
+    "link": "https://www.gnu.org/software/bash/"
+  },
+  {
+    "image": "/git.webp",
+    "alt": "Git",
+    "tooltip": "Time-travel magic. Lets me undo catastrophes and rewrite history itself.",
+    "link": "https://git-scm.com/"
+  },
+  {
+    "image": "/flask.webp",
+    "alt": "Flask",
+    "tooltip": "A small Python cauldron for brewing backends. I used it to serve visions from vision-language models.",
+    "link": "https://flask.palletsprojects.com/"
+  },
+  {
+    "image": "/ollama.webp",
+    "alt": "Ollama",
+    "tooltip": "Summons LLM spirits onto my own hardware. No cloud daemons required.",
+    "link": "https://ollama.com/"
+  },
+  {
+    "image": "/typst.webp",
+    "alt": "Typst",
+    "tooltip": "LaTeX's swift young apprentice. My resume is scribed with it.",
+    "link": "https://typst.app/"
+  },
+  {
+    "image": "/emacs.webp",
+    "alt": "Emacs",
+    "tooltip": "The rival school of magic. I study it to know my enemy... and because org-mode is genuinely good.",
+    "link": "https://www.gnu.org/software/emacs/"
   }
 ]
