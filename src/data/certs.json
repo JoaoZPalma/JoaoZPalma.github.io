@@ -1,0 +1,12 @@
+[
+  { "title": "Front End Development Libraries", "issuer": "freeCodeCamp", "year": "2025", "featured": true },
+  { "title": "Foundations of Git", "issuer": "GitKraken", "year": "2024", "featured": true },
+  { "title": "Kubernetes for the Absolute Beginners", "issuer": "KodeKloud", "year": "2026"},
+  { "title": "Crash Course: Kubernetes for Absolute Beginners", "issuer": "KodeKloud", "year": "2026" },
+  { "title": "Fundamentals of DevOps", "issuer": "KodeKloud", "year": "2026", "featured": true },
+  { "title": "DevOps Pre-Requisite Course", "issuer": "KodeKloud", "year": "2026" },
+  { "title": "12 Factor App", "issuer": "KodeKloud", "year": "2026" },
+  { "title": "Learning Linux Basics", "issuer": "KodeKloud", "year": "2026" },
+  { "title": "Shell Scripts for Beginners", "issuer": "KodeKloud", "year": "2026" },
+  { "title": "Academia de Verão — Summer Academy", "issuer": "Polytechnic of Leiria", "year": "2023" }
+]

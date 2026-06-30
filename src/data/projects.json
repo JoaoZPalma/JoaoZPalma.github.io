@@ -11,8 +11,9 @@
     "title": "Non-Profit Organization Website",
     "description": "<strong>Designed, developed, and deployed</strong> a user-friendly, accessible site within budget constraints without compromising quality.",
     "image": "/livroslivres.webp",
-    "link": "https://pracadoslivroslivres.org/",
-    "available": true
+    "link": "#",
+    "available": false,
+    "unavailableComment": "Sadly no longer online :-("
   },
   {
     "title": "LEI - Smart Package Monitor",

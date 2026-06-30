@@ -1,39 +1,68 @@
 ---
-// Project list. Edit src/data/projects.json to add/remove projects —
-// descriptions are HTML strings (rendered with set:html).
+// QUEST LOG panel. A tab bar switches between four sections:
+//   experience — work history      (src/data/experience.json)
+//   education  — degree            (src/data/education.json)
+//   scrolls    — highlighted certs (src/data/certs.json)
+//   projects   — project cards     (src/data/projects.json)
+// Tab switching lives in scripts/questlog.ts. Experience/education/certs are
+// text-only; project descriptions are HTML strings rendered with set:html.
 import projects from '../data/projects.json';
+import experience from '../data/experience.json';
+import education from '../data/education.json';
+import certs from '../data/certs.json';
+
+const tabs = [
+  { id: 'experience', label: 'Experience' },
+  { id: 'scrolls', label: 'Scrolls' },
+  { id: 'projects', label: 'Projects' },
+];
+
+// Newest first. Stable sort keeps the hand-tuned order within a given year.
+const sortedCerts = [...certs].sort((a, b) => Number(b.year) - Number(a.year));
+const featuredCerts = sortedCerts.filter((c) => c.featured);
+const otherCerts = sortedCerts.filter((c) => !c.featured);
 ---
 
-<div class="p-2 h-full">
-  <section class="h-full overflow-y-auto pb-32">
-    <ul class="mr-8">
-      {projects.map((project, index) => (
-        <>
-          <li class:list={['flex items-start my-6 md:mb-14 flex-col md:flex-row', index % 2 === 1 && 'md:flex-row-reverse']}>
-            <div class:list={['flex items-start gap-4 md:contents', index % 2 === 1 ? 'flex-row-reverse' : 'text-right']}>
-              <img
-                class:list={[
-                  'aspect-square w-[10vh] h-[10vh] md:w-40 md:h-40 object-cover border-secondary border-4 bg-darker_primary p-1 mb-4 md:mb-0',
-                  index % 2 === 1 ? ' md:self-start' : 'self-start',
-                ]}
-                src={project.image}
-                alt={project.title}
-                width="160"
-                height="160"
-                loading="lazy"
-              />
-              <h2 class="text-darker_secondary text-4xl md:hidden" style="font-family: AtlantisText; font-weight: 700;">
-                {project.title}
-              </h2>
-            </div>
-            <article class:list={['flex-1 text-end md:-mt-2', index % 2 === 1 ? 'text-start md:mr-4 md:ml-2' : 'md:ml-4 md:mr-2']}>
-              <h2 class="text-darker_secondary text-4xl hidden md:block" style="font-family: AtlantisText; font-weight: 700;">
-                {project.title}
-              </h2>
-              <p class="text-darker_secondary text-2xl" style="font-family: AtlantisText; font-weight: 400;" set:html={project.description} />
-              {project.available ? (
+<div class="questlog-root p-2 h-full flex flex-col">
+  <!-- Tab bar -->
+  <div class="flex flex-wrap justify-center gap-2 mb-3 shrink-0" role="tablist" aria-label="Quest log sections">
+    {tabs.map((tab, i) => (
+      <button
+        type="button"
+        data-tab={tab.id}
+        role="tab"
+        aria-selected={i === 0 ? 'true' : 'false'}
+        class:list={[
+          'cursor-pointer border-4 border-secondary px-3 py-1 text-darker_secondary text-2xl transition-all duration-150 hover:opacity-100',
+          i === 0 ? 'bg-darker_primary' : 'opacity-50',
+        ]}
+        style="font-family: AtlantisText; font-weight: 700;"
+      >
+        {tab.label}
+      </button>
+    ))}
+  </div>
+
+  <section data-tab-scroll class="flex-1 overflow-y-auto pb-32 px-2 flex flex-col items-center">
+    <!-- EXPERIENCE -->
+    <div data-tab-panel="experience" class="w-full max-w-2xl text-center">
+      <ul>
+        {experience.map((exp, index) => (
+          <>
+            <li class="mb-4">
+              <h3 class="text-darker_secondary text-3xl" style="font-family: AtlantisText; font-weight: 700;">
+                {exp.role}
+              </h3>
+              <p class="text-darker_secondary text-2xl" style="font-family: AtlantisText; font-weight: 500;">
+                {exp.org}
+              </p>
+              <p class="text-darker_secondary text-xl italic -mt-1" style="font-family: AtlantisText; font-weight: 400;">
+                {exp.meta}
+              </p>
+              <p class="text-darker_secondary text-2xl mt-1" style="font-family: AtlantisText; font-weight: 400;" set:html={exp.description} />
+              {exp.available && exp.link && (
                 <a
-                  href={project.link}
+                  href={exp.link}
                   class="text-darker_secondary text-2xl underline decoration-2 hover:decoration-wavy hover:decoration-1"
                   style="font-family: AtlantisText; font-weight: 400;"
                   target="_blank"
@@ -41,27 +70,111 @@ import projects from '../data/projects.json';
                 >
                   Check it out here!
                 </a>
-              ) : (
-                <div class:list={['flex gap-2 flex-col md:flex-row', index % 2 === 1 && 'md:flex-row-reverse']}>
-                  <span class="text-darker_secondary text-2xl line-through decoration-2" style="font-family: AtlantisText; font-weight: 400;">
-                    Check it out here!
-                  </span>
-                  <span class="text-darker_secondary text-xl italic -mb-2" style="font-family: AtlantisText; font-weight: 400;">
-                    {project.unavailableComment}
-                  </span>
-                </div>
               )}
-            </article>
-          </li>
-          {index < projects.length - 1 && (
-            <li class="md:hidden flex justify-center">
-              <div class="text-darker_secondary text-4xl leading-none" style="font-family: AtlantisText; font-weight: 400;">
-                -----------------------
-              </div>
             </li>
-          )}
-        </>
-      ))}
-    </ul>
+            {index < experience.length - 1 && (
+              <li class="flex justify-center mb-4 text-darker_secondary text-2xl leading-none" style="font-family: AtlantisText; font-weight: 400;">
+                -----------
+              </li>
+            )}
+          </>
+        ))}
+      </ul>
+    </div>
+
+    <!-- SCROLLS (schooling + certs) -->
+    <div data-tab-panel="scrolls" class="hidden w-full max-w-2xl text-center">
+      <ul>
+        {education.map((edu) => (
+          <li class="mb-2">
+            <h3 class="text-darker_secondary text-3xl" style="font-family: AtlantisText; font-weight: 700;">
+              {edu.degree}
+            </h3>
+            <p class="text-darker_secondary text-2xl" style="font-family: AtlantisText; font-weight: 500;">
+              {edu.school}
+            </p>
+            <p class="text-darker_secondary text-xl italic -mt-1" style="font-family: AtlantisText; font-weight: 400;">
+              {edu.period}
+            </p>
+          </li>
+        ))}
+      </ul>
+      <div class="flex justify-center my-4 text-darker_secondary text-2xl leading-none" style="font-family: AtlantisText; font-weight: 400;">
+        -----------
+      </div>
+
+      <!-- Featured certs — bigger -->
+      <ul class="mb-4">
+        {featuredCerts.map((cert) => (
+          <li class="mb-3">
+            <p class="text-darker_secondary text-3xl leading-tight" style="font-family: AtlantisText; font-weight: 700;">
+              {cert.title}
+            </p>
+            <p class="text-darker_secondary text-xl italic -mt-1" style="font-family: AtlantisText; font-weight: 400;">
+              {cert.issuer} · {cert.year}
+            </p>
+          </li>
+        ))}
+      </ul>
+
+      <!-- The rest — compact list -->
+      <ul>
+        {otherCerts.map((cert) => (
+          <li class="text-darker_secondary text-xl mb-1" style="font-family: AtlantisText; font-weight: 400;">
+            <span style="font-weight: 500;">{cert.title}</span> · {cert.issuer} · {cert.year}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- PROJECTS -->
+    <div data-tab-panel="projects" class="hidden w-full max-w-2xl">
+      <ul>
+        {projects.map((project, index) => (
+          <>
+            <li class:list={['flex items-start my-8 flex-col md:flex-row', index % 2 === 1 && 'md:flex-row-reverse']}>
+              <div class:list={['flex items-start gap-4 md:contents', index % 2 === 1 ? 'flex-row-reverse' : 'text-right']}>
+                <img
+                  class:list={[
+                    'aspect-square w-[10vh] h-[10vh] md:w-40 md:h-40 object-cover border-secondary border-4 bg-darker_primary p-1 mb-4 md:mb-0',
+                    index % 2 === 1 ? ' md:self-start' : 'self-start',
+                  ]}
+                  src={project.image}
+                  alt={project.title}
+                  width="160"
+                  height="160"
+                  loading="lazy"
+                />
+                <h2 class="text-darker_secondary text-4xl md:hidden" style="font-family: AtlantisText; font-weight: 700;">
+                  {project.title}
+                </h2>
+              </div>
+              <article class:list={['flex-1 text-end md:-mt-2', index % 2 === 1 ? 'text-start md:mr-4 md:ml-2' : 'md:ml-4 md:mr-2']}>
+                <h2 class="text-darker_secondary text-4xl hidden md:block" style="font-family: AtlantisText; font-weight: 700;">
+                  {project.title}
+                </h2>
+                <p class="text-darker_secondary text-2xl" style="font-family: AtlantisText; font-weight: 400;" set:html={project.description} />
+                {project.available && (
+                  <a
+                    href={project.link}
+                    class="text-darker_secondary text-2xl underline decoration-2 hover:decoration-wavy hover:decoration-1"
+                    style="font-family: AtlantisText; font-weight: 400;"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Check it out here!
+                  </a>
+                )}
+              </article>
+            </li>
+            {index < projects.length - 1 && (
+              <li class="flex justify-center text-darker_secondary text-2xl leading-none" style="font-family: AtlantisText; font-weight: 400;">
+                -----------
+              </li>
+            )}
+          </>
+        ))}
+      </ul>
+    </div>
   </section>
 </div>

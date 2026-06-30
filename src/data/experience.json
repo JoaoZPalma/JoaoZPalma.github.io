@@ -1,0 +1,23 @@
+[
+  {
+    "role": "Software Developer",
+    "org": "Setwin",
+    "meta": "Full-time, Sep 2025 — Present, Marinha Grande, PT",
+    "description": "Crafting and shipping web apps with <strong>Laravel</strong>, <strong>Vue</strong> and <strong>PHP</strong>, and currently knee-deep in <strong>Kubernetes</strong>. Wrangling systems that make sense.",
+    "available": false
+  },
+  {
+    "role": "Web Design, Development & Deployment",
+    "org": "Praça dos Livros Livres",
+    "meta": "Freelance, Feb — Apr 2025, Remote",
+    "description": "<strong>Designed, developed, and deployed</strong> a user-friendly, accessible site with a working API for a non-profit — on budget, on mission.",
+    "available": false
+  },
+  {
+    "role": "Co-Author & Graphic Designer",
+    "org": "\"Um Desastre de Natal\"",
+    "meta": "Contract, Nov 2024, ISBN 978-989-33-6836-4",
+    "description": "Co-authored and illustrated a published children's book, conjuring artwork in <strong>Photoshop</strong>.",
+    "available": false
+  }
+]

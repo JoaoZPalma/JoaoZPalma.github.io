@@ -26,7 +26,7 @@ import stats from '../data/stats.json';
   <Panel id="contacts" title="CONTACTS" pos="right" centered>
     <Contacts />
   </Panel>
-  <Panel id="projects" title="PROJECTS" pos="default">
+  <Panel id="projects" title="QUEST LOG" pos="default">
     <Projects />
   </Panel>
   <Panel id="faq" title="FAQ" pos="middle">
@@ -89,6 +89,9 @@ import stats from '../data/stats.json';
               <span class="w-full text-5xl leading-tight text-darker_secondary text-center mt-1" style="font-family: AtlantisText; font-weight: 500; text-shadow: 3px 3px 0 var(--color-darker_primary);" role="heading" aria-level="2">
                 CODE WARLOCK
               </span>
+              <span class="w-full text-xl leading-tight text-darker_secondary text-center" style="font-family: AtlantisText; font-weight: 400;">
+                Full-Stack · Laravel · Vue · Kubernetes
+              </span>
             </div>
 
             <section class="w-full text-5xl text-darker_secondary pl-6 pr-6 mt-3 text-center" style="font-family: AtlantisText; font-weight: 700;" aria-labelledby="stats-heading-mobile">
@@ -147,7 +150,7 @@ import stats from '../data/stats.json';
                       <div class="chest-icon mx-auto"></div>
                     </button>
                   </div>
-                  <p class="text-xl mt-1" aria-hidden="true">Projects</p>
+                  <p class="text-xl mt-1" aria-hidden="true">Quests</p>
                 </div>
 
                 <div class="artifact flex flex-col items-center h-full relative">
@@ -249,6 +252,9 @@ import stats from '../data/stats.json';
                     <span class="w-full text-5xl leading-tight text-darker_secondary text-center mt-1" style="font-family: AtlantisText; font-weight: 500; text-shadow: 3px 3px 0 var(--color-darker_primary);" role="heading" aria-level="2">
                       CODE WARLOCK
                     </span>
+                    <span class="w-full text-xl leading-tight text-darker_secondary text-center" style="font-family: AtlantisText; font-weight: 400;">
+                      Full-Stack · Laravel · Vue · Kubernetes
+                    </span>
                     <button
                       data-panel-toggle="inventory"
                       data-sound="click1"
@@ -280,7 +286,7 @@ import stats from '../data/stats.json';
                       <div class="chest-icon mx-auto"></div>
                     </button>
                   </div>
-                  <p class="text-xl mt-1 absolute -bottom-9" aria-hidden="true">Projects</p>
+                  <p class="text-xl mt-1 absolute -bottom-9" aria-hidden="true">Quests</p>
                 </div>
 
                 <div class="artifact flex flex-col items-center h-full relative">
@@ -345,6 +351,7 @@ import stats from '../data/stats.json';
   import { initInventory } from '../scripts/inventory';
   import { initFaq } from '../scripts/faq';
   import { initNotes } from '../scripts/notes';
+  import { initQuestLog } from '../scripts/questlog';
   import {
     initThemeToggles,
     initSoundToggles,
@@ -359,6 +366,7 @@ import stats from '../data/stats.json';
   initInventory();
   initFaq();
   initNotes();
+  initQuestLog();
   initThemeToggles();
   initSoundToggles();
   initMobileControlsDrawer();
